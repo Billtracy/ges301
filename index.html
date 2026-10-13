@@ -40,10 +40,11 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="min-h-screen text-gray-800 sm:flex sm:items-center sm:justify-center sm:p-4 bg-gray-100 sm:bg-gradient-to-br sm:from-blue-50 sm:to-indigo-100">
+<!-- pb-20 keeps a strip clear at the bottom for the Netlify badge -->
+<body class="min-h-screen pb-20 text-gray-800 sm:flex sm:items-center sm:justify-center sm:px-4 sm:pt-4 bg-gray-100 sm:bg-gradient-to-br sm:from-blue-50 sm:to-indigo-100">
 
     <!-- Mobile: Full height, Desktop: Rounded card -->
-    <div id="app" class="w-full max-w-3xl bg-white sm:shadow-2xl sm:rounded-2xl overflow-hidden min-h-screen sm:min-h-0 flex flex-col relative fade-in">
+    <div id="app" class="w-full max-w-3xl bg-white sm:shadow-2xl sm:rounded-2xl overflow-hidden h-[calc(100dvh-5rem)] sm:h-auto sm:max-h-[calc(100dvh-6rem)] flex flex-col relative fade-in">
         
         <!-- Header -->
         <div class="bg-indigo-600 text-white px-4 py-5 sm:p-6 text-center shrink-0 z-30 shadow-md">
@@ -52,7 +53,7 @@
         </div>
 
         <!-- Dynamic Content Container -->
-        <div id="content" class="flex-grow flex flex-col bg-white">
+        <div id="content" class="flex-grow min-h-0 flex flex-col bg-white">
             <!-- Content will be injected by JavaScript -->
         </div>
     </div>
@@ -1103,9 +1104,9 @@
         // --- SCREEN RENDERERS ---
 
         function renderSetupScreen() {
-            contentDiv.className = "flex-grow flex flex-col p-5 sm:p-8 bg-white justify-center";
+            contentDiv.className = "flex-grow min-h-0 overflow-y-auto flex flex-col p-5 sm:p-8 bg-white";
             contentDiv.innerHTML = `
-                <div class="w-full max-w-xl mx-auto fade-in">
+                <div class="w-full max-w-xl mx-auto my-auto fade-in">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Test Preferences</h2>
                     
                     <div class="space-y-5 bg-gray-50 p-5 sm:p-6 rounded-2xl border border-gray-100 shadow-inner">
@@ -1162,7 +1163,7 @@
 
         function renderTestScreen() {
             // Adjust padding specifically for test view
-            contentDiv.className = "flex-grow flex flex-col bg-white relative";
+            contentDiv.className = "flex-grow min-h-0 flex flex-col bg-white relative";
             
             const question = state.questions[state.currentQuestionIndex];
             const progress = ((state.currentQuestionIndex) / state.questions.length) * 100;
@@ -1186,7 +1187,7 @@
 
             contentDiv.innerHTML = `
                 <!-- Sticky Header for Mobile & Desktop -->
-                <div class="sticky top-0 bg-white/95 backdrop-blur-sm z-20 px-5 sm:px-8 py-4 border-b border-gray-100 shadow-sm">
+                <div class="shrink-0 bg-white/95 backdrop-blur-sm z-20 px-5 sm:px-8 py-4 border-b border-gray-100 shadow-sm">
                     <div class="flex justify-between items-center mb-3">
                         <div class="text-xs sm:text-sm font-bold text-gray-500 uppercase tracking-wider">
                             Q ${state.currentQuestionIndex + 1} <span class="text-gray-300 mx-1">/</span> ${state.questions.length}
@@ -1202,7 +1203,7 @@
                 </div>
 
                 <!-- Scrollable Question Area -->
-                <div class="flex-grow px-5 sm:px-8 py-6 overflow-y-auto no-scrollbar pb-24 sm:pb-8 fade-in">
+                <div class="flex-grow min-h-0 px-5 sm:px-8 py-6 overflow-y-auto fade-in">
                     <p class="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-2">${TOPICS[question.topic]}</p>
                     <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-6 sm:mb-8 leading-relaxed">
                         ${question.text}
@@ -1213,7 +1214,7 @@
                 </div>
 
                 <!-- Sticky Footer -->
-                <div class="fixed sm:absolute bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 sm:px-8 sm:py-5 z-20 flex justify-between items-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] sm:shadow-none">
+                <div class="shrink-0 w-full bg-white border-t border-gray-200 p-4 sm:px-8 sm:py-5 z-20 flex justify-between items-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] sm:shadow-none">
                     <button onclick="prevQuestion()" class="${state.currentQuestionIndex === 0 ? 'invisible' : ''} w-1/2 sm:w-auto px-4 py-3 sm:py-2.5 text-gray-600 font-bold bg-gray-100 active:bg-gray-200 hover:bg-gray-200 rounded-xl sm:rounded-lg transition text-center mr-2">
                         <i class="fa-solid fa-arrow-left sm:mr-2"></i> <span class="hidden sm:inline">Previous</span>
                     </button>
@@ -1235,7 +1236,7 @@
 
         function renderReviewScreen() {
             // Adjust padding to allow full natural scrolling on mobile
-            contentDiv.className = "flex-grow flex flex-col px-4 py-6 sm:p-8 bg-white sm:overflow-y-auto sm:max-h-[75vh]";
+            contentDiv.className = "flex-grow min-h-0 flex flex-col px-4 py-6 sm:p-8 bg-white overflow-y-auto";
             
             let score = 0;
             state.questions.forEach((q, idx) => {
