@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GES 301: Entrepreneurial Skills Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            -webkit-tap-highlight-color: transparent; /* Removes tap highlight on mobile */
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .option-label {
+            transition: all 0.2s;
+        }
+        .option-radio:checked + .option-label {
+            background-color: #e0e7ff;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+        /* Custom scrollbar only for desktop */
+        @media (min-width: 640px) {
+            ::-webkit-scrollbar { width: 8px; }
+            ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+            ::-webkit-scrollbar-thumb { background: #c7c7cc; border-radius: 4px; }
+            ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+        }
+        /* Hide scrollbar for clean mobile sticky header/footer */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="min-h-screen text-gray-800 sm:flex sm:items-center sm:justify-center sm:p-4 bg-gray-100 sm:bg-gradient-to-br sm:from-blue-50 sm:to-indigo-100">
+
+    <!-- Mobile: Full height, Desktop: Rounded card -->
+    <div id="app" class="w-full max-w-3xl bg-white sm:shadow-2xl sm:rounded-2xl overflow-hidden min-h-screen sm:min-h-0 flex flex-col relative fade-in">
+        
+        <!-- Header -->
+        <div class="bg-indigo-600 text-white px-4 py-5 sm:p-6 text-center shrink-0 z-30 shadow-md">
+            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight"><i class="fa-solid fa-graduation-cap mr-2"></i> GES 301</h1>
+            <p class="text-indigo-100 mt-1 text-sm sm:text-base font-medium">Introduction to Entrepreneurial Skills</p>
+        </div>
+
+        <!-- Dynamic Content Container -->
+        <div id="content" class="flex-grow flex flex-col bg-white">
+            <!-- Content will be injected by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Question Bank derived from GES 301 Textbook.pdf
+        const questionBank = [
+            // Easy Questions
+            {
+                text: "Who first introduced the term 'entrepreneur' in the early 18th century?",
+                options: ["Adam Smith", "Richard Cantillon", "Joseph Schumpeter", "John Stuart Mill"],
+                correct: 1,
+                difficulty: "easy",
+                rationale: "The French economist Richard Cantillon formally defined the entrepreneur as the 'agent who buys means of production at certain prices in order to combine them' into a new product."
+            },
+            {
+                text: "What does the French verb 'entreprendre' mean?",
+                options: ["To innovate", "To calculate risk", "To undertake or attempt", "To make profit"],
+                correct: 2,
+                difficulty: "easy",
+                rationale: "The word entrepreneur is derived from the French verb 'entreprendre', which means to undertake, to attempt, to try in hand, or to adventure."
+            },
+            {
+                text: "Which of the following is considered an 'invisible business'?",
+                options: ["A local bakery", "A hair salon", "An online e-commerce store", "A manufacturing plant"],
+                correct: 2,
+                difficulty: "easy",
+                rationale: "An invisible business is one whose activities incorporate digital technology, such as purchasing goods from an online store (e.g., Konga.com), as opposed to physical premises."
+            },
+            {
+                text: "What is the primary objective of a feasibility study?",
+                options: ["To market a new product to customers", "To determine if a business opportunity is possible, practical, and viable", "To secure a bank loan immediately", "To hire the best employees"],
+                correct: 1,
+                difficulty: "easy",
+                rationale: "A feasibility study determines whether a plan of action makes economic and operational sense, i.e., whether it is possible, practical, and viable."
+            },
+            {
+                text: "Which type of company has a name ending in 'ltd'?",
+                options: ["Public Company", "Company limited by guarantee", "Private company limited by shares", "Unlimited company"],
+                correct: 2,
+                difficulty: "easy",
+                rationale: "A private company limited by shares restricts the right to transfer shares and its name ends with 'ltd'."
+            },
+            // Medium Questions
+            {
+                text: "According to Joseph Schumpeter, what is the primary role of an entrepreneur?",
+                options: ["To organize labor and capital", "To engage in 'creative destruction' through innovation", "To simply imitate existing products", "To bear risks without innovation"],
+                correct: 1,
+                difficulty: "medium",
+                rationale: "Schumpeter asserted that the entrepreneur has a 'creative destruction' function by innovating—replacing or destroying an existing economy with a better, advanced one."
+            },
+            {
+                text: "In the history of Nigerian entrepreneurship, what disrupted the early development of modern Nigerian entrepreneurs?",
+                options: ["The discovery of oil", "The introduction of formal education and colonial trading practices", "The lack of local currency", "The failure of the agricultural sector"],
+                correct: 1,
+                difficulty: "medium",
+                rationale: "The trading practices of colonial masters (who dealt directly with producers) and the introduction of formal education (which shifted focus to civil service jobs) disrupted early entrepreneurial growth."
+            },
+            {
+                text: "Which of the following is NOT a stage in the entrepreneurial process outlined in the text?",
+                options: ["Motivational stage", "Visionary stage", "Retirement stage", "Commissioning stage"],
+                correct: 2,
+                difficulty: "medium",
+                rationale: "The 7 stages are: Motivational, Decision, Visionary, Mission, Resource Mobilization/Structuring, Commissioning, and Operational stages."
+            },
+            {
+                text: "What is the minimum share capital requirement for a Public Company in Nigeria?",
+                options: ["₦10,000", "₦100,000", "₦500,000", "₦1,000,000"],
+                correct: 2,
+                difficulty: "medium",
+                rationale: "Under CAMA, the minimum capital requirement of a public company is Five Hundred Thousand Naira (₦500,000.00)."
+            },
+            {
+                text: "Which Intellectual Property tool protects the aesthetic or ornamental aspects of an article?",
+                options: ["Patent", "Trademark", "Trade Secret", "Industrial Design"],
+                correct: 3,
+                difficulty: "medium",
+                rationale: "An Industrial design is granted for the ornamental or aesthetic aspects of an article of manufacture, making the article attractive and appealing."
+            },
+            // Hard Questions
+            {
+                text: "According to Carroll's Four Part Definition of CSR, which responsibility is considered the 'foundation upon which all others rest'?",
+                options: ["Ethical responsibility", "Legal responsibility", "Philanthropic responsibility", "Economic responsibility"],
+                correct: 3,
+                difficulty: "hard",
+                rationale: "Economic responsibilities (being profitable) form the foundation upon which legal, ethical, and philanthropic responsibilities rest in Carroll's pyramid."
+            },
+            {
+                text: "How do Carland et al. (1984) differentiate an entrepreneurial venture from a small business?",
+                options: ["Small businesses have more employees.", "Entrepreneurial ventures focus on innovation and strategic growth, while small businesses focus on personal goals and stability.", "Small businesses require venture capital.", "Entrepreneurial ventures do not engage in marketing."],
+                correct: 1,
+                difficulty: "hard",
+                rationale: "Carland et al. distinguish them by noting that entrepreneurs are characterized by innovative behavior and principal goals of profit and growth, whereas small business owners focus on personal goals and stability."
+            },
+            {
+                text: "Under Nigerian Copyright Law, what is the duration of copyright protection for literary works?",
+                options: ["Life of the author plus 50 years", "Life of the author plus 70 years", "Exactly 50 years from publication", "Exactly 70 years from publication"],
+                correct: 1,
+                difficulty: "hard",
+                rationale: "In Nigeria, copyright protection exists throughout the life of the owner plus 70 years after for all literary works."
+            },
+            {
+                text: "In McClelland's Cross Cultural Competencies, 'Proactivity' is demonstrated by:",
+                options: ["Breaking large tasks into subtasks", "Acting to build friendly relationships with customers", "Seizing unusual opportunities and taking initiative before being forced by events", "Confronting problems with others directly"],
+                correct: 2,
+                difficulty: "hard",
+                rationale: "Proactivity involves taking initiative (doing things before being asked or forced) and assertiveness (seizing opportunities)."
+            },
+            {
+                text: "Which of the following describes 'Sustaining Mastery Over a Technology' in the S-Curve of innovation?",
+                options: ["Exploring new possibilities and inventing", "Building firm foundations, improving, and augmenting an existing technology", "Experiencing diminishing returns", "A sudden technological breakthrough"],
+                correct: 1,
+                difficulty: "hard",
+                rationale: "On the S-Curve, sustaining mastery over a technology involves building firm foundations, improving, augmenting, and applying the existing technology before diminishing returns set in."
+            }
+        ];
+
+        // Application State
+        let state = {
+            questions: [],
+            currentQuestionIndex: 0,
+            answers: {},
+            timeLimit: 0, 
+            timeRemaining: 0,
+            timerId: null
+        };
+
+        const contentDiv = document.getElementById('content');
+
+        // Initialize App
+        function initApp() {
+            renderSetupScreen();
+        }
+
+        // --- SCREEN RENDERERS ---
+
+        function renderSetupScreen() {
+            contentDiv.className = "flex-grow flex flex-col p-5 sm:p-8 bg-white justify-center";
+            contentDiv.innerHTML = `
+                <div class="w-full max-w-xl mx-auto fade-in">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Test Preferences</h2>
+                    
+                    <div class="space-y-5 bg-gray-50 p-5 sm:p-6 rounded-2xl border border-gray-100 shadow-inner">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Number of Questions</label>
+                            <select id="numQuestions" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
+                                <option value="5">5 Questions</option>
+                                <option value="10" selected>10 Questions</option>
+                                <option value="15">15 Questions</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Difficulty Level</label>
+                            <select id="difficulty" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
+                                <option value="mixed" selected>Mixed (All Levels)</option>
+                                <option value="easy">Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Time Limit</label>
+                            <select id="timeLimit" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
+                                <option value="1">1 Minute (Quick Drill)</option>
+                                <option value="5" selected>5 Minutes</option>
+                                <option value="10">10 Minutes</option>
+                                <option value="15">15 Minutes</option>
+                            </select>
+                        </div>
+
+                        <button onclick="startTest()" class="w-full mt-8 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold text-lg py-4 sm:py-3 px-4 rounded-xl transition duration-200 shadow-md">
+                            <i class="fa-solid fa-play mr-2"></i> Start Test
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTestScreen() {
+            // Adjust padding specifically for test view
+            contentDiv.className = "flex-grow flex flex-col bg-white relative";
+            
+            const question = state.questions[state.currentQuestionIndex];
+            const progress = ((state.currentQuestionIndex) / state.questions.length) * 100;
+            const isLastQuestion = state.currentQuestionIndex === state.questions.length - 1;
+
+            let optionsHtml = '';
+            question.options.forEach((opt, index) => {
+                const isSelected = state.answers[state.currentQuestionIndex] === index;
+                optionsHtml += `
+                    <div class="mb-3 sm:mb-4 relative">
+                        <input type="radio" name="option" id="opt_${index}" value="${index}" class="option-radio opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10" ${isSelected ? 'checked' : ''} onchange="selectOption(${index})">
+                        <label for="opt_${index}" class="option-label block w-full border border-gray-200 rounded-xl p-4 sm:p-5 cursor-pointer active:bg-gray-100 hover:bg-gray-50 flex items-center">
+                            <span class="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0 border-2 rounded-full mr-4 flex items-center justify-center ${isSelected ? 'border-indigo-600 bg-indigo-600' : 'border-gray-300'}">
+                                ${isSelected ? '<div class="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-white rounded-full"></div>' : ''}
+                            </span>
+                            <span class="text-base sm:text-lg text-gray-800 leading-snug">${opt}</span>
+                        </label>
+                    </div>
+                `;
+            });
+
+            contentDiv.innerHTML = `
+                <!-- Sticky Header for Mobile & Desktop -->
+                <div class="sticky top-0 bg-white/95 backdrop-blur-sm z-20 px-5 sm:px-8 py-4 border-b border-gray-100 shadow-sm">
+                    <div class="flex justify-between items-center mb-3">
+                        <div class="text-xs sm:text-sm font-bold text-gray-500 uppercase tracking-wider">
+                            Q ${state.currentQuestionIndex + 1} <span class="text-gray-300 mx-1">/</span> ${state.questions.length}
+                        </div>
+                        <div class="flex items-center text-base sm:text-lg font-bold ${state.timeRemaining <= 60 ? 'text-red-500 animate-pulse' : 'text-indigo-600'} bg-indigo-50 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg">
+                            <i class="fa-regular fa-clock mr-2"></i> <span id="timerDisplay">--:--</span>
+                        </div>
+                    </div>
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-gray-200 rounded-full h-1.5 sm:h-2">
+                        <div class="bg-indigo-500 h-1.5 sm:h-2 rounded-full transition-all duration-300 ease-out" style="width: ${progress}%"></div>
+                    </div>
+                </div>
+
+                <!-- Scrollable Question Area -->
+                <div class="flex-grow px-5 sm:px-8 py-6 overflow-y-auto no-scrollbar pb-24 sm:pb-8 fade-in">
+                    <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-6 sm:mb-8 leading-relaxed">
+                        ${question.text}
+                    </h3>
+                    <div class="mb-4">
+                        ${optionsHtml}
+                    </div>
+                </div>
+
+                <!-- Sticky Footer -->
+                <div class="fixed sm:absolute bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 sm:px-8 sm:py-5 z-20 flex justify-between items-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] sm:shadow-none">
+                    <button onclick="prevQuestion()" class="${state.currentQuestionIndex === 0 ? 'invisible' : ''} w-1/2 sm:w-auto px-4 py-3 sm:py-2.5 text-gray-600 font-bold bg-gray-100 active:bg-gray-200 hover:bg-gray-200 rounded-xl sm:rounded-lg transition text-center mr-2">
+                        <i class="fa-solid fa-arrow-left sm:mr-2"></i> <span class="hidden sm:inline">Previous</span>
+                    </button>
+                    
+                    ${isLastQuestion ? 
+                        `<button onclick="submitTest()" class="w-1/2 sm:w-auto px-4 py-3 sm:py-2.5 bg-green-600 active:bg-green-700 hover:bg-green-700 text-white font-bold rounded-xl sm:rounded-lg transition shadow-md text-center ml-2">
+                            Submit <i class="fa-solid fa-check ml-1 sm:ml-2"></i>
+                        </button>` 
+                        : 
+                        `<button onclick="nextQuestion()" class="w-1/2 sm:w-auto px-4 py-3 sm:py-2.5 bg-indigo-600 active:bg-indigo-700 hover:bg-indigo-700 text-white font-bold rounded-xl sm:rounded-lg transition shadow-md text-center ml-2">
+                            Next <i class="fa-solid fa-arrow-right ml-1 sm:ml-2"></i>
+                        </button>`
+                    }
+                </div>
+            `;
+            
+            updateTimerDisplay(); // Ensure immediate render
+        }
+
+        function renderReviewScreen() {
+            // Adjust padding to allow full natural scrolling on mobile
+            contentDiv.className = "flex-grow flex flex-col px-4 py-6 sm:p-8 bg-white sm:overflow-y-auto sm:max-h-[75vh]";
+            
+            let score = 0;
+            state.questions.forEach((q, idx) => {
+                if (state.answers[idx] === q.correct) score++;
+            });
+
+            const percentage = Math.round((score / state.questions.length) * 100);
+            let feedback = '';
+            if (percentage >= 80) feedback = "Excellent work! You have a solid grasp of the GES 301 material.";
+            else if (percentage >= 50) feedback = "Good effort! Review the concepts below to solidify your understanding.";
+            else feedback = "Keep studying! Carefully review the detailed rationales below to master these concepts.";
+
+            let reviewHtml = `
+                <div class="fade-in w-full max-w-3xl mx-auto pb-8">
+                    
+                    <!-- Score Card -->
+                    <div class="text-center mb-8 bg-indigo-50 p-6 sm:p-8 rounded-2xl border border-indigo-100 shadow-sm">
+                        <div class="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full shadow mb-4">
+                            <h2 class="text-3xl font-black text-indigo-600">${score}<span class="text-lg text-gray-400">/${state.questions.length}</span></h2>
+                        </div>
+                        <p class="text-xl font-bold text-gray-800 mb-2">Score: ${percentage}%</p>
+                        <p class="text-sm sm:text-base text-gray-600 px-4">${feedback}</p>
+                        <button onclick="initApp()" class="mt-6 w-full sm:w-auto px-8 py-3.5 sm:py-2.5 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold rounded-xl transition shadow-md">
+                            <i class="fa-solid fa-rotate-right mr-2"></i> Retake Setup
+                        </button>
+                    </div>
+                    
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-5 border-b pb-3 pl-1">Informed Review</h3>
+                    <div class="space-y-5 sm:space-y-6">
+            `;
+
+            state.questions.forEach((q, idx) => {
+                const userAnswer = state.answers[idx];
+                const isCorrect = userAnswer === q.correct;
+                const unanswered = userAnswer === undefined;
+
+                let userChoiceText = unanswered ? "<span class='italic text-gray-400'>Not answered</span>" : q.options[userAnswer];
+                let correctChoiceText = q.options[q.correct];
+
+                reviewHtml += `
+                    <div class="bg-white border rounded-2xl p-4 sm:p-6 ${isCorrect ? 'border-green-200 shadow-sm' : 'border-red-200 shadow-sm'}">
+                        <div class="flex items-start">
+                            <div class="mt-1 mr-3 sm:mr-4 flex-shrink-0 bg-white rounded-full">
+                                ${isCorrect ? '<i class="fa-solid fa-circle-check text-green-500 text-2xl"></i>' : '<i class="fa-solid fa-circle-xmark text-red-500 text-2xl"></i>'}
+                            </div>
+                            <div class="flex-grow min-w-0"> <!-- min-w-0 fixes flexbox text truncation issues -->
+                                <p class="font-semibold text-gray-800 mb-4 text-base sm:text-lg leading-relaxed"><span class="text-gray-400 mr-1">${idx + 1}.</span> ${q.text}</p>
+                                
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5 text-sm sm:text-base">
+                                    <div class="bg-gray-50 p-3.5 sm:p-4 rounded-xl border border-gray-200">
+                                        <p class="text-gray-500 mb-1.5 text-xs font-bold uppercase tracking-wider">Your Answer</p>
+                                        <p class="${isCorrect ? 'text-green-700 font-semibold' : 'text-red-700 font-medium'} break-words">${userChoiceText}</p>
+                                    </div>
+                                    ${!isCorrect ? `
+                                    <div class="bg-green-50 p-3.5 sm:p-4 rounded-xl border border-green-200">
+                                        <p class="text-green-600 mb-1.5 text-xs font-bold uppercase tracking-wider">Correct Answer</p>
+                                        <p class="text-green-800 font-semibold break-words">${correctChoiceText}</p>
+                                    </div>
+                                    ` : ''}
+                                </div>
+
+                                <div class="bg-blue-50/70 border-l-4 border-blue-400 p-4 sm:p-5 rounded-r-xl">
+                                    <h4 class="text-xs font-bold text-blue-800 uppercase tracking-wider mb-2 flex items-center"><i class="fa-solid fa-book-open mr-2"></i> Rationale</h4>
+                                    <p class="text-sm sm:text-base text-blue-900 leading-relaxed">${q.rationale}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            reviewHtml += `
+                    </div>
+                </div>
+            `;
+            
+            contentDiv.innerHTML = reviewHtml;
+            // Scroll to top of review screen
+            window.scrollTo(0,0);
+            if(contentDiv.scrollTo) contentDiv.scrollTo(0,0);
+        }
+
+        // --- APP LOGIC ---
+
+        function startTest() {
+            const numQ = parseInt(document.getElementById('numQuestions').value);
+            const diff = document.getElementById('difficulty').value;
+            const timeLimitMins = parseInt(document.getElementById('timeLimit').value);
+
+            // Filter questions
+            let filteredQuestions = questionBank;
+            if (diff !== 'mixed') {
+                filteredQuestions = questionBank.filter(q => q.difficulty === diff);
+            }
+
+            // Shuffle and slice
+            filteredQuestions = shuffleArray([...filteredQuestions]);
+            const selectedQuestions = filteredQuestions.slice(0, Math.min(numQ, filteredQuestions.length));
+
+            // Setup state
+            state.questions = selectedQuestions;
+            state.currentQuestionIndex = 0;
+            state.answers = {};
+            state.timeLimit = timeLimitMins * 60;
+            state.timeRemaining = state.timeLimit;
+            
+            // Start Timer
+            if (state.timerId) clearInterval(state.timerId);
+            state.timerId = setInterval(timerTick, 1000);
+
+            renderTestScreen();
+            window.scrollTo(0,0);
+        }
+
+        function timerTick() {
+            state.timeRemaining--;
+            updateTimerDisplay();
+
+            if (state.timeRemaining <= 0) {
+                clearInterval(state.timerId);
+                alert("Time's up! Submitting your test automatically.");
+                submitTest();
+            }
+        }
+
+        function updateTimerDisplay() {
+            const timerEl = document.getElementById('timerDisplay');
+            if (!timerEl) return;
+            
+            const m = Math.floor(state.timeRemaining / 60).toString().padStart(2, '0');
+            const s = (state.timeRemaining % 60).toString().padStart(2, '0');
+            timerEl.textContent = `${m}:${s}`;
+            
+            if (state.timeRemaining <= 60 && state.timeRemaining > 0) {
+                timerEl.parentElement.classList.remove('text-indigo-600', 'bg-indigo-50');
+                timerEl.parentElement.classList.add('text-red-600', 'bg-red-50', 'animate-pulse');
+            }
+        }
+
+        function selectOption(index) {
+            state.answers[state.currentQuestionIndex] = index;
+            // Force re-render to update radio visual states
+            renderTestScreen();
+        }
+
+        function nextQuestion() {
+            if (state.currentQuestionIndex < state.questions.length - 1) {
+                state.currentQuestionIndex++;
+                renderTestScreen();
+                window.scrollTo(0,0);
+            }
+        }
+
+        function prevQuestion() {
+            if (state.currentQuestionIndex > 0) {
+                state.currentQuestionIndex--;
+                renderTestScreen();
+                window.scrollTo(0,0);
+            }
+        }
+
+        function submitTest() {
+            clearInterval(state.timerId);
+            renderReviewScreen();
+        }
+
+        // Utility: Fisher-Yates Shuffle
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Boot
+        initApp();
+    </script>
+</body>
+</html>
