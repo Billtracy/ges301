@@ -59,116 +59,1029 @@
 
     <script>
         // Question Bank derived from GES 301 Textbook.pdf
-        const questionBank = [
-            // Easy Questions
-            {
-                text: "Who first introduced the term 'entrepreneur' in the early 18th century?",
-                options: ["Adam Smith", "Richard Cantillon", "Joseph Schumpeter", "John Stuart Mill"],
-                correct: 1,
-                difficulty: "easy",
-                rationale: "The French economist Richard Cantillon formally defined the entrepreneur as the 'agent who buys means of production at certain prices in order to combine them' into a new product."
-            },
-            {
-                text: "What does the French verb 'entreprendre' mean?",
-                options: ["To innovate", "To calculate risk", "To undertake or attempt", "To make profit"],
-                correct: 2,
-                difficulty: "easy",
-                rationale: "The word entrepreneur is derived from the French verb 'entreprendre', which means to undertake, to attempt, to try in hand, or to adventure."
-            },
-            {
-                text: "Which of the following is considered an 'invisible business'?",
-                options: ["A local bakery", "A hair salon", "An online e-commerce store", "A manufacturing plant"],
-                correct: 2,
-                difficulty: "easy",
-                rationale: "An invisible business is one whose activities incorporate digital technology, such as purchasing goods from an online store (e.g., Konga.com), as opposed to physical premises."
-            },
-            {
-                text: "What is the primary objective of a feasibility study?",
-                options: ["To market a new product to customers", "To determine if a business opportunity is possible, practical, and viable", "To secure a bank loan immediately", "To hire the best employees"],
-                correct: 1,
-                difficulty: "easy",
-                rationale: "A feasibility study determines whether a plan of action makes economic and operational sense, i.e., whether it is possible, practical, and viable."
-            },
-            {
-                text: "Which type of company has a name ending in 'ltd'?",
-                options: ["Public Company", "Company limited by guarantee", "Private company limited by shares", "Unlimited company"],
-                correct: 2,
-                difficulty: "easy",
-                rationale: "A private company limited by shares restricts the right to transfer shares and its name ends with 'ltd'."
-            },
-            // Medium Questions
-            {
-                text: "According to Joseph Schumpeter, what is the primary role of an entrepreneur?",
-                options: ["To organize labor and capital", "To engage in 'creative destruction' through innovation", "To simply imitate existing products", "To bear risks without innovation"],
-                correct: 1,
-                difficulty: "medium",
-                rationale: "Schumpeter asserted that the entrepreneur has a 'creative destruction' function by innovating—replacing or destroying an existing economy with a better, advanced one."
-            },
-            {
-                text: "In the history of Nigerian entrepreneurship, what disrupted the early development of modern Nigerian entrepreneurs?",
-                options: ["The discovery of oil", "The introduction of formal education and colonial trading practices", "The lack of local currency", "The failure of the agricultural sector"],
-                correct: 1,
-                difficulty: "medium",
-                rationale: "The trading practices of colonial masters (who dealt directly with producers) and the introduction of formal education (which shifted focus to civil service jobs) disrupted early entrepreneurial growth."
-            },
-            {
-                text: "Which of the following is NOT a stage in the entrepreneurial process outlined in the text?",
-                options: ["Motivational stage", "Visionary stage", "Retirement stage", "Commissioning stage"],
-                correct: 2,
-                difficulty: "medium",
-                rationale: "The 7 stages are: Motivational, Decision, Visionary, Mission, Resource Mobilization/Structuring, Commissioning, and Operational stages."
-            },
-            {
-                text: "What is the minimum share capital requirement for a Public Company in Nigeria?",
-                options: ["₦10,000", "₦100,000", "₦500,000", "₦1,000,000"],
-                correct: 2,
-                difficulty: "medium",
-                rationale: "Under CAMA, the minimum capital requirement of a public company is Five Hundred Thousand Naira (₦500,000.00)."
-            },
-            {
-                text: "Which Intellectual Property tool protects the aesthetic or ornamental aspects of an article?",
-                options: ["Patent", "Trademark", "Trade Secret", "Industrial Design"],
-                correct: 3,
-                difficulty: "medium",
-                rationale: "An Industrial design is granted for the ornamental or aesthetic aspects of an article of manufacture, making the article attractive and appealing."
-            },
-            // Hard Questions
-            {
-                text: "According to Carroll's Four Part Definition of CSR, which responsibility is considered the 'foundation upon which all others rest'?",
-                options: ["Ethical responsibility", "Legal responsibility", "Philanthropic responsibility", "Economic responsibility"],
-                correct: 3,
-                difficulty: "hard",
-                rationale: "Economic responsibilities (being profitable) form the foundation upon which legal, ethical, and philanthropic responsibilities rest in Carroll's pyramid."
-            },
-            {
-                text: "How do Carland et al. (1984) differentiate an entrepreneurial venture from a small business?",
-                options: ["Small businesses have more employees.", "Entrepreneurial ventures focus on innovation and strategic growth, while small businesses focus on personal goals and stability.", "Small businesses require venture capital.", "Entrepreneurial ventures do not engage in marketing."],
-                correct: 1,
-                difficulty: "hard",
-                rationale: "Carland et al. distinguish them by noting that entrepreneurs are characterized by innovative behavior and principal goals of profit and growth, whereas small business owners focus on personal goals and stability."
-            },
-            {
-                text: "Under Nigerian Copyright Law, what is the duration of copyright protection for literary works?",
-                options: ["Life of the author plus 50 years", "Life of the author plus 70 years", "Exactly 50 years from publication", "Exactly 70 years from publication"],
-                correct: 1,
-                difficulty: "hard",
-                rationale: "In Nigeria, copyright protection exists throughout the life of the owner plus 70 years after for all literary works."
-            },
-            {
-                text: "In McClelland's Cross Cultural Competencies, 'Proactivity' is demonstrated by:",
-                options: ["Breaking large tasks into subtasks", "Acting to build friendly relationships with customers", "Seizing unusual opportunities and taking initiative before being forced by events", "Confronting problems with others directly"],
-                correct: 2,
-                difficulty: "hard",
-                rationale: "Proactivity involves taking initiative (doing things before being asked or forced) and assertiveness (seizing opportunities)."
-            },
-            {
-                text: "Which of the following describes 'Sustaining Mastery Over a Technology' in the S-Curve of innovation?",
-                options: ["Exploring new possibilities and inventing", "Building firm foundations, improving, and augmenting an existing technology", "Experiencing diminishing returns", "A sudden technological breakthrough"],
-                correct: 1,
-                difficulty: "hard",
-                rationale: "On the S-Curve, sustaining mastery over a technology involves building firm foundations, improving, augmenting, and applying the existing technology before diminishing returns set in."
-            }
-        ];
+        // Q(topic, difficulty, question, correctAnswer, [distractors], rationale)
+        // Options are shuffled at test start, so the correct answer is always written first here.
+        const TOPICS = {
+            history: "History & Concepts of Entrepreneurship",
+            profile: "Entrepreneurial Profile, Process & Types",
+            smallbiz: "Gender & Small Business Management",
+            leadership: "Leadership, Unit Operations & Time Management",
+            creativity: "Creativity & Innovation",
+            opportunity: "Opportunities, HR & Entrepreneurial Marketing",
+            feasibility: "Feasibility Studies & Business Plans",
+            marketing: "Principles of Marketing & Market Plans",
+            networking: "Networking",
+            cases: "Case Methodology & Case Studies",
+            ip: "Intellectual Property & Technology Transfer",
+            legal: "Legal Issues, Regulation & Taxation",
+            csr: "CSR & Environmental Considerations",
+            ethics: "Business Ethics"
+        };
+
+        const questionBank = [];
+        function Q(topic, difficulty, text, answer, distractors, rationale) {
+            questionBank.push({ topic, difficulty, text, options: [answer, ...distractors], correct: 0, rationale });
+        }
+
+        // ===================== HISTORY & CONCEPTS =====================
+        Q("history", "easy", "Who first introduced the term 'entrepreneur' in the early 18th century?",
+            "Richard Cantillon", ["Adam Smith", "Joseph Schumpeter", "John Stuart Mill"],
+            "The French economist Richard Cantillon formally defined the entrepreneur as the 'agent who buys means of production at certain prices in order to combine them' into a new product.");
+        Q("history", "easy", "The word 'entrepreneur' is derived from the French verb 'entreprendre', which means:",
+            "To undertake, to attempt, to try in hand", ["To innovate and invent", "To trade and barter", "To make a profit"],
+            "'Entreprendre' means to undertake, to attempt, to try in hand, to contract for, or to adventure.");
+        Q("history", "medium", "In the Middle Ages, an entrepreneur was simply someone who:",
+            "Carried out tasks such as building and construction projects using all resources at his disposal", ["Lent money to merchants at interest", "Traded goods across national borders", "Invented new tools for farming"],
+            "The term can be traced to the Middle Ages, when the entrepreneur was someone who carried out tasks such as buildings and construction projects by applying all the resources at his disposal.");
+        Q("history", "medium", "What did J.B. Say add to Cantillon's definition of the entrepreneur?",
+            "That entrepreneurs had to be leaders who bring people together to build a single productive organism", ["That entrepreneurs must bear all the risk of the business", "That entrepreneurs must be innovators who destroy old markets", "That entrepreneurs provide capital for production"],
+            "Say added the idea of leadership: an entrepreneur brings other people together in order to build a single productive organism.");
+        Q("history", "medium", "Under what broad English term did British economists such as Adam Smith, David Ricardo and J.S. Mill refer to entrepreneurship?",
+            "Business management", ["Enterprise", "Commerce", "Risk bearing"],
+            "British economists briefly touched on entrepreneurship under the broad English term 'business management'.");
+        Q("history", "hard", "Which British economist stressed that entrepreneurship requires 'no ordinary skill' and lamented the lack of a good English word for it?",
+            "John Stuart Mill", ["Adam Smith", "David Ricardo", "Alfred Marshall"],
+            "Mill went out of his way to stress entrepreneurship's significance for growth, saying it needs 'no ordinary skill', and lamented there was no good English equivalent of the French term.");
+        Q("history", "hard", "According to the text, whose writings suggest they likely UNDERVALUED the importance of entrepreneurship?",
+            "Adam Smith and David Ricardo", ["John Stuart Mill and Alfred Marshall", "Cantillon and J.B. Say", "Schumpeter and McClelland"],
+            "The writings of Smith and Ricardo suggest they likely undervalued entrepreneurship, whereas Mill stressed its significance.");
+        Q("history", "medium", "Joseph Schumpeter described the entrepreneur's role as:",
+            "'Creative destruction' – replacing an existing economy with a better, advanced one through innovation", ["Coordinating land, labour and capital", "Bearing uncertainty in the absence of information", "Imitating products from developed countries"],
+            "Schumpeter asserted that the entrepreneur engages in 'creative destruction innovation', replacing or destroying an existing economy with a better one.");
+        Q("history", "hard", "Schumpeter (1934) credited whom with bringing the term 'entrepreneur' into general use among economists?",
+            "Mill (1848)", ["Cantillon (1730)", "Marshall (1890)", "Adam Smith (1776)"],
+            "Schumpeter credited Mill (1848) with bringing the term into general use among economists.");
+        Q("history", "medium", "At the Center for Entrepreneurial History at Harvard, Arthur H. Cole defined an entrepreneur as:",
+            "An organization builder", ["A risk bearer", "A gap-filler", "A creative imitator"],
+            "Arthur H. Cole, working at Harvard's Center for Entrepreneurial History, defined an entrepreneur as an organization builder.");
+        Q("history", "medium", "In some modern theories mentioned in the text, the concept of the entrepreneur has expanded to include:",
+            "The top tier of executives running a corporation", ["Only sole proprietors", "Government officials who regulate business", "Only founders of technology firms"],
+            "Within the last two decades the concept evolved from a single individual to an entire organization, with some theories including top-tier corporate executives.");
+        Q("history", "medium", "Which of these is cited as a historical entrepreneurship that revolutionized the food market with pre-packaged food?",
+            "Heinz", ["Coca-Cola", "McDonald's", "Ford"],
+            "Heinz is cited as the brand which brought about a revolution in the food market with pre-packaged food.");
+        Q("history", "easy", "Before the advent of money, early entrepreneurship in Nigeria started with:",
+            "Trade by barter", ["Colonial retail trade", "Commodity exports", "Cooperative societies"],
+            "Early entrepreneurship in Nigeria started with trade by barter, where producers exchanged their surpluses for what they needed.");
+        Q("history", "medium", "Modern entrepreneurship in Nigeria began when:",
+            "Colonial masters brought in goods and services and made Nigerians their middlemen", ["Nigeria gained independence in 1960", "Oil was discovered in commercial quantity", "Formal education was introduced"],
+            "Modern entrepreneurship started with the colonial masters, who made Nigerians middlemen engaged in retail trade or sole proprietorship.");
+        Q("history", "medium", "Which TWO developments disrupted early entrepreneurial development in Nigeria?",
+            "Colonial trading practices and the introduction of formal education", ["Civil war and military rule", "Oil boom and structural adjustment", "Trade by barter and lack of currency"],
+            "The trading practices of the colonial masters and the introduction of formal education disrupted the flow of entrepreneurial development.");
+        Q("history", "hard", "How did the colonial masters' trading practices harm Nigerian entrepreneurs?",
+            "They dealt directly with raw material producers and refused to use Nigerian entrepreneurs in processing raw materials", ["They imposed high taxes on all Nigerian traders", "They banned Nigerians from owning land", "They introduced a currency Nigerians could not access"],
+            "The colonialists dealt directly with producers of raw materials and refused Nigerian entrepreneurs a role in processing, which stunted their growth and skill acquisition.");
+        Q("history", "hard", "According to the text, what was the effect of formal education on Nigeria's value system?",
+            "Educated Nigerians took prestigious civil service jobs, creating dependency on colonial masters and later on government", ["It produced more industrial entrepreneurs", "It made agriculture the most respected occupation", "It encouraged Nigerians to export manufactured goods"],
+            "Formal education gave access to civil service jobs with more prestige than entrepreneurship; dependency on colonial masters shifted to government after independence.");
+        Q("history", "easy", "According to the text, who became the largest employer of labour in Nigeria?",
+            "Government at Federal, State and Local levels", ["Multinational oil companies", "The informal private sector", "Agricultural cooperatives"],
+            "The dominant public sector made government at all levels the largest employer of labour, while entrepreneurial ventures remained underdeveloped.");
+        Q("history", "hard", "Hoselitz (1952) noted that writers have identified entrepreneurship with each of the following EXCEPT:",
+            "Political lobbying", ["Uncertainty-bearing", "Coordination of productive resources", "Provision of capital"],
+            "Hoselitz listed uncertainty-bearing, coordination of productive resources, introduction of innovation, and provision of capital.");
+        Q("history", "medium", "For J.S. Mill, what differentiates entrepreneurs from managers?",
+            "Risk bearing", ["Technical skill", "Formal education", "Ownership of land"],
+            "Mill (1848) focused his definition on risk bearing as the differentiating factor between entrepreneurs and managers.");
+        Q("history", "medium", "In 'Principles of Economics' (1890), Alfred Marshall listed four factors of production. Which is the coordinating factor driven by entrepreneurship?",
+            "Organization", ["Land", "Labour", "Capital"],
+            "Marshall's four factors were land, labour, capital and organization; organization coordinates the others and entrepreneurship drives it.");
+        Q("history", "hard", "Which statement correctly reflects Marshall's view of entrepreneurial ability?",
+            "The abilities are rare and numerous, but people can be taught to acquire them", ["The abilities are common and need no training", "The abilities are purely inborn and cannot be taught", "The abilities only matter in developed economies"],
+            "Marshall said few people exhibit all the abilities to a high degree, yet implied people can be taught to acquire them.");
+        Q("history", "hard", "Which of these is NOT one of Schumpeter's three forms of entrepreneurial motivation?",
+            "The desire for job security", ["The desire to found a private kingdom or dynasty", "The will to win, fight and conquer", "The joy of creation and problem solving"],
+            "Schumpeter's second typology: desire to found a private kingdom/dynasty, the will to win, and the joy of creation and problem solving.");
+        Q("history", "hard", "Schumpeter's third typology concerns factors that inhibit entrepreneurial action. Which is NOT one of them?",
+            "Lack of bank credit", ["The new and hard-to-plan nature of the innovative task", "Inertia in the psyche – resistance to change", "Fear of social sanctioning"],
+            "The inhibitors are: the nature of the innovative task, psychological inertia, and fear of social sanctioning. Overcoming them needs strong will and 'personal weight'.");
+        Q("history", "medium", "David McClelland's research in the 1960s reported three groups of competencies common to all entrepreneurs. They are:",
+            "Proactivity, Achievement Orientation, Commitment to Others", ["Vision, Creativity, Knowledge", "Risk-taking, Innovation, Leadership", "Planning, Organizing, Controlling"],
+            "McClelland's Table 1 groups competencies into Proactivity, Achievement Orientation and Commitment to Others.");
+        Q("history", "hard", "In McClelland's competencies, 'Systematic Planning' (breaking a large task into subtasks) falls under:",
+            "Achievement Orientation", ["Proactivity", "Commitment to Others", "Assertiveness"],
+            "Achievement Orientation covers seeing opportunities, efficiency, concern for quality, systematic planning, and monitoring.");
+        Q("history", "hard", "In McClelland's table, 'confronts problems with others directly; tells others what they have to do' describes:",
+            "Assertiveness", ["Initiative", "Monitoring", "Commitment to work contract"],
+            "Assertiveness (under Proactivity) means confronting problems with others directly and telling others what to do.");
+        Q("history", "hard", "'Makes a personal sacrifice or expends extraordinary effort to complete a job' is McClelland's description of:",
+            "Commitment to work contract", ["Efficiency orientation", "Concern for high quality of work", "Initiative"],
+            "Commitment to work contract (under Commitment to Others) involves personal sacrifice and pitching in with workers.");
+        Q("history", "hard", "Gartner (1990) segmented responses on what constitutes entrepreneurship using which technique?",
+            "Delphi technique", ["Case method", "SWOT analysis", "Brainstorming"],
+            "In 'What are we talking about when we talk about Entrepreneurship?', Gartner used a Delphi technique.");
+        Q("history", "medium", "Which institution defines entrepreneurship as 'a way of thinking and acting that is opportunity obsessed, holistic in approach and leadership balanced'?",
+            "Babson College", ["Harvard Business School", "Wharton School", "MIT"],
+            "Babson College's definition (Solomon, 2008) describes entrepreneurship as opportunity obsessed, holistic and leadership balanced.");
+        Q("history", "medium", "Who described the entrepreneur as 'an innovative person who creates something unique with value added... assuming financial, psychological and social risks'?",
+            "Solomon and Winslow (1988)", ["Carland et al. (1984)", "Katz and Green (2006)", "Gartner (1990)"],
+            "This working definition comes from Solomon and Winslow (1988).");
+        Q("history", "hard", "Whereas Marshall saw entrepreneurship as the driving force behind organization, many economists today (Arnold, 1996) believe entrepreneurship is:",
+            "By itself the fourth factor of production that coordinates the other three", ["A sub-component of capital", "Irrelevant to economic growth", "Identical to management"],
+            "Many (not all) modern economists see entrepreneurship itself as the fourth factor of production.");
+        Q("history", "medium", "According to Knight, an entrepreneur will bear the risk of a new venture if:",
+            "He believes there is a significant chance for profit", ["The government guarantees the investment", "He has complete information", "There is no competition"],
+            "Knight's risk-bearer view: the entrepreneur bears risk where he believes there is a significant chance for profit.");
+        Q("history", "hard", "Mises' observation that 'any person who bears risk of losses could be called an entrepreneur' shows that:",
+            "Risk-bearing alone cannot explain why some people become entrepreneurs", ["Everyone is naturally an entrepreneur", "Risk is irrelevant to entrepreneurship", "Only investors are entrepreneurs"],
+            "The narrow risk-bearer definition is too broad; risk may be a factor, but other characteristics are needed to explain entrepreneurship.");
+        Q("history", "hard", "Kirzner describes innovation as 'undeliberate learning'. The necessary characteristic of the entrepreneur in his view is therefore:",
+            "Alertness", ["Capital", "Technical skill", "Leadership"],
+            "For Kirzner, the necessary characteristic is alertness; no intrinsic skills other than recognizing opportunities are needed.");
+        Q("history", "medium", "Leibenstein claims the dominant characteristic of entrepreneurs is that they are:",
+            "Gap-fillers", ["Risk-bearers", "Organization builders", "Creative destroyers"],
+            "Leibenstein: entrepreneurs perceive where the market fails and develop goods or processes the market demands but which are not being supplied.");
+        Q("history", "easy", "The process where entrepreneurs in developing countries imitate and adapt products invented elsewhere is called:",
+            "Creative imitation", ["Creative destruction", "Reverse engineering", "Spin-out"],
+            "Drucker (1985) called it 'creative imitation' – imitators better understand how an innovation applies in their own market niche.");
+        Q("history", "medium", "Combining the disparate theories, the text lists entrepreneurs in general as all of the following EXCEPT:",
+            "Bureaucrats", ["Risk-bearers", "Gap-fillers", "Innovators or creative imitators"],
+            "The generalized set: risk-bearers, coordinators and organizers, gap-fillers, leaders, and innovators or creative imitators.");
+        Q("history", "hard", "Entrepreneurship at the macro level of society is best described as:",
+            "An on-going process of transformation", ["A characteristic of a person", "A single business transaction", "A government policy"],
+            "At the micro level it is a characteristic of a person; at the macro level it is an on-going process of societal transformation.");
+        Q("history", "medium", "Which is NOT among the common features and functions of entrepreneurs summarized in Chapter One?",
+            "Avoidance of all failure", ["Recognition of business opportunities", "Initiating ideas and actions", "Risk taking and tolerance for failure"],
+            "The five features include risk taking AND tolerance for failure – not avoidance of failure.");
+
+        // ===================== PROFILE, PROCESS & TYPES =====================
+        Q("profile", "easy", "According to the text, are entrepreneurs born or made?",
+            "Any person can be an entrepreneur through a combination of heredity, environment, orientation, training and experience", ["Only people born into business families", "Only those with university degrees", "Only those with large inheritance"],
+            "With a combination of heredity, environment, appropriate orientation, training and experience, any person can be an entrepreneur.");
+        Q("profile", "easy", "The story of George Washington Carver is used to illustrate which entrepreneurial quality?",
+            "Vision", ["Perseverance", "Honesty", "Risk-taking"],
+            "Carver is described as 'a man of vision' who identified a problem and turned it into an opportunity.");
+        Q("profile", "medium", "How many derivative products did Carver develop from groundnuts and sweet potatoes respectively?",
+            "300 and 118", ["118 and 300", "200 and 100", "500 and 150"],
+            "Carver developed 300 derivative products from groundnuts and 118 from sweet potatoes.");
+        Q("profile", "medium", "Why did Carver introduce groundnuts and sweet potatoes to southern U.S. farmers?",
+            "Years of planting only cotton had devastated the farmland; the new crops restored soil fertility", ["Cotton prices had collapsed globally", "The government banned cotton farming", "Groundnuts were already the main cash crop"],
+            "Farmlands were devastated by mono-cropping cotton; the new crops grew well and restored soil fertility.");
+        Q("profile", "easy", "J.C. Penney's story illustrates which trait?",
+            "Perseverance and drive", ["Creativity", "Honesty and discipline", "Adaptability"],
+            "Penney is presented as 'a man of perseverance who beat the odds' despite bereavements and financial ruin.");
+        Q("profile", "medium", "How much did J.C. Penney lose in the 1929 stock market crash, and at what age did he start the climb back?",
+            "$40 million; age 56", ["$4 million; age 46", "$1 billion; age 60", "$40 million; age 36"],
+            "He lost $40 million in 1929 and restarted at the age of fifty-six; by 1951 sales surpassed $1 billion a year.");
+        Q("profile", "medium", "Ray Kroc, cited for persistence, was a kitchen wares salesman who in 1954 at age 52:",
+            "Bought out the McDonald brothers and expanded their concept nationally, creating the fast-food industry", ["Founded Coca-Cola", "Opened the first department store chain", "Invented pre-packaged food"],
+            "Kroc took the McDonald brothers' limited menu, fast service and low prices concept national.");
+        Q("profile", "easy", "'A farmer that eats his seeds for the next planting season will have no harvest' illustrates:",
+            "Willingness to defer gratification", ["Adaptability", "Independent-mindedness", "Risk-taking"],
+            "Entrepreneurs should reinvest profit rather than spend it on luxuries, otherwise there is no working capital for the next opportunity.");
+        Q("profile", "easy", "An entrepreneur who adjusts the business plan to changes in policy or availability of materials is showing:",
+            "Adaptability", ["Optimism", "Perseverance", "Goal orientation"],
+            "Adaptability: an entrepreneur should not be so rigid in following a plan if conditions change.");
+        Q("profile", "medium", "The text defines honesty in an entrepreneur as:",
+            "The ability to trust – being a person that can be relied on in actions and deeds", ["Never making a loss", "Strict obedience to employees", "Paying the lowest prices to suppliers"],
+            "Honesty is 'the ability to trust'; an entrepreneur must be reliable and must not cheat or exploit customers.");
+        Q("profile", "medium", "Why must an entrepreneur be 'independent-minded'?",
+            "To avoid dropping an idea because of others' skepticism", ["To avoid hiring employees", "To avoid paying taxes", "To avoid making a business plan"],
+            "Many people may dissuade a potential entrepreneur; those unable to decide for themselves may drop ideas others later succeed with.");
+        Q("profile", "medium", "Why are prospective entrepreneurs encouraged to seek information from research institutes?",
+            "They have human and material resources for research which an individual may lack", ["They provide free capital", "They guarantee profits", "They replace the need for creativity"],
+            "Research institutes are 'partners in progress' with resources an individual entrepreneur may not have – but they should not stop the entrepreneur's own creativity.");
+        Q("profile", "easy", "How many basic stages make up the entrepreneurial process?",
+            "Seven", ["Five", "Four", "Ten"],
+            "The seven stages: Motivational, Decision, Visionary, Mission, Resource Mobilization & Business Structuring, Commissioning, Operational.");
+        Q("profile", "medium", "At which stage does the person succumb to the urge and become determined to start a venture?",
+            "Decision stage", ["Motivational stage", "Visionary stage", "Mission stage"],
+            "The Motivational stage is when a force drives the person; the Decision stage is when they succumb to the urge.");
+        Q("profile", "hard", "Which is the FIFTH stage of the entrepreneurial process?",
+            "Resource Mobilization and Business Structuring", ["Commissioning", "Mission", "Operational"],
+            "Order: Motivational, Decision, Visionary, Mission, Resource Mobilization & Structuring (5th), Commissioning, Operational.");
+        Q("profile", "medium", "The stage where the prospective entrepreneur forms a picture of what to do and how well to do it to meet the vision is the:",
+            "Mission stage", ["Visionary stage", "Decision stage", "Commissioning stage"],
+            "Visionary = basic structure and form conceived; Mission = what to do and how well to do it to meet the vision.");
+        Q("profile", "easy", "In which stage does the business, having survived start-up hitches, go into full-blast operation?",
+            "Operational stage", ["Commissioning stage", "Decision stage", "Mission stage"],
+            "Commissioning is when the business takes off; Operational is the final full-blast stage.");
+        Q("profile", "medium", "An entrepreneur who uses proceeds from the sale of one business to start another is a:",
+            "Professional entrepreneur", ["Classical entrepreneur", "Induced entrepreneur", "First generation entrepreneur"],
+            "The Professional entrepreneur sells one business to start another and is brimming with ideas for new ventures.");
+        Q("profile", "easy", "An entrepreneur motivated by incentives, concessions and benefits offered by government is a(n):",
+            "Induced entrepreneur", ["Pure entrepreneur", "Spontaneous entrepreneur", "Motivated entrepreneur"],
+            "Induced entrepreneurs are moved by government incentives and concessions.");
+        Q("profile", "medium", "A 'born' entrepreneur with inborn traits of confidence, vision and initiative is classified as a:",
+            "Spontaneous entrepreneur", ["Pure entrepreneur", "Modern entrepreneur", "Growth entrepreneur"],
+            "Spontaneous entrepreneurs are born entrepreneurs with inborn traits of confidence, vision and initiative.");
+        Q("profile", "hard", "An entrepreneur motivated by psychological and economic rewards is classified as a:",
+            "Pure entrepreneur", ["Motivated entrepreneur", "Induced entrepreneur", "Spontaneous entrepreneur"],
+            "Pure entrepreneur: psychological and economic rewards. Motivated entrepreneur: sense of achievement and fulfilment.");
+        Q("profile", "easy", "An entrepreneur who undertakes manufacturing activities ONLY (e.g., textiles, electronics) is a(n):",
+            "Industrial entrepreneur", ["Trading entrepreneur", "Business entrepreneur", "Corporate entrepreneur"],
+            "Industrial entrepreneurs undertake manufacturing only; business entrepreneurs deal with both manufacturing and trading.");
+        Q("profile", "hard", "An entrepreneur who gives more importance to consistent returns than to growth is a(n):",
+            "Classical entrepreneur", ["Modern entrepreneur", "Super growth entrepreneur", "First generation entrepreneur"],
+            "Classical entrepreneurs value consistent returns over growth and are concerned about customer and marketing needs.");
+        Q("profile", "medium", "Classification by 'Use of Technology' includes:",
+            "Technical, Non-technical and Professional entrepreneurs", ["Pure, Induced and Motivated entrepreneurs", "Rural and Urban entrepreneurs", "Growth and Super growth entrepreneurs"],
+            "Use of Technology: Technical, Non-Technical and Professional. Pure/Induced/Motivated/Spontaneous fall under Motivation.");
+        Q("profile", "medium", "A business outfit contracts to provide security for a client but uses another outfit to carry out the service. This is:",
+            "An indirect service", ["A direct service", "Material entrepreneurship", "A trade secret"],
+            "An indirect service reaches its beneficiary through intermediaries other than the original provider. A mechanic fixing a car is a direct service.");
+        Q("profile", "medium", "Which of the following is NOT listed as a benefit of entrepreneurship?",
+            "Increased emigration of talents", ["Development of new markets", "Processing of local materials into finished goods", "Self-employment and job satisfaction"],
+            "Entrepreneurship REDUCES the emigration of talents by creating a favourable domestic entrepreneurship climate.");
+
+        // ===================== GENDER & SMALL BUSINESS =====================
+        Q("smallbiz", "medium", "Mabogunje (1989) described the vast majority of women's economic activities as 'petty', meaning:",
+            "Small-scale, small-size, low income base and low technological content", ["Illegal and informal", "Unprofitable and short-lived", "Dependent on husbands"],
+            "'Petty' here means small-scale, small-size, low income base and low technological content.");
+        Q("smallbiz", "medium", "In the case of Mrs F.G. of Ikereku, what opportunity did she recognize?",
+            "Transport problems limited farmers' production, so she chartered trucks to carry cassava to Ibadan", ["There was no cassava processing mill in Oyo State", "Farmers lacked credit, so she lent them money", "Cassava prices were higher in Lagos"],
+            "She recognized that bad roads meant farmers only planted what they could carry; her chartered trucks helped her and other farmers.");
+        Q("smallbiz", "hard", "In the case of female timber 'converters' in Edo State, which was NOT mentioned as a constraint?",
+            "Lack of capital", ["Electricity irregularity", "Equipment breakdown", "Both electricity and equipment problems were mentioned"],
+            "The major problems were electricity irregularity and equipment breakdown; lack of capital was not mentioned as a constraint.");
+        Q("smallbiz", "hard", "How many members did the Edo State 'Converters' Union' cooperative have?",
+            "55", ["25", "100", "15"],
+            "The converters formed a state-wide registered cooperative with 55 members.");
+        Q("smallbiz", "medium", "According to the text, what is the overriding factor that assists potential entrepreneurs, notwithstanding socio-economic factors?",
+            "A positive attitude", ["Access to bank loans", "Family wealth", "Government connections"],
+            "Notwithstanding socio-economic factors, a positive attitude is always the overriding factor.");
+        Q("smallbiz", "hard", "According to Table 2 (Gender and Entrepreneurship), the typical age range of female and male entrepreneurs is:",
+            "Female 28–45; Male 22–40", ["Female 22–40; Male 28–45", "Female 18–30; Male 25–50", "Both 25–45"],
+            "Table 2 lists female entrepreneurs between 28–45 and males between 22–40.");
+        Q("smallbiz", "medium", "In Table 2, women entrepreneurs' attitude towards risk is described as:",
+            "Averse to risk", ["Moderate risk takers", "High risk takers", "Indifferent to risk"],
+            "Females: averse to risk. Males: moderate risk takers.");
+        Q("smallbiz", "hard", "In the United States, the SBA generally defines a small manufacturing business as having fewer than:",
+            "500 employees", ["50 employees", "15 employees", "250 employees"],
+            "SBA: fewer than 500 employees for manufacturing and less than $7 million receipts for most non-manufacturing.");
+        Q("smallbiz", "hard", "Under Australia's Fair Work Act 2009, a small business is one with fewer than:",
+            "15 employees", ["50 employees", "200 employees", "500 employees"],
+            "Australia: fewer than 15 employees. EU: fewer than 50. US: fewer than 500 (manufacturing).");
+        Q("smallbiz", "medium", "In the European Union, a small business generally has fewer than ____ employees, and a medium business fewer than ____.",
+            "50; 250", ["15; 200", "500; 1000", "20; 100"],
+            "EU small business: fewer than 50; medium: fewer than 250.");
+        Q("smallbiz", "hard", "The Federal and State Ministries of Industries define small businesses in Nigeria by value of installed fixed capital, which currently stands at:",
+            "₦5 million (excluding building)", ["₦2 million (including building)", "₦500,000", "₦50 million"],
+            "The value moved from ₦60,000 (1972) to ₦2m (1992) and currently stands at ₦5m, excluding the building.");
+        Q("smallbiz", "hard", "Under CBN guidelines (2010), a small business must employ a full-time labour force of between:",
+            "11 and 300 employees", ["1 and 10 employees", "50 and 500 employees", "5 and 50 employees"],
+            "CBN classifies small businesses by income/asset (₦5m–₦500m in 2010) and a full-time labour force of 11 to 300.");
+        Q("smallbiz", "medium", "According to Carland et al. (1984), the critical factor distinguishing small business owners from entrepreneurs is:",
+            "Innovation", ["Number of employees", "Amount of capital", "Location of the business"],
+            "Entrepreneurs show innovative combination of resources for profit; small businesses focus on stability.");
+        Q("smallbiz", "medium", "Per Carland et al., a small business owner perceives the business as:",
+            "An extension of his or her personality, bound with family needs", ["A vehicle for rapid growth and innovation", "A short-term investment to be sold", "A government-supported enterprise"],
+            "The small business owner's business furthers personal goals and is intricately bound with family needs and desires.");
+        Q("smallbiz", "medium", "In Katz & Green's Table 4, which characteristic belongs to the HIGH GROWTH venture?",
+            "Fund with other people's money", ["Imitation", "Control as goal", "Cash flow as key"],
+            "High growth: novelty, involve key others, growth as goal, wealth, other people's money, profit as key. The rest describe conventional small business.");
+        Q("smallbiz", "medium", "According to Katz, what does a conventional small business do in a 'cash crunch'?",
+            "Tighten belt", ["See more (raise more funds)", "Sell equity to investors", "Close down"],
+            "Conventional small business: 'Cash crunch? Tighten belt.' High growth: 'Cash crunch? See more.'");
+        Q("smallbiz", "hard", "Katz suggests that small businesses at founding typically have job creation of:",
+            "Low – less than 20 jobs", ["Over 500 jobs", "Between 100 and 300 jobs", "No jobs at all"],
+            "Small business at founding: income substitution, family participation, low job creation (less than 20), high independence.");
+        Q("smallbiz", "hard", "An entrepreneurial venture, per Carland et al., is one that engages in at least one of:",
+            "Schumpeter's categories of behaviour", ["McClelland's competencies", "Carroll's responsibilities", "Drucker's sources of innovation"],
+            "An entrepreneurial venture engages in at least one of Schumpeter's categories of behaviour, with profitability and growth as goals.");
+
+        // ===================== LEADERSHIP, UNIT OPS, TIME =====================
+        Q("leadership", "easy", "In the text, leadership is defined as:",
+            "The process through which an entrepreneur influences employees to achieve the organization's objectives", ["The act of owning a business", "The ability to make profit alone", "The process of hiring staff"],
+            "Leadership is the process through which an entrepreneur is able to influence employees to achieve the objectives of the organization.");
+        Q("leadership", "medium", "According to Article 1, how do entrepreneurial leaders build trust and confidence in employees?",
+            "By showing they are fully committed to achieving the vision", ["By paying the highest salaries in the industry", "By avoiding communication", "By making all decisions secretly"],
+            "Leaders build trust by working hard, maintaining a constant message, being available, and showing full commitment to the vision.");
+        Q("leadership", "medium", "Regarding technical skills, Article 1 says a leader:",
+            "Need not have the greatest technical skills but must be savvy enough to lead the team", ["Must be the most technically skilled person", "Needs no technical knowledge at all", "Should outsource all technical decisions"],
+            "Leaders may not need the greatest technical skills in the organization, but must be savvy enough to lead.");
+        Q("leadership", "medium", "Which are the '3 Essential Leadership Qualities for Entrepreneurs' in Article 2?",
+            "Handling stress; not accepting society's definition of what is possible; understanding leverage and relationships", ["Vision, honesty, perseverance", "Planning, organizing, controlling", "Communication, delegation, discipline"],
+            "Article 2 lists ability to handle stress, refusing society's limits, and understanding leverage and relationships.");
+        Q("leadership", "medium", "According to Javitch, the number one quality of a superior leader is:",
+            "Honesty", ["Vision", "Perseverance", "Technical skill"],
+            "'The number one quality or characteristic of a superior leader is honesty.'");
+        Q("leadership", "easy", "A leader who moves around the department or plant to interact informally with employees is practising:",
+            "Management by walking around", ["Micro-management", "Delegation", "Autocratic leadership"],
+            "Managing by walking around lets leaders see progress and learn about employees' work challenges.");
+        Q("leadership", "medium", "Javitch advises that when employees ask for solutions to their problems, a good leader should:",
+            "Encourage them to think and come up with options, then discuss their merits", ["Immediately give them the answer", "Refer them to HR", "Ignore the question to build independence"],
+            "'Ask people their opinion rather than telling them yours' helps create a motivational atmosphere.");
+        Q("leadership", "medium", "In Article 4, the first of the '10 Unique Entrepreneurial Leadership Skills' is:",
+            "Putting together a committed team", ["Being prepared for the unexpected", "Motivating employees", "Identifying hindrances"],
+            "A great business idea alone won't accomplish the vision; the first skill is assembling a committed, loyal team.");
+        Q("leadership", "medium", "According to Article 4, entrepreneurs often fail with staff because they:",
+            "Assume staff understand the company's mission and vision", ["Pay staff too much", "Hire too many people", "Communicate too often"],
+            "Entrepreneurs fail miserably with staff because of the assumption that staff understand the mission and vision.");
+        Q("leadership", "easy", "A unit operation is best defined as:",
+            "A basic step in a process that has a single function", ["The entire production line of a company", "A department's annual budget", "A government regulatory unit"],
+            "A unit operation is any part of a multiple-step process which can be considered to have a single function.");
+        Q("leadership", "medium", "Why are large processes broken into unit operations?",
+            "To make them easier to analyze", ["To increase the number of employees", "To reduce taxes", "To avoid regulation"],
+            "Large processes are broken into unit operations in order to make them easier to analyze.");
+        Q("leadership", "easy", "'One man gets only a week's value out of a year while another gets a full year's value out of a week' emphasizes:",
+            "Time management", ["Leadership", "Networking", "Creativity"],
+            "Until you master time management you can never hope to be successful in entrepreneurial adventures.");
+        Q("leadership", "easy", "According to Howlett, why should you avoid multitasking?",
+            "Task switching wastes time and reduces concentration", ["It is illegal in most workplaces", "It costs more money", "It reduces sleep"],
+            "Every time you switch tasks you waste time getting back up to speed and you are not fully concentrating.");
+        Q("leadership", "medium", "Howlett's two tests to determine whether something is worth doing are:",
+            "Will this task move the business forward? Is this the best use of our time right now?", ["Is it cheap? Is it fast?", "Will customers like it? Will competitors copy it?", "Is it legal? Is it ethical?"],
+            "If you can't answer those two questions well, you are probably not using your time properly.");
+        Q("leadership", "hard", "According to Wetmore, a person working with a messy desk loses on average how much time per week?",
+            "7.5 hours (1.5 hours per day)", ["2 hours", "15 hours", "30 minutes"],
+            "Research shows about one and a half hours per day spent looking for things – seven and a half hours per week.");
+        Q("leadership", "hard", "Wetmore lists seven vital areas of life. Which is NOT one of them?",
+            "Political", ["Health", "Spiritual", "Intellectual"],
+            "The seven areas: Health, Family, Financial, Intellectual, Social, Professional and Spiritual.");
+        Q("leadership", "medium", "Wetmore's adage 'the squeaky wheel gets the grease' warns against:",
+            "Starting your day without a plan of action", ["Not taking a lunch break", "Getting too much sleep", "Working with a clean desk"],
+            "Without a plan, you spend the day responding to the loudest voice in a defensive mode.");
+        Q("leadership", "medium", "In time management, 'time vampires' are:",
+            "People who suck up your time with unscheduled, unproductive chatter", ["Tools that track time", "Employees who work night shifts", "Deadlines set by customers"],
+            "Don't be a 'Yes' man/woman; schedule meetings with an agenda instead.");
+        Q("leadership", "medium", "Studies cited in the text show that the average person can concentrate fully for about:",
+            "20 minutes", ["5 minutes", "60 minutes", "2 hours"],
+            "The average person can concentrate fully for about 20 minutes before attention starts wandering.");
+        Q("leadership", "hard", "Learning a new time management system is likened to forming a new habit, which can take up to:",
+            "12 weeks or more", ["3 days", "1 week", "1 year"],
+            "It can take up to 12 weeks or more for a new system to become second nature.");
+        Q("leadership", "hard", "What is the weakness of the 'Do the thing you fear most first' system?",
+            "Nothing may get done if the fear of the first task is very strong", ["It ignores deadlines involving other people", "It creates cluttered lists", "It is only useful for spring cleaning"],
+            "It is good for personal growth, but can mean NOTHING gets done if the fear is too strong.");
+        Q("leadership", "hard", "The 'Do it now' system is NOT useful for:",
+            "A multi-faceted life where many areas need equal attention", ["Procrastinators", "Routine tasks like filling the car", "Spring cleaning"],
+            "You may end up spending all your time on one area because you have to 'do it now'.");
+        Q("leadership", "medium", "Which basic time management system makes it difficult to estimate duration and doesn't account for interruptions?",
+            "Scheduling", ["To-do lists", "Prioritization", "Do it now"],
+            "Scheduling attaches times to tasks, which helps with meetings but ignores interruptions and delays.");
+        Q("leadership", "hard", "Charlotte Burton recommends which book as giving an overview of basic time management systems?",
+            "Get Everything Done and Still Have Time to Play – Mark Forster", ["Innovation and Entrepreneurship – Peter Drucker", "Principles of Economics – Alfred Marshall", "More than Conquerors – J. Woodbridge"],
+            "Mark Forster's book outlines the basic methods before describing a more complicated system.");
+        Q("leadership", "medium", "In the Mr Segun Adisa case, which was a time management mistake?",
+            "Letting a visitor take 2 hours and carrying Friday's records work home, then arriving late", ["Hiring competent staff for the cybercafé", "Keeping a logbook for the photocopier", "Adding a snacks bar"],
+            "He left early Friday, spent 2 hours with a visitor, worked late Monday night and arrived late on a busy Tuesday.");
+
+        // ===================== CREATIVITY & INNOVATION =====================
+        Q("creativity", "easy", "Creativity is defined as:",
+            "The ability to develop new ideas and discover new ways of looking at problems and opportunities", ["The ability to apply creative solutions to enrich people's lives", "The ability to make profit", "The ability to imitate products"],
+            "Creativity = developing new ideas; Innovation = applying creative solutions to problems and opportunities.");
+        Q("creativity", "easy", "According to Ted Levitt:",
+            "Creativity is thinking new things; innovation is doing new things", ["Creativity is doing new things; innovation is thinking new things", "Creativity and innovation are identical", "Innovation is copying; creativity is inventing"],
+            "Levitt's distinction: creativity is thinking, innovation is doing.");
+        Q("creativity", "medium", "A 'paradigm' in the context of creativity is:",
+            "A pre-conceived idea of what the world is and how it should operate", ["A tool for brainstorming", "A type of patent", "A creative breakthrough"],
+            "Paradigms become so deeply rooted that they become immovable blocks to creative thinking.");
+        Q("creativity", "medium", "Why are children described as so creative?",
+            "Society has not yet brain-washed them into conformity", ["They have more knowledge than adults", "They use the left brain more", "They have formal training in creativity"],
+            "Past experiences shape perception; children have not yet been conditioned into conformity.");
+        Q("creativity", "medium", "Who famously asserted that 'creative destruction is the essential fact about capitalism'?",
+            "Joseph Schumpeter", ["Peter Drucker", "Ted Levitt", "Eric von Hippel"],
+            "Schumpeter argued industries must incessantly revolutionize the economic structure from within.");
+        Q("creativity", "medium", "When an idea originating within an existing organization (e.g., a university) becomes a new business, it is called a:",
+            "Spin-out", ["Start-up", "Franchise", "Joint venture"],
+            "A new business arising from an idea originating within an existing organization is called a 'spin-out'.");
+        Q("creativity", "medium", "Which of these is NOT among Drucker's general sources of innovation?",
+            "Government tax waivers", ["Changes in industry and market structure", "Changes in human perception, mood and meaning", "The amount of available scientific knowledge"],
+            "Drucker's sources include structural and demographic changes, perception changes, skills, culture, scientific knowledge and ICT.");
+        Q("creativity", "hard", "MIT economist Eric von Hippel identified which source as by far the most important and critical source of innovation?",
+            "End-user innovation", ["Manufacturer innovation", "Government R&D", "University research"],
+            "End-user innovation is where an agent innovates for their own use because existing products don't meet their needs.");
+        Q("creativity", "medium", "Joseph F. Engelberger asserts that innovation requires only three things. Which is NOT one?",
+            "A large market share", ["A recognized need", "Competent people with relevant technology", "Financial support"],
+            "Engelberger's three requirements: a recognized need, competent people with relevant technology, and financial support.");
+        Q("creativity", "hard", "According to the text, radical innovations tend to emerge from ____, while incremental innovations tend to emerge from ____.",
+            "R&D; practice", ["Practice; R&D", "Customers; suppliers", "Government; universities"],
+            "Radical/revolutionary innovations tend to come from R&D; incremental ones from practice – with many exceptions.");
+        Q("creativity", "hard", "Davila et al. (2006) note that companies cannot grow through:",
+            "Cost reduction and reengineering alone", ["Innovation alone", "Marketing alone", "Hiring alone"],
+            "Innovation is the key element in providing aggressive top-line growth.");
+        Q("creativity", "medium", "On the innovation S-curve, growth in the early stage of an innovation is:",
+            "Relatively slow as the product establishes itself", ["Extremely rapid", "Negative", "Constant"],
+            "Early growth is slow; it increases as customers begin to demand the product, then levels off with diminishing returns.");
+        Q("creativity", "hard", "On the S-curve diagram, 'Pioneering Engineering & Science' involves:",
+            "Prospecting for new possibilities; exploring, evaluating, inventing", ["Building firm foundations and augmenting existing technology", "Experiencing diminishing returns", "Cutting costs on existing products"],
+            "Pioneering engineering leads to the breakthrough onto a new technology curve; sustaining mastery improves the existing one.");
+        Q("creativity", "easy", "Which hemisphere of the brain is responsible for lateral, creative thinking?",
+            "Right brain", ["Left brain", "Both equally", "Neither"],
+            "The left brain handles linear/vertical thinking, language and logic; the right brain handles lateral, intuitive, spatial thinking.");
+        Q("creativity", "medium", "The ability to create a multitude of original, diverse ideas is called ____ reasoning and is associated with the ____ brain.",
+            "Divergent; right", ["Convergent; left", "Divergent; left", "Convergent; right"],
+            "Right-brain divergent reasoning creates ideas; left-brain convergent reasoning evaluates and selects the best.");
+        Q("creativity", "hard", "Which of the following is an EXTERNAL barrier to creativity?",
+            "Pessimistic co-workers", ["Restriction by logic", "Fear of mistakes and failure", "Assuming there is only one right answer"],
+            "External barriers: rigid policies, pessimistic co-workers, unsupportive management. The others are internal, self-imposed.");
+        Q("creativity", "medium", "'There is more than one way to kill a hen' is used to illustrate which barrier to creativity?",
+            "Assumption that there can be only one right answer", ["Being too serious", "Following rules blindly", "Fear of failure"],
+            "Creative entrepreneurs must search for the other answers.");
+        Q("creativity", "medium", "According to the text, 'entrepreneurs are those who learn to fail ____'.",
+            "Intelligently", ["Rarely", "Quickly", "Publicly"],
+            "The key to creativity is to see failure as the chance to learn how to succeed.");
+        Q("creativity", "hard", "What is the correct order of the first four phases of the creative process?",
+            "Preparation, Investigation, Transformation, Incubation", ["Investigation, Preparation, Incubation, Transformation", "Preparation, Incubation, Investigation, Illumination", "Illumination, Preparation, Verification, Implementation"],
+            "The seven phases: Preparation, Investigation, Transformation, Incubation, Illumination, Verification, Implementation.");
+        Q("creativity", "easy", "The phase of the creative process where the mind takes a break and rest, sleep or a new location help is:",
+            "Incubation", ["Illumination", "Investigation", "Verification"],
+            "In incubation the mind takes a break but still revisits the issue in a relaxed manner.");
+        Q("creativity", "easy", "The 'light bulb' effect occurs during which phase?",
+            "Illumination", ["Incubation", "Transformation", "Implementation"],
+            "In illumination all previous stages come together and a spark suddenly appears.");
+        Q("creativity", "medium", "Analyzing collected data for similarities and differences and identifying combinations happens in the:",
+            "Transformation phase", ["Investigation phase", "Preparation phase", "Verification phase"],
+            "The more options generated during transformation, the more robust the creative process.");
+        Q("creativity", "medium", "Conducting a feasibility study, pilot program or prototype to validate an idea belongs to the:",
+            "Verification phase", ["Illumination phase", "Implementation phase", "Investigation phase"],
+            "A good idea must be validated as better, feasible and required before full implementation.");
+        Q("creativity", "medium", "Which is NOT a guideline for a brainstorming session?",
+            "Evaluate and criticize each idea as it is mentioned", ["Limit group to 5–8 people", "Invite people from diverse backgrounds", "Limit sessions to 40–60 minutes"],
+            "In brainstorming you do NOT evaluate ideas; throw logic out and encourage full participation.");
+        Q("creativity", "medium", "Mind mapping is described as:",
+            "An extension of brainstorming; a graphical technique with the problem at the centre", ["A step-by-step left-brained scientific method", "Building a physical model to expose flaws", "A legal tool for protecting ideas"],
+            "Mind mapping encourages thinking from both sides of the brain, with ideas connected to a central picture or word.");
+        Q("creativity", "medium", "TRIZ is an acronym for a Russian phrase meaning:",
+            "Theory of Inventive Problem Solving", ["Technique of Rapid Innovation Zones", "Total Research and Innovation Zone", "Theory of Industrial Resource Integration"],
+            "TRIZ was developed in 1946 by a young Soviet naval officer; it is a systematic, left-brained method.");
+        Q("creativity", "hard", "The TRIZ matrix helps entrepreneurs by:",
+            "Combining principles from existing patents to resolve contradictions without settling for inferior quality", ["Generating as many wild ideas as possible", "Drawing ideas around a central image", "Producing quick physical models"],
+            "TRIZ resolves contradictions in processes using principles derived from patents.");
+        Q("creativity", "easy", "Which creativity tool transforms an idea into an actual model to expose its flaws?",
+            "Rapid prototyping", ["Brainstorming", "Mind mapping", "TRIZ"],
+            "Models expose shortcomings, which are rectified until the idea is perfected; initial prototypes need not be perfect.");
+        Q("creativity", "easy", "In the examples by Temitope Oke, the manufacturers of Peak Milk innovated mainly in:",
+            "Packaging – tins and sachets of different sizes", ["Advertising on radio", "Price reduction", "Cow breeding"],
+            "West African Milk Company innovated in packaging, from tins to sachets of different sizes.");
+
+        // ===================== OPPORTUNITIES, HR, ENTREPRENEURIAL MARKETING =====================
+        Q("opportunity", "medium", "Stevenson et al. (1989) defined entrepreneurship as:",
+            "The process of creating value by bringing together a unique package of resources to exploit an opportunity", ["The process of maximizing shareholder wealth", "The act of buying and selling for profit", "The management of a small business"],
+            "This definition stresses value creation through a unique package of resources to exploit an opportunity.");
+        Q("opportunity", "medium", "According to Amit (Wharton), a very interesting business idea arises when you:",
+            "See inefficiency in the market and have the idea and resources to correct it", ["Copy a competitor exactly", "Receive a government grant", "Have plenty of free time"],
+            "An entrepreneur must identify a gap (market inefficiency), have an idea to correct it, and the resources and capability to do so.");
+        Q("opportunity", "easy", "The text identifies the most promising source of ideas for business as:",
+            "Customers – listening to customers", ["Competitors", "Government", "Banks"],
+            "Understanding the unmet needs of customers has no substitute.");
+        Q("opportunity", "medium", "The 'W questions' in customer analysis are:",
+            "Who, where, what, when", ["Why, which, whose, whom", "What, why, when, worth", "Who, why, what, wealth"],
+            "Who are my customers, what do they want, when and where do they want to buy, at what price.");
+        Q("opportunity", "medium", "Asking 'who else is supplying this market and what are they doing for customers?' is part of:",
+            "Competitor analysis", ["Customer analysis", "Industry analysis", "Financial analysis"],
+            "Competitor analysis reveals unmet needs and price/feature points for differentiation.");
+        Q("opportunity", "medium", "Asking whether an industry is growing or shrinking, supplier power and barriers to entry is part of:",
+            "Industry analysis", ["Customer analysis", "Competitor analysis", "Risk analysis"],
+            "A broader industry analysis assesses the attractiveness of the industry.");
+        Q("opportunity", "medium", "The text warns entrepreneurs against which approach?",
+            "Having an idea first and then trying to 'shove it down the distribution channel'", ["Identifying needs before designing a product", "Conducting competitor analysis", "Studying regulations"],
+            "Understand the need and tailor the product to it, rather than forcing an idea onto the market.");
+        Q("opportunity", "medium", "In the 'company bucket' of risks, the biggest source of risk is:",
+            "The founders", ["The customers", "The regulators", "The suppliers"],
+            "Do the founders have the wherewithal not just to start but also to grow the company?");
+        Q("opportunity", "hard", "The two big uncertainties in the 'market bucket' of risks are:",
+            "Customers' willingness to buy and the pace at which competitors can imitate", ["Interest rates and inflation", "Supply of raw materials and regulation", "Valuation and follow-up funding"],
+            "Entrepreneurs should create barriers to imitation so successful products are not quickly copied.");
+        Q("opportunity", "hard", "Will you be able to raise follow-up money, and at what valuation? This concern falls under which risk bucket?",
+            "Financial risk", ["Company risk", "Market risk", "Industry risk"],
+            "Financial risks include raising money early, valuation, follow-up money and whether public markets will be open.");
+        Q("opportunity", "medium", "Which is NOT one of the four categories of outsourcing human resources?",
+            "Total Quality Management (TQM)", ["Professional Employer Organization (PEO)", "Business Process Outsourcing (BPO)", "Application Service Providers (ASP)"],
+            "The four: PEO, BPO, ASP and E-services.");
+        Q("opportunity", "medium", "Which HR outsourcing arrangement makes the provider a co-employer with full legal responsibility, including final say in hiring and firing?",
+            "Professional Employer Organization (PEO)", ["Application Service Provider (ASP)", "E-services", "Business Process Outsourcing (BPO)"],
+            "A PEO takes full legal responsibility for employees and becomes a partner of the business owner.");
+        Q("opportunity", "medium", "An organization that hosts software (e.g., PeopleSoft) on the web and rents it to users is a(n):",
+            "Application Service Provider (ASP)", ["Professional Employer Organization", "Business Process Outsourcer", "Venture capitalist"],
+            "ASPs host software on the web and rent it; some host HR software for payroll and benefits.");
+        Q("opportunity", "hard", "Schuler (2006) notes that two particularly important factors in successful corporate entrepreneurship are:",
+            "Organization structure and human resource management practices", ["Capital and technology", "Marketing and sales", "Location and regulation"],
+            "By selecting appropriate structure and HR practices, HR professionals can foster innovation within organizations.");
+        Q("opportunity", "hard", "Morris et al. (2002) defined entrepreneurial marketing as 'the proactive identification and exploitation of opportunities for ____'.",
+            "Acquiring and retaining profitable customers through innovative approaches to risk management, resource leveraging and value creation", ["Maximizing advertising spend", "Reducing costs through outsourcing", "Selling existing products in new markets"],
+            "Morris et al.'s definition stresses acquiring and retaining profitable customers through innovative approaches.");
+        Q("opportunity", "hard", "According to Kotler (2003), in the first development phase of a growing organization:",
+            "Entrepreneurship is high and formalization of marketing is low", ["Entrepreneurship is low and formalization is high", "Both are high", "Both are low"],
+            "As small companies succeed, they inevitably move toward more formulated marketing.");
+        Q("opportunity", "hard", "Hills and Hultman (2006) argue that in small firms:",
+            "Marketing implementation can be more important to success than planning and strategy", ["Planning is more important than implementation", "Marketing is unnecessary", "Only large firms benefit from marketing"],
+            "This is part of why marketing in SMEs is fundamentally different and can be more successful than in large firms.");
+        Q("opportunity", "hard", "Why are smaller firms able to act on opportunities faster than larger firms (Morrish and Deacon, 2009)?",
+            "Their decision making is often ad hoc", ["They have more capital", "They face less regulation", "They have larger marketing teams"],
+            "Ad-hoc decision making allows smaller firms to act on opportunities and strategies faster.");
+
+        // ===================== FEASIBILITY & BUSINESS PLAN =====================
+        Q("feasibility", "easy", "The purpose of a feasibility study is to determine if a business opportunity is:",
+            "Possible, practical and viable", ["Popular, profitable and patented", "Cheap, quick and legal", "Large, global and innovative"],
+            "Once these three determinants are ensured, the next step is to kick-start the business.");
+        Q("feasibility", "medium", "The central question a feasibility study must answer is:",
+            "Does the idea make economic sense?", ["Who will be the CEO?", "What colour should the logo be?", "How many branches should we open?"],
+            "The main goal is to assess the economic viability of the proposed business.");
+        Q("feasibility", "medium", "If a feasibility study shows the project is NOT a sound business idea, the text advises:",
+            "The project should not be pursued – better to find out sooner than later", ["Proceed anyway and adjust later", "Hire a different consultant until results are positive", "Write a business plan to convince investors"],
+            "It is much better to find out early than after more time and money have been invested and lost.");
+        Q("feasibility", "medium", "Why should an engineering firm or equipment manufacturer NOT conduct the overall market analysis?",
+            "They may be biased towards positive results to win future contracts", ["They lack engineering knowledge", "They are too expensive", "They are not allowed by law"],
+            "An independent consultant should conduct the overall study; equipment firms only provide equipment information and costs.");
+        Q("feasibility", "medium", "The Executive Summary of a feasibility study is:",
+            "Written last but presented first, and no more than one page", ["Written first and presented last", "At least five pages long", "Optional for small businesses"],
+            "It summarizes all key sections and should work as a stand-alone document.");
+        Q("feasibility", "medium", "Distinguishing between end users and customers in a feasibility study helps you:",
+            "Establish the kind of marketing strategy to adopt later", ["Calculate taxes", "Design the company logo", "Determine the legal structure"],
+            "This distinction under 'Intended Market Environment' informs later marketing strategy.");
+        Q("feasibility", "easy", "Break-even analysis answers the question:",
+            "When will the firm begin to turn a profit?", ["Who are the competitors?", "How many staff are needed?", "What licences are required?"],
+            "Break-even analysis shows when the firm begins to turn a profit.");
+        Q("feasibility", "hard", "In feasibility study financial projections, income and cash flow projections for Year 1 are done ____ while Years 2 and 3 are done ____.",
+            "Monthly or quarterly; annually", ["Annually; monthly", "Weekly; quarterly", "Daily; monthly"],
+            "Year 1: monthly or quarterly. Years 2 and 3: annually. Balance sheet projections cover three years.");
+        Q("feasibility", "hard", "Final findings should discuss viability in all these terms EXCEPT:",
+            "Celebrity endorsement viability", ["Market viability", "Exit strategy viability", "Management model viability"],
+            "Viability areas: market, technical, business model, management model, economic and financial model, and exit strategy.");
+        Q("feasibility", "medium", "Which statement correctly distinguishes a feasibility study from a business plan?",
+            "A feasibility study is about idea viability; a business plan deals with growth and sustainability", ["A business plan is prepared before a feasibility study", "A feasibility study is mostly tactics and strategies", "They are the same document"],
+            "Feasibility studies come first and are full of calculations; business plans are mostly tactics and strategies for growth.");
+        Q("feasibility", "medium", "A feasibility study is filled with ____, while a business plan is mostly made up of ____.",
+            "Calculations, analysis and projections; tactics and strategies", ["Tactics and strategies; calculations", "Legal documents; marketing slogans", "Employee CVs; financial statements"],
+            "The business plan is the blueprint for implementation; the feasibility study is an analytical tool.");
+        Q("feasibility", "easy", "A business plan is likened to:",
+            "A road map", ["A balance sheet", "A legal contract", "A trademark"],
+            "It tells you what to expect and what alternative routes you can take to arrive at your destination.");
+        Q("feasibility", "medium", "According to Cagan (2006), the most important function of a business plan – often overlooked – is:",
+            "Planning", ["Getting bank loans", "Advertising", "Tax filing"],
+            "Most people think of a business plan for financing, but its most important function is planning.");
+        Q("feasibility", "medium", "Which is NOT one of Cagan's events that spur the need for a full-scale business plan?",
+            "Your employees go on annual leave", ["Launching a new business", "Expanding into new markets", "Thinking about buying a business"],
+            "Cagan's events: launching a new business, substantial growth, expansion, adding a product line, buying a business.");
+        Q("feasibility", "medium", "The four principles of planning state that a plan must be:",
+            "Explicit, Intelligible, Flexible, Written", ["Expensive, Long, Rigid, Secret", "Specific, Measurable, Achievable, Realistic", "Simple, Quick, Verbal, Final"],
+            "Explicit (all steps spelled out), Intelligible, Flexible, and Written.");
+        Q("feasibility", "medium", "A business plan 'reduces firefighting' because it:",
+            "Lets you anticipate problems and decide in advance how to handle them", ["Eliminates all risk", "Replaces the need for managers", "Guarantees profitability"],
+            "Many owners spend so much time 'putting out fires' that they never do anything else.");
+        Q("feasibility", "hard", "According to Kuratko and Hodgetts (1998), the business plan describes to investors and financial sources:",
+            "All of the events that are likely to affect the proposed venture", ["Only the founders' CVs", "Only the marketing slogan", "Only the tax obligations"],
+            "Details are required for projected actions with associated revenues and costs.");
+        Q("feasibility", "medium", "Under 'Business organisation' in a written plan, which item belongs to 'Form of legal organisation'?",
+            "Sole Trader, Partnership, Company or Trust", ["Licences and insurance", "Buy or rent contracts", "Advertising costs"],
+            "Form of legal organisation covers sole trader, partnership, company or trust, business name registration and organisation chart.");
+
+        // ===================== MARKETING =====================
+        Q("marketing", "medium", "Van Hook (2011) defines marketing as:",
+            "The process through which goods and services move from concept to the customer", ["Only sales and profit", "Advertising on social media", "The pricing of products"],
+            "Marketing is much more than sales and profit; it involves everything to place a product in customers' hands.");
+        Q("marketing", "medium", "The Chartered Institute (CIM, 2015) defined marketing as the management process that:",
+            "Identifies, anticipates and satisfies customer requirements profitably", ["Maximizes shareholder value", "Reduces production costs", "Controls distribution channels"],
+            "CIM: identifies, anticipates and satisfies customer requirements profitably.");
+        Q("marketing", "medium", "Kotler (1991) defined marketing as:",
+            "A social process by which individuals and groups obtain what they need through creating, offering and exchanging products of value", ["A management process for profit", "The act of advertising", "A legal framework for trade"],
+            "Kotler emphasizes marketing as a social process of exchange.");
+        Q("marketing", "hard", "Who defined the marketing plan as a written declaration identifying target markets, specifying objectives by product and containing scheduling and budget elements?",
+            "Berkowitz", ["Kotler", "Van Hook", "Drucker"],
+            "Berkowitz's definition: together these create the marketing program.");
+        Q("marketing", "medium", "What made the NIVEA FOR MEN after-shave balm stand out?",
+            "It contained zero percent alcohol, which does not irritate the skin", ["It was the cheapest on the market", "It was sold only to women", "It was made from groundnuts"],
+            "Most after-shave balms contained alcohol which irritates the skin.");
+        Q("marketing", "medium", "Why did NIVEA FOR MEN include women in its target market?",
+            "Women assist partners in product choice and buy products for them", ["Women were the main users of after-shave", "It was required by UK law", "Men refused to buy skincare"],
+            "Part of the targets included women because they help choose and buy products for their partners.");
+        Q("marketing", "easy", "NIVEA set objectives that were Specific, Measurable, Achievable, Realistic and Time-constrained. These are called:",
+            "SMART objectives", ["SWOT objectives", "PEST objectives", "TRIZ objectives"],
+            "The marketing team set up clear and relevant SMART objectives.");
+        Q("marketing", "easy", "NIVEA examined its internal strengths and weaknesses and external opportunities and threats using:",
+            "SWOT analysis", ["Break-even analysis", "Mind mapping", "PEST analysis"],
+            "SWOT analysis critically examines internal and external factors.");
+        Q("marketing", "medium", "NIVEA's market forecast covered what period?",
+            "3–5 years", ["1 year", "10–15 years", "6 months"],
+            "A 3–5 year plan; Berkowitz warns that over-extension of a marketing plan is a cause of failure.");
+        Q("marketing", "hard", "NIVEA FOR MEN UK retail sales in 2008 were nearly:",
+            "£30 million", ["£3 million", "£300 million", "£1 billion"],
+            "UK sales in 2008 were nearly £30 million, in line with expectations; international products grew by almost 20%.");
+        Q("marketing", "hard", "NIVEA FOR MEN won the Best Skincare Range in the FHM Grooming Award 2008 for the:",
+            "Fifth year running", ["First time", "Tenth year running", "Second year running"],
+            "Voted by consumers, showing an extremely positive brand image.");
+        Q("marketing", "hard", "Which is NOT one of Berkowitz's frequent reasons for failure of a marketing plan?",
+            "Using SMART objectives", ["Not taking account of external factors", "Over-extension of the marketing plan", "Non-familiarisation of each employee with the plan"],
+            "The four reasons: ignoring external factors, not monitoring client needs, over-extension, non-familiarisation of employees.");
+        Q("marketing", "medium", "Some small business owners do not have a market plan. Which reason is given in the text?",
+            "They think only big, well-established enterprises need one", ["Plans are illegal for small businesses", "Banks forbid them", "Customers dislike planned businesses"],
+            "Reasons given: size of business, time factor, and flexibility of business.");
+
+        // ===================== NETWORKING =====================
+        Q("networking", "easy", "According to the text, the key term in networking is:",
+            "Share", ["Sell", "Compete", "Advertise"],
+            "A network is only effective if parties are willing and open to share information that might benefit the other.");
+        Q("networking", "medium", "Entrepreneur.com defines networking as:",
+            "Developing and using contacts made in business for purposes beyond the reason for the initial contact", ["Connecting computers in an office", "Attending as many parties as possible", "Advertising on social media"],
+            "E.g., a sales rep asking a customer for names of others who may be interested in his product.");
+        Q("networking", "easy", "Do you need to be an extroverted person to network effectively?",
+            "No – that is a myth; being personable and a little outgoing is enough", ["Yes – only extroverts can network", "Yes – introverts should hire others to network", "No – networking requires no social skill"],
+            "The author, not an extrovert, stepped out of the comfort zone without becoming what they are not.");
+        Q("networking", "medium", "Before a networking event ends, the text recommends committing to meet at least:",
+            "3 new people", ["1 new person", "10 new people", "Everyone in the room"],
+            "Set achievable targets: at least 3 new people with meaningful conversations or exchanged cards.");
+        Q("networking", "medium", "An elevator pitch should introduce yourself, what you do and your 'ask' in about:",
+            "2–3 minutes", ["30 minutes", "10 seconds", "15 minutes"],
+            "Make it a 2–3 minute brief that is engaging and informative.");
+        Q("networking", "medium", "When the author referenced a speaker's presentation and mentioned having worked for the same company, they were establishing a:",
+            "Point of connection", ["Elevator pitch", "Business card", "Referral"],
+            "A point of connection is important when approaching someone 'cold' without introduction.");
+        Q("networking", "medium", "Why does the text advise volunteering at networking events?",
+            "It gives you a reason to talk to attendees and speakers and provides visibility", ["It earns free money", "It avoids having to speak to anyone", "It is compulsory for members"],
+            "Volunteering at hospitality or check-in gets you involved in the group's inner workings.");
+        Q("networking", "medium", "According to the text, people 'buy' based on:",
+            "Trust", ["Price only", "Advertising", "Location"],
+            "Follow up after events and build relationships, because people buy based on trust.");
+        Q("networking", "medium", "Which is given as an example of a mentorship program for networking?",
+            "WIMBIZ", ["NAFDAC", "CAC", "SON"],
+            "WIMBIZ and The Mentor Capital Network are mentorship program examples.");
+        Q("networking", "easy", "The text's final word on networking is that it is:",
+            "A continuous activity that evolves with the needs of the enterprise", ["A one-time activity at start-up", "Only for large companies", "Unnecessary once you have customers"],
+            "Networking does not end; it evolves with time and enterprise needs.");
+
+        // ===================== CASES =====================
+        Q("cases", "easy", "A business case is best defined as:",
+            "A written description of an actual business situation that provokes the reader to decide what should be done", ["A lawsuit between companies", "A financial statement", "A product sample"],
+            "Cases are organized around one or more problems or issues confronted by an organization.");
+        Q("cases", "medium", "What is the correct order of steps in the case method?",
+            "Read the situation, identify the problem, analyse it, consider alternatives, recommend action", ["Recommend action, read, analyse, identify, consider", "Identify, recommend, read, analyse, consider", "Analyse, read, recommend, identify, consider"],
+            "Students assume the role of decision maker and follow these five steps.");
+        Q("cases", "medium", "Which institution pioneered the case method in the 1920s?",
+            "Harvard Business School", ["Babson College", "Wharton School", "University of Ibadan"],
+            "HBS faculty pioneered it when designing the programme later called the MBA.");
+        Q("cases", "medium", "A case presenting a summary of decisions and actions ALREADY taken is a:",
+            "Historical case", ["Problem-oriented case", "Primary data case", "Fiction case"],
+            "A problem-oriented case presents facts about a problem currently faced by the organization.");
+        Q("cases", "medium", "A case prepared using information supplied directly by the organization concerned is a:",
+            "Primary data case", ["Secondary data case", "Historical case", "Short case"],
+            "Secondary data cases draw details from published information.");
+        Q("cases", "medium", "Where did the first Tantalizers outlet open on May 1, 1997?",
+            "Festac Town", ["Broad Street", "Ikeja", "Ibadan"],
+            "Festac (residential) in 1997, Broad Street (commercial) in 1998, Ikeja (industrial) in 1999.");
+        Q("cases", "hard", "In the First Bite case, chicken represented about what share of the cost of raw material inputs?",
+            "Close to 40%", ["About 10%", "About 75%", "Exactly 25%"],
+            "Chicken was close to 40% of raw material cost, and demand had started to outstrip supply.");
+        Q("cases", "medium", "Why did Folu and Bose Ayeni establish First Bite Limited (FBL)?",
+            "As a logistics organization to handle all material needs of Tantalizers outlets", ["To open more restaurants abroad", "To manufacture cooking equipment", "To train chefs"],
+            "Individual outlet managers sourcing materials was hurting quality control and service.");
+        Q("cases", "hard", "How many line items did Tantalizers have to keep in inventory for its outlets?",
+            "Close to 200", ["About 20", "Over 2,000", "Exactly 50"],
+            "Keeping up with close to 200 line items was 'not a mean task'.");
+        Q("cases", "hard", "In Best Oils Limited, the mechanical crushers extract at best ____ of the 50% oil content, while competitors' SEP extracts at least ____.",
+            "42%; 48%", ["48%; 42%", "30%; 50%", "45%; 49%"],
+            "Competitors' solvent extraction process is more efficient and can crush any oil-bearing seed.");
+        Q("cases", "medium", "Besides efficiency, what other advantage did Best Oils' competitors have from the Solvent Extraction Process?",
+            "They could crush any oil-bearing seed, while Best Oils was limited to palm kernel", ["They paid no taxes", "They had government subsidies", "They produced no waste"],
+            "SEP gives flexibility in raw material, easing supply problems.");
+        Q("cases", "hard", "In the Oprah Winfrey case, what share of Harpo, Inc. did president Jeff Jacobs hold?",
+            "10%", ["50%", "25%", "1%"],
+            "Jacobs held 10% and Oprah 90%; she was not willing to go public.");
+        Q("cases", "medium", "Why was Oprah reluctant to license her name?",
+            "She is not only the chief content creator but also the chief content itself", ["It was illegal under US law", "She had no trademark", "Her partners refused"],
+            "She successfully leverages herself into various entertainment categories.");
+        Q("cases", "medium", "Oprah's one criterion for choosing people to work with was:",
+            "Trust", ["Academic qualifications", "Years of experience", "Salary expectations"],
+            "Even with rapid growth, her choice of people was based on only one criterion: trust.");
+        Q("cases", "medium", "What does the Oprah case suggest distinguishes a great entrepreneur from a good one?",
+            "Spotting an idea with the right emotional and strategic fit and identifying the resources to exploit it", ["Being able to read a balance sheet", "Having the most money", "Avoiding partnerships"],
+            "Oprah admits she can't read a balance sheet but built a strong executive team around her weaknesses.");
+        Q("cases", "medium", "Amazon's 'syndicate selling' model works by:",
+            "Earning commission when sales are made from other websites via links", ["Selling only to syndicates of buyers", "Buying out competing bookstores", "Auctioning products"],
+            "Amazon became the premier bookseller on sites like AOL, Yahoo! and Excite through syndicate selling.");
+        Q("cases", "medium", "Which Amazon venture failed because it could not compete with eBay?",
+            "Amazon.com Auctions", ["Amazon Marketplace", "Amazon MP3", "Amazon Fresh"],
+            "After the auction site failed, Amazon launched zShops (1999) and Amazon Marketplace (2000).");
+        Q("cases", "medium", "In the Armstrong Electronics case, the Finance Manager boasted that he:",
+            "Cut R&D funding by 50% and had not paid suppliers for six months", ["Increased advertising budgets", "Hired more R&D staff", "Raised executive incentives"],
+            "His 'strict controls' starved R&D and led suppliers to stop supplying materials.");
+        Q("cases", "medium", "The underlying problem in Armstrong Electronics is best described as:",
+            "Poor interdepartmental relationships – each head blamed others instead of cooperating", ["Lack of physical facilities", "Too much innovation", "Excessive employee pay"],
+            "The production manager even notes they had the best physical facilities; the issue was conflict and lack of coordination.");
+
+        // ===================== IP & TECH TRANSFER =====================
+        Q("ip", "easy", "Intellectual Property is simply stated as:",
+            "The creation of the mind", ["Land and buildings", "Money and shares", "Machinery and equipment"],
+            "IP includes intangible creations of the human intellect: inventions, literary/artistic works, symbols, names and images used in commerce.");
+        Q("ip", "easy", "Intellectual Property is divided into which two categories?",
+            "Industrial Property and Copyright", ["Patents and Trademarks", "Tangible and Intangible property", "Public and Private property"],
+            "Industrial property covers patents, trademarks, industrial designs, GIs; copyright covers literary and artistic works.");
+        Q("ip", "medium", "Which British law, passed in 1623, was an early patent law?",
+            "Statute of Monopolies", ["Patents and Designs Act", "Copyright Act", "Trademarks Ordinance"],
+            "In 1623 the British Crown passed the Statute of Monopolies.");
+        Q("ip", "medium", "Although IP rights are in the US Constitution, the first US patent law was adopted in:",
+            "1790", ["1776", "1623", "1883"],
+            "The first patent law was adopted in 1790, after the Constitution was ratified.");
+        Q("ip", "medium", "The Paris Convention (1883) and the Berne Convention (1886) protect, respectively:",
+            "Industrial Property; Literary and Artistic Works", ["Literary Works; Industrial Property", "Trademarks; Patents", "Plant varieties; Software"],
+            "Both treaties are administered by the World Intellectual Property Organisation (WIPO).");
+        Q("ip", "easy", "A patent is usually granted for a period of:",
+            "20 years from the filing date", ["50 years after the inventor's death", "5 years, renewable indefinitely", "70 years from publication"],
+            "After the protection lapses, the invention enters the public domain.");
+        Q("ip", "hard", "Patent disclosures are published:",
+            "18 months after filing, or at the latest when the patent is issued", ["Immediately on filing", "Only after the patent expires", "Never – patents are secret"],
+            "Disclosure enriches the body of knowledge available in the world, stimulating further innovation.");
+        Q("ip", "medium", "The body of existing knowledge in a technical field against which novelty is judged is called:",
+            "Prior art", ["Trade secret", "Public domain", "Claims"],
+            "An invention must show novelty – something not part of the prior art – and an inventive step.");
+        Q("ip", "medium", "Which of the following is generally NOT patentable?",
+            "Mathematical methods and scientific theories", ["A new medical product", "A new technical process", "An improvement on an earlier invention"],
+            "Scientific theories, mathematical methods, plant/animal varieties, natural substances, commercial and medical treatment methods are generally not patentable.");
+        Q("ip", "medium", "The WIPO-administered treaty that allows a single international patent application with effect in many countries is the:",
+            "Patent Cooperation Treaty (PCT)", ["Berne Convention", "TRIPS Agreement", "Statute of Monopolies"],
+            "An applicant may file one PCT application and request protection in as many signatory states as needed.");
+        Q("ip", "hard", "Which regional body carries out patent examination for a group of African countries?",
+            "African Intellectual Property Organization (OAPI)", ["NOTAP", "European Patent Office", "WIPO"],
+            "Regional offices like the EPO and OAPI examine applications for groups of countries.");
+        Q("ip", "medium", "Unlike a patent, a trademark:",
+            "Can be renewed indefinitely on payment of fees", ["Lasts exactly 20 years", "Never needs to be used in commerce", "Protects inventions"],
+            "A trademark is valid only when used in commerce, and can be renewed indefinitely.");
+        Q("ip", "hard", "Industrial design protection is generally granted for ____, renewable in most cases up to ____.",
+            "5 years; 15 years", ["20 years; 40 years", "10 years; indefinitely", "1 year; 5 years"],
+            "In some countries industrial design provides protection of up to 25 years.");
+        Q("ip", "hard", "A plant patent (specific to the USA) is granted for a new plant variety that is:",
+            "Asexually reproduced (tuber-propagated plants excluded)", ["Grown from seed", "Genetically modified only", "Imported from abroad"],
+            "Sexually reproduced or tuber-propagated plants are protected via the Plant Variety Protection Office or breeders' rights.");
+        Q("ip", "easy", "'Ofada rice' and 'dodo Ikire' are examples of:",
+            "Geographical indications", ["Trademarks", "Patents", "Trade secrets"],
+            "A GI is a sign on goods with a specific geographical origin and qualities or reputation derived from that origin.");
+        Q("ip", "medium", "Which IP tool has NO limitation of time, provided the information remains secret?",
+            "Trade secret", ["Patent", "Copyright", "Industrial design"],
+            "A trade secret (e.g., a formula, customer list) lasts as long as it stays secret.");
+        Q("ip", "medium", "As a general rule, an employer (rather than the inventor) owns the patent right when:",
+            "The organization's policy says so or the employee was employed to invent or solve that problem", ["The inventor is under 30", "The invention is unprofitable", "The patent is filed abroad"],
+            "Who sponsored the research and the terms of agreement also determine ownership.");
+        Q("ip", "hard", "Under Nigerian copyright law, protection for broadcasts, cinematography and photographs lasts:",
+            "Life plus 50 years", ["Life plus 70 years", "20 years from creation", "Indefinitely"],
+            "Literary works: life plus 70 years; broadcasts, cinematography and photographs: life plus 50.");
+        Q("ip", "hard", "Under Nigerian Copyright Law, the duration of copyright protection for literary works is:",
+            "Life of the author plus 70 years", ["Life of the author plus 50 years", "Exactly 50 years from publication", "Exactly 70 years from publication"],
+            "Copyright protection exists throughout the life of the owner plus 70 years for all literary works.");
+        Q("ip", "medium", "The Nigerian Copyright Commission (NCC) operates under the supervision of the:",
+            "Federal Ministry of Justice", ["Federal Ministry of Industry, Trade and Investment", "Central Bank of Nigeria", "Federal Ministry of Education"],
+            "NCC has primary responsibility for all copyright matters and runs the Copyright Notification Scheme.");
+        Q("ip", "medium", "To qualify for copyright protection, a work must be:",
+            "Fixed and original", ["Registered and excellent", "Patented and published", "Novel and non-obvious"],
+            "Fixing means writing it down, storing, recording or sculpting it. No registration or excellence is required.");
+        Q("ip", "hard", "Patents and designs registration in Nigeria is governed by:",
+            "The Patents and Designs Act 1970", ["The Trademarks Act 1965", "CAMA 2004", "The Copyright Act Cap C28"],
+            "Administered by the Trademarks, Patents and Designs Registry, Federal Ministry of Industry, Trade and Investment.");
+        Q("ip", "hard", "Trademark registration in Nigeria is governed by:",
+            "The Trademarks Act 1965", ["The Patents and Designs Act 1970", "The Investment and Securities Act 2007", "The Industrial Development Act 2004"],
+            "The Trademarks Act 1965 (Cap 436 LFN 1990).");
+        Q("ip", "easy", "To qualify for a patent in Nigeria, an invention must be:",
+            "Novel, non-obvious and useful", ["Original, fixed and artistic", "Profitable, cheap and popular", "Registered, licensed and taxed"],
+            "Novel (did not previously exist), non-obvious (significant improvement) and useful (social or commercial value).");
+        Q("ip", "hard", "In Nigeria, an applicant dissatisfied with a decision of the patent registry can appeal to the:",
+            "Court of Appeal", ["Supreme Court directly", "Magistrate Court", "Nigerian Copyright Commission"],
+            "Applicants can appeal the patent registry's decision at the Court of Appeal.");
+        Q("ip", "medium", "Royalty, in the law of property, is a payment analogous to:",
+            "Rent, made for use of another's property", ["Tax paid to government", "Salary paid to employees", "A fine for infringement"],
+            "Royalty is paid to a writer, composer or inventor as a share of proceeds from licensed use of their work.");
+        Q("ip", "easy", "Technology transfer is defined as:",
+            "The process of developing practical applications from the results of scientific research", ["Moving machines from one factory to another", "Selling computers abroad", "Copying foreign technology illegally"],
+            "Broadly, anything that increases people's capacity to benefit economically and socially from innovation.");
+        Q("ip", "medium", "Research whose primary objective is simply to advance knowledge, often driven by curiosity, is:",
+            "Basic research", ["Applied research", "Commercial development", "Market research"],
+            "Applied research answers specific practical questions; commercial development creates a product for sale.");
+        Q("ip", "medium", "The three pillars of technology transfer are government commitment to science education and research, strong IPR protection, and:",
+            "Strong market forces", ["Foreign aid", "Military support", "High taxation"],
+            "Market-oriented policies encourage entrepreneurs to take risks and increase private investment.");
+        Q("ip", "medium", "As research moves from basic research towards product development, government's role:",
+            "Diminishes, as private investment driven by market forces becomes more efficient", ["Increases sharply", "Stays exactly the same", "Becomes the only source of funding"],
+            "Governments are key in basic and early applied research; markets take over toward commercialization.");
+        Q("ip", "hard", "In Chile, cited as an emerging economy example, about what share of scientists are formally linked to universities?",
+            "About 85%", ["About 15%", "About 50%", "About 100%"],
+            "About 85% of Chile's scientists are linked to universities, and government contributes up to 80% of R&D funds.");
+
+        // ===================== LEGAL & TAX =====================
+        Q("legal", "easy", "The basic difference between goods and services is:",
+            "Tangibility", ["Price", "Location", "Taxation"],
+            "Goods are tangible with physical dimensions; services are intangible processes.");
+        Q("legal", "medium", "Which statement about services is correct according to the text?",
+            "They are perishable and time-dependent, unlike goods which can be stored", ["They can be stored like goods", "They never involve customer interaction", "They always have physical dimensions"],
+            "Services usually involve customer interaction, so premises may need to provide privacy.");
+        Q("legal", "easy", "Tools, equipment and machinery used to produce other goods are:",
+            "Capital goods", ["Consumer goods", "Services", "Intangible assets"],
+            "Consumer goods are end products bought by consumers; capital goods produce other goods.");
+        Q("legal", "easy", "Which of the following is considered an 'invisible business'?",
+            "An online e-commerce store", ["A local bakery", "A hair salon", "A manufacturing plant"],
+            "An invisible business incorporates digital technology, e.g., Konga.com, rather than physical premises.");
+        Q("legal", "easy", "Why are sole proprietors described as 'very vulnerable'?",
+            "They are personally liable for their business debts", ["They cannot register a business name", "They cannot employ others", "They pay no taxes"],
+            "A sole proprietor's personal assets are exposed to business debts.");
+        Q("legal", "hard", "Under Section 19 CAMA, a partnership of more than 20 members must be incorporated. Which group is EXEMPT?",
+            "Legal practitioners, accountants and co-operative societies", ["Doctors and engineers", "Family businesses", "Online businesses"],
+            "Co-operative societies, legal practitioners and accountants are exempted from the mandatory incorporation requirement.");
+        Q("legal", "medium", "A company limited by guarantee:",
+            "Is suitable for non-profit objects, has no share capital, and its name ends with 'Ltd/Gty'", ["Has unlimited share capital and ends with 'plc'", "Is for profit-making trading only", "Has members personally liable for all debts"],
+            "Its income must be applied solely to its objects; members' liability is limited to their guaranteed contribution.");
+        Q("legal", "easy", "The name of an unlimited company ends with:",
+            "Unltd", ["Ltd", "Plc", "Ltd/Gty"],
+            "Members of an unlimited company are personally responsible for the company's debts.");
+        Q("legal", "medium", "A private company limits its membership to ____ (excluding employees) and has a minimum share capital of ____.",
+            "50; ₦10,000", ["20; ₦500,000", "100; ₦50,000", "1 million; ₦10,000"],
+            "A private company restricts transfer of shares and cannot invite the public to subscribe to its shares.");
+        Q("legal", "medium", "What is the minimum share capital requirement for a Public Company in Nigeria (per the text)?",
+            "₦500,000", ["₦10,000", "₦100,000", "₦1,000,000"],
+            "Under CAMA, the minimum capital of a public company is ₦500,000.");
+        Q("legal", "easy", "Which body administers the Companies and Allied Matters Act (CAMA)?",
+            "Corporate Affairs Commission (CAC)", ["Securities and Exchange Commission (SEC)", "NIPC", "Federal Inland Revenue Service"],
+            "CAC regulates formation, incorporation, management and winding up of companies, plus business names and incorporated trustees.");
+        Q("legal", "hard", "Who is accredited to transact business with the CAC in respect of Part A of CAMA (company incorporation)?",
+            "Legal practitioners, chartered accountants and chartered secretaries", ["Anyone at all", "Only bank managers", "Only government officials"],
+            "For business names and incorporated trustees (Parts B and C), anyone can transact.");
+        Q("legal", "medium", "The SEC is primarily responsible for:",
+            "Regulating the capital market to protect investors", ["Registering business names", "Standardizing product quality", "Collecting VAT"],
+            "Under the Investment and Securities Act 2007, all shares and debentures issued to the public must be registered with SEC.");
+        Q("legal", "easy", "Which agency regulates food, drugs, cosmetics and packaged water in Nigeria?",
+            "NAFDAC", ["SON", "NERC", "COSON"],
+            "NAFDAC, under the Federal Ministry of Health, safeguards public health.");
+        Q("legal", "easy", "The sole statutory body for standardizing and regulating the quality of all products in Nigeria is:",
+            "Standards Organisation of Nigeria (SON)", ["NAFDAC", "NIPC", "CAC"],
+            "SON is vested with responsibility for product standards and quality.");
+        Q("legal", "medium", "Which body evaluates and registers technology transfer agreements and promotes IP in Nigeria?",
+            "NOTAP", ["NCC", "NIPC", "SEC"],
+            "The National Office for Technology Acquisition and Promotion also assists inventors in universities and research institutes.");
+        Q("legal", "medium", "COSON is a collective management society for owners of copyright in:",
+            "Musical works and sound recordings", ["Patents and designs", "Pharmaceutical products", "Electricity distribution"],
+            "COSON fights copyright infringement and piracy in music.");
+        Q("legal", "medium", "Which is on the 'negative list' that foreigners cannot invest in under the NIPC Act?",
+            "Arms and ammunition", ["Telecommunications", "Agriculture", "Banking"],
+            "The negative list includes arms and ammunition, narcotic drugs, military/para-military accoutrement and items the FEC adds.");
+        Q("legal", "medium", "When a business is carried on jointly between Nigerians and non-Nigerians, it is good to start with a:",
+            "Joint Venture Agreement", ["Patent application", "Trade secret", "Royalty agreement"],
+            "The JV agreement may specify subscription, board composition, quorum and reserved matters.");
+        Q("legal", "easy", "Which source of capital is described as the best, if available, because there is no repayment pressure?",
+            "Personal savings", ["Bank overdraft", "Supplier credit", "Debenture"],
+            "Using own funds avoids the pressure of repayment plans.");
+        Q("legal", "medium", "Raising capital through 'suppliers and customers' (buying on credit and paying after sale) applies to:",
+            "Goods alone", ["Services alone", "Both goods and services equally", "Only government contracts"],
+            "The entrepreneur buys goods on credit and pays back once he sells them.");
+        Q("legal", "medium", "Regarding work hours, the text states that work should be for:",
+            "Six working days with one day off", ["Seven days without break", "Four days with three days off", "Five days with two days off"],
+            "The employer also owes employees a duty of care to make the work environment safe.");
+        Q("legal", "medium", "Pay As You Earn (PAYE), where tax liability rises as income rises, is an example of a ____ tax.",
+            "Progressive", ["Regressive", "Proportional", "Flat"],
+            "VAT, where all pay the same percentage, is given as an example of proportional tax.");
+        Q("legal", "hard", "The Constitution places tax collection on the concurrent list, which means:",
+            "All three tiers of government – Federal, State and Local – can make provisions for tax collection", ["Only the Federal government can collect tax", "Only states can collect tax", "Taxes are optional"],
+            "Tax administration is therefore vested in various tax authorities depending on the tax.");
+        Q("legal", "medium", "According to the text, foreign companies are liable to pay Nigerian tax on:",
+            "Only earnings accruing in Nigeria", ["Their universal (worldwide) income", "Nothing at all", "Only dividends paid abroad"],
+            "There must be a connection with Nigeria; Nigerian companies, by contrast, pay regardless of where earnings accrue.");
+        Q("legal", "medium", "Company Income Tax is charged at what rate of assessable profit?",
+            "30%", ["10%", "5%", "2%"],
+            "CIT is 30% of assessable profit, payable to the Federal Inland Revenue.");
+        Q("legal", "medium", "Capital Gains Tax is charged at:",
+            "10% of chargeable gain", ["30% of chargeable gain", "5% of sale price", "1% of profit"],
+            "CGT applies to disposals such as sale, lease, transfer, assignment and compulsory acquisition.");
+        Q("legal", "medium", "Education Tax, meant to encourage private-sector funding of education, is charged at:",
+            "2%", ["10%", "5%", "30%"],
+            "Education tax is 2%, payable to the Federal Board of Inland Revenue.");
+        Q("legal", "medium", "According to the textbook, Value Added Tax (VAT), which replaced the sales tax, is charged at:",
+            "5%", ["10%", "2%", "30%"],
+            "The textbook states VAT is 5% under the VAT Act 2004. (Note: the rate has since been raised to 7.5% in 2020 – answer per the textbook in exams.)");
+        Q("legal", "hard", "The NITDEV levy, payable by GSM, cyber, banking and insurance companies with turnover of ₦1m and above, is:",
+            "1% of profit before tax", ["10% of turnover", "5% of revenue", "2% of share capital"],
+            "The National Information Technology Development Fund levy is 1% of profit before tax.");
+        Q("legal", "medium", "Withholding tax is fixed at ____ and is regarded as:",
+            "10%; an advance payment on account of the relevant tax liability", ["5%; a fine", "30%; a capital gain", "2%; an education levy"],
+            "Individuals and organizations can demand a withholding tax credit note.");
+        Q("legal", "hard", "Customs and excise duty rates range from:",
+            "0% to 35%", ["5% to 10%", "10% to 50%", "1% to 2%"],
+            "Customs and excise duties are payable on certain imports and exports.");
+        Q("legal", "hard", "Companies with pioneer status sited in disadvantaged areas enjoy a tax-free holiday of:",
+            "Seven years", ["Five years", "Three years", "Ten years"],
+            "Pioneer status: 5 years; in disadvantaged areas: 7 years, under the Industrial Development Act 2004.");
+        Q("legal", "hard", "Companies incurring capital expenditure on plant and machinery are entitled to an investment allowance of:",
+            "10%", ["30%", "50%", "5%"],
+            "Investment allowance of 10% for capital expenditure on plant and machinery.");
+        Q("legal", "hard", "Companies whose profits are taxed under the Petroleum Profits Tax Act are:",
+            "Exempted from taxation under the Companies Income Tax Act", ["Also taxed fully under CITA", "Exempt from all taxes", "Taxed only by local governments"],
+            "This avoids double taxation of petroleum companies.");
+        Q("legal", "medium", "IPRs are described as 'negative rights' because they:",
+            "Prevent others from dealing with the work without the owner's authorisation", ["Reduce the owner's income", "Are always contested in court", "Expire immediately"],
+            "IPRs are a bundle of exclusive rights over creations of the mind.");
+        Q("legal", "medium", "Copyright protects:",
+            "The form of expression of ideas, not the ideas themselves", ["Ideas themselves", "Inventions and processes", "Business names"],
+            "Protection starts from creation; no registration is required in Nigeria.");
+
+        // ===================== CSR & ENVIRONMENT =====================
+        Q("csr", "easy", "Corporate Social Responsibility (CSR) is the idea that businesses should:",
+            "Balance profit-making activities with activities that benefit society", ["Maximize profit at all costs", "Avoid paying taxes", "Only obey the law"],
+            "CSR involves developing businesses with a positive relationship to the society in which they operate.");
+        Q("csr", "medium", "CSR refers to a code of conduct and action that is:",
+            "Beyond what is required by laws, regulations and trade rules", ["Exactly what the law requires", "Less than what the law requires", "Only required of public companies"],
+            "CSR goes beyond legal compliance – e.g., clean operations, ethics education, charity and community involvement.");
+        Q("csr", "medium", "In Carroll's Four Part Definition, which responsibilities are REQUIRED by society?",
+            "Economic and Legal", ["Ethical and Philanthropic", "Legal and Ethical", "Economic and Philanthropic"],
+            "Economic and legal are required; ethical is expected; philanthropic is desired/expected.");
+        Q("csr", "easy", "In Carroll's CSR pyramid, which responsibility is the foundation upon which all others rest?",
+            "Economic responsibility", ["Ethical responsibility", "Legal responsibility", "Philanthropic responsibility"],
+            "Being profitable is the foundation; the pyramid rises through legal, ethical, to philanthropic.");
+        Q("csr", "medium", "In Carroll's pyramid, 'Law is society's codification of right and wrong' describes:",
+            "Legal responsibilities", ["Ethical responsibilities", "Economic responsibilities", "Philanthropic responsibilities"],
+            "Legal: obey the law. Ethical: do what is right and fair and avoid harm.");
+        Q("csr", "medium", "Toms Shoes (one pair donated for every pair sold) places the company at which level of Carroll's pyramid?",
+            "Philanthropic (top)", ["Economic (base)", "Legal", "Ethical"],
+            "Giving back is the basis of the organisation, putting it at the top of the pyramid – though the giving also persuades customers to buy.");
+        Q("csr", "medium", "Which is an argument AGAINST CSR?",
+            "It dilutes the primary aim of business", ["It limits future government intervention", "It improves public image", "It adds long-run profits"],
+            "Arguments against include restricting profit maximization, higher costs, lack of public accountability and increased business power.");
+        Q("csr", "medium", "A company that meets economic AND legal responsibilities only follows which CSR strategy?",
+            "Defensive", ["Obstructionist", "Accommodative", "Proactive"],
+            "Obstructionist: economic only. Defensive: + legal. Accommodative: + ethical. Proactive: all four.");
+        Q("csr", "medium", "A company that meets economic, legal, ethical AND discretionary responsibilities follows the ____ strategy.",
+            "Proactive", ["Accommodative", "Defensive", "Obstructionist"],
+            "Proactive companies take the initiative and establish a positive model for the industry.");
+        Q("csr", "hard", "On the continuum of CSR strategies, 'Accept social responsibility in response to pressure' describes:",
+            "Accommodation", ["Reaction", "Defense", "Proaction"],
+            "Reaction: deny/ignore. Defense: put up a fight. Accommodation: accept under pressure. Proaction: take the initiative.");
+        Q("csr", "hard", "In the suggested CSR Evaluation Framework, PEST analysis, SWOT analysis and missions definition feed into which stage?",
+            "CSR Analysis", ["CSR Execution", "CSR Evaluation", "Feedback"],
+            "Execution uses activity area classification and action planning; Evaluation uses multicriteria analysis.");
+        Q("csr", "medium", "Business environment is the combination of internal and external factors. Which is an INTERNAL factor?",
+            "Value system", ["Competitors", "Political factors", "Suppliers"],
+            "Internal factors include value system, mission and objectives, organizational structure, corporate culture and financial factors.");
+        Q("csr", "medium", "Suppliers, competitors and marketing intermediaries belong to the:",
+            "Micro environment", ["Macro environment", "Internal environment", "Value system"],
+            "The macro environment includes economic, social, political, technological, global and demographic factors.");
+        Q("csr", "medium", "Political stability determining trade stability is an example of a ____ factor in the ____ environment.",
+            "Political; macro", ["Social; micro", "Economic; internal", "Political; internal"],
+            "Macro factors are often regarded as uncontrollable by the firm.");
+        Q("csr", "medium", "Which of these is one of the four environmental considerations for business in the text?",
+            "Adapting to climate change, e.g., virtual conferencing to reduce trips", ["Increasing paper usage", "Expanding car fleets", "Ignoring water usage"],
+            "The four: employee engagement, cost savings vs expenses (LED bulbs), climate adaptation, and water conservation.");
+        Q("csr", "easy", "Smart irrigation controllers differ from traditional ones because they:",
+            "Monitor weather, soil, evaporation and plant water use to adjust watering automatically", ["Water on a fixed timer only", "Use more water", "Require manual operation"],
+            "Smart irrigation saves water by irrigating only where and when needed.");
+        Q("csr", "hard", "The Age Discrimination in Employment Act, cited under responsibilities to employees, protects workers aged:",
+            "40 or older", ["18 or younger", "60 or older", "25 to 35"],
+            "The Act (cited as 1968) protects workers aged 40 or older.");
+        Q("csr", "easy", "Which consumer right means consumers can express legitimate complaints to the appropriate parties?",
+            "The right to be heard", ["The right to be safe", "The right to choose", "The right to be informed"],
+            "Avoiding misleading advertising relates to the right to be informed.");
+
+        // ===================== ETHICS =====================
+        Q("ethics", "easy", "In its strict economic sense, business is:",
+            "Any economic activity producing or delivering goods and services to generate profit within law and morality", ["Anything a person is interested in", "Any government service", "Charitable giving"],
+            "Its hallmark is production and distribution for the primary purpose of making profit.");
+        Q("ethics", "medium", "Why are philanthropic (non-profit) organizations NOT businesses in the strict sense?",
+            "They do not produce goods or services with the objective of making profit", ["They do not employ people", "They are not registered", "They do not pay taxes"],
+            "Without a profit objective, an organization is not a business in the strict economic sense.");
+        Q("ethics", "hard", "In determining morally acceptable business decisions, which TWO issues are carefully considered?",
+            "Profit (for survival) and balancing business needs with the general needs of society", ["Taxes and tariffs", "Employee age and gender", "Location and advertising"],
+            "This frequently requires trade-offs or compromises.");
+        Q("ethics", "medium", "Which global event is cited as evidence that business malpractices can inflict great harm?",
+            "The global economic crisis that started around 2007", ["The 1929 stock market crash", "World War II", "The dot-com boom of 1999"],
+            "Unethical business conduct has a very high cost and grievous effects on society.");
+        Q("ethics", "medium", "Why is being a good person not always enough to handle ethical issues in business?",
+            "Some moral issues in business (e.g., industrial impact on environment) don't arise in personal life and need special consideration", ["Business has no moral issues", "Good people make poor managers", "Ethics is illegal in business"],
+            "Ordinary moral values from family, religion or school may be insufficient for specific business decisions.");
+        Q("ethics", "medium", "Fairness is defined in the text as the moral virtue of being:",
+            "Just, impartial and equitable in dealings with others", ["Truthful and trustworthy", "Profitable and efficient", "Generous and charitable"],
+            "Honesty is being truthful and trustworthy; fairness is being just, impartial and equitable.");
+        Q("ethics", "easy", "A car company claiming its brand is superior to all competitors without proof is an example of:",
+            "Exaggerated claims – deceptive communication", ["Honest advertising", "Trade secret", "Corporate philanthropy"],
+            "Deceptive communication includes exaggerated claims, concealment of information and outright lying.");
+        Q("ethics", "medium", "An employee being pressured to choose between personal ethical values and the organization's values is facing:",
+            "A conflict of interest", ["A trade secret", "A royalty dispute", "A geographical indication"],
+            "E.g., whether the business should bribe an official to influence legislation.");
+        Q("ethics", "medium", "Profit is justified as the reward for intangible factors crucial to business. Which is NOT one of them?",
+            "Workers' wages", ["Risk", "Entrepreneurial creativity and initiative", "Deferment of the use of one's resources"],
+            "Wages are a tangible, quantifiable cost. Profit is what is left after all tangible costs are paid.");
+        Q("ethics", "medium", "Why is a surplus from lottery winnings or fraud NOT correctly construed as profit?",
+            "Profit must be earned from legitimate business activities in a fair and reasonable way", ["Because it is too small", "Because it is not taxed", "Because it is earned by individuals"],
+            "Profit is the surplus or gain from legitimate business activities.");
+        Q("ethics", "hard", "The argument 'How can our business be doing so well if it is not good?' commits the fallacy of:",
+            "Circularity – it presupposes the claim that needs justification", ["Appeal to authority", "False dilemma", "Hasty generalization"],
+            "Recording profit is assumed to prove profit is justified, which is circular.");
+        Q("ethics", "hard", "Why does justifying profit as an innate, universal human desire fail?",
+            "Morality requires that innate drives sometimes be suppressed or transcended", ["Not all humans desire more", "Innate drives are illegal", "Profit is not a desire"],
+            "Being innate does not place something beyond ethical scrutiny.");
+        Q("ethics", "hard", "What is a problem with justifying profit by 'what the market can bear'?",
+            "In situations like scarcity, customers may have no choice but to pay excessively high prices", ["Markets never set prices", "Customers always pay too little", "It makes profit illegal"],
+            "Paying does not prove the price is reasonable when customers lack alternatives.");
+        Q("ethics", "medium", "Milton Friedman's famous 1970 article was titled:",
+            "The Social Responsibility of Business is to Increase its Profits", ["The Pyramid of Corporate Social Responsibility", "The Corporation as a Moral Person", "Creative Destruction and Capitalism"],
+            "Friedman was perhaps the most ardent critic of the idea that corporations have social responsibilities.");
+        Q("ethics", "hard", "Which is NOT one of Friedman's premises against corporate social responsibility?",
+            "Corporations are moral persons responsible for social welfare", ["Only humans have moral responsibility", "Managers' only responsibility within the law is to make profit", "Social problems are the proper concern of the state"],
+            "Friedman argued the opposite: corporations, not being humans, have no moral responsibility as autonomous entities.");
+        Q("ethics", "hard", "Friedman argued that managers pursuing social goals with company funds amounts to:",
+            "A betrayal of their responsibility and a form of theft from shareholders' money", ["Good corporate citizenship", "A legal requirement", "Tax avoidance"],
+            "Managers are employed to make profit for shareholders, not elected to set social goals.");
+        Q("ethics", "medium", "Which is a reason given for why corporations SHOULD take on social responsibility?",
+            "Socially responsible businesses attract more customers and better employees", ["It removes the need for profit", "It guarantees government contracts", "It eliminates competition"],
+            "Other reasons: reduced government legislation, resolving problems they cause, and their great resources and influence.");
+        Q("ethics", "hard", "Critics say CSR done out of 'enlightened self-interest' is just profit-seeking. The text responds that what really matters is:",
+            "The motivation behind the act – if social responsibility is the main motive, resulting profit is a happy coincidence", ["Whether the act is legal", "Whether profit increases", "Whether the media reports it"],
+            "The key question is whether profit or social responsibility is the main motivation.");
+        Q("ethics", "easy", "The Greek word 'philanthropy' means:",
+            "Love of fellow humans", ["Love of money", "Love of wisdom", "Love of work"],
+            "Philanthropic responsibility includes donations, supporting schools, sponsoring events and building facilities.");
+        Q("ethics", "medium", "In Carroll's model, which category of responsibility appears to be the LEAST important?",
+            "Philanthropic", ["Economic", "Legal", "Ethical"],
+            "Philanthropic responsibilities are desired of corporations but not required.");
+        Q("ethics", "hard", "A key limitation of Carroll's four-part model, according to the text, is that it:",
+            "Does not specify how conflicts between the responsibilities should be resolved", ["Ignores profit entirely", "Has only two levels", "Applies only to non-profit organizations"],
+            "E.g., what to do when efficiency and profitability conflict with providing secure jobs.");
+        Q("ethics", "medium", "Employees in tobacco or alcohol companies may continue working there despite ethical doubts because:",
+            "There are no alternatives or the jobs pay well", ["The law forces them to", "The products are healthy", "They own the companies"],
+            "This illustrates conflict between personal moral standpoints and business tasks.");
 
         // Application State
         let state = {
@@ -199,9 +1112,20 @@
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Number of Questions</label>
                             <select id="numQuestions" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
-                                <option value="5">5 Questions</option>
-                                <option value="10" selected>10 Questions</option>
-                                <option value="15">15 Questions</option>
+                                <option value="10">10 Questions</option>
+                                <option value="20">20 Questions</option>
+                                <option value="40" selected>40 Questions</option>
+                                <option value="60">60 Questions (Exam Length)</option>
+                                <option value="100">100 Questions</option>
+                                <option value="0">All Questions (${questionBank.length})</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Topic</label>
+                            <select id="topic" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
+                                <option value="all" selected>All Topics</option>
+                                ${Object.entries(TOPICS).map(([key, name]) => `<option value="${key}">${name} (${questionBank.filter(q => q.topic === key).length})</option>`).join('')}
                             </select>
                         </div>
 
@@ -218,10 +1142,13 @@
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Time Limit</label>
                             <select id="timeLimit" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
-                                <option value="1">1 Minute (Quick Drill)</option>
-                                <option value="5" selected>5 Minutes</option>
+                                <option value="auto" selected>Exam Pace (45 seconds per question)</option>
                                 <option value="10">10 Minutes</option>
-                                <option value="15">15 Minutes</option>
+                                <option value="20">20 Minutes</option>
+                                <option value="30">30 Minutes</option>
+                                <option value="45">45 Minutes</option>
+                                <option value="60">60 Minutes</option>
+                                <option value="120">2 Hours</option>
                             </select>
                         </div>
 
@@ -276,6 +1203,7 @@
 
                 <!-- Scrollable Question Area -->
                 <div class="flex-grow px-5 sm:px-8 py-6 overflow-y-auto no-scrollbar pb-24 sm:pb-8 fade-in">
+                    <p class="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-2">${TOPICS[question.topic]}</p>
                     <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-6 sm:mb-8 leading-relaxed">
                         ${question.text}
                     </h3>
@@ -335,6 +1263,21 @@
                         </button>
                     </div>
                     
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4 border-b pb-3 pl-1">Score by Topic</h3>
+                    <div class="space-y-2 mb-8">
+                        ${Object.entries(TOPICS).map(([key, name]) => {
+                            const qs = state.questions.map((q, i) => ({ q, i })).filter(x => x.q.topic === key);
+                            if (qs.length === 0) return '';
+                            const right = qs.filter(x => state.answers[x.i] === x.q.correct).length;
+                            const pct = Math.round(right / qs.length * 100);
+                            const bar = pct >= 70 ? 'bg-green-500' : pct >= 50 ? 'bg-yellow-400' : 'bg-red-500';
+                            return `<div class="text-sm">
+                                <div class="flex justify-between mb-1"><span class="text-gray-700 pr-2">${name}</span><span class="font-semibold text-gray-800 shrink-0">${right}/${qs.length}</span></div>
+                                <div class="w-full bg-gray-200 rounded-full h-2"><div class="${bar} h-2 rounded-full" style="width:${pct}%"></div></div>
+                            </div>`;
+                        }).join('')}
+                    </div>
+
                     <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-5 border-b pb-3 pl-1">Informed Review</h3>
                     <div class="space-y-5 sm:space-y-6">
             `;
@@ -395,23 +1338,30 @@
         function startTest() {
             const numQ = parseInt(document.getElementById('numQuestions').value);
             const diff = document.getElementById('difficulty').value;
-            const timeLimitMins = parseInt(document.getElementById('timeLimit').value);
+            const topic = document.getElementById('topic').value;
+            const timeChoice = document.getElementById('timeLimit').value;
 
             // Filter questions
-            let filteredQuestions = questionBank;
-            if (diff !== 'mixed') {
-                filteredQuestions = questionBank.filter(q => q.difficulty === diff);
+            let filteredQuestions = questionBank.filter(q =>
+                (diff === 'mixed' || q.difficulty === diff) && (topic === 'all' || q.topic === topic));
+            if (filteredQuestions.length === 0) {
+                alert("No questions match that topic and difficulty. Try 'Mixed' difficulty.");
+                return;
             }
 
-            // Shuffle and slice
+            // Shuffle questions, take the requested count, then shuffle each question's options
             filteredQuestions = shuffleArray([...filteredQuestions]);
-            const selectedQuestions = filteredQuestions.slice(0, Math.min(numQ, filteredQuestions.length));
+            const count = numQ === 0 ? filteredQuestions.length : Math.min(numQ, filteredQuestions.length);
+            const selectedQuestions = filteredQuestions.slice(0, count).map(q => {
+                const order = shuffleArray(q.options.map((_, i) => i));
+                return { ...q, options: order.map(i => q.options[i]), correct: order.indexOf(q.correct) };
+            });
 
             // Setup state
             state.questions = selectedQuestions;
             state.currentQuestionIndex = 0;
             state.answers = {};
-            state.timeLimit = timeLimitMins * 60;
+            state.timeLimit = timeChoice === 'auto' ? Math.max(60, count * 45) : parseInt(timeChoice) * 60;
             state.timeRemaining = state.timeLimit;
             
             // Start Timer
