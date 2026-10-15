@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GES 104: Science, Industry and Mankind Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            -webkit-tap-highlight-color: transparent; /* Removes tap highlight on mobile */
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .option-label {
+            transition: all 0.2s;
+        }
+        .option-radio:checked + .option-label {
+            background-color: #e0e7ff;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+        /* Custom scrollbar only for desktop */
+        @media (min-width: 640px) {
+            ::-webkit-scrollbar { width: 8px; }
+            ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+            ::-webkit-scrollbar-thumb { background: #c7c7cc; border-radius: 4px; }
+            ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+        }
+        /* Hide scrollbar for clean mobile sticky header/footer */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<!-- pb-20 keeps a strip clear at the bottom for the Netlify badge -->
+<body class="min-h-screen pb-20 text-gray-800 sm:flex sm:items-center sm:justify-center sm:px-4 sm:pt-4 bg-gray-100 sm:bg-gradient-to-br sm:from-blue-50 sm:to-indigo-100">
+
+    <!-- Mobile: Full height, Desktop: Rounded card -->
+    <div id="app" class="w-full max-w-3xl bg-white sm:shadow-2xl sm:rounded-2xl overflow-hidden h-[calc(100dvh-5rem)] sm:h-auto sm:max-h-[calc(100dvh-6rem)] flex flex-col relative fade-in">
+        
+        <!-- Header -->
+        <div class="bg-indigo-600 text-white px-4 py-5 sm:p-6 text-center shrink-0 z-30 shadow-md">
+            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight"><i class="fa-solid fa-graduation-cap mr-2"></i> GES 104</h1>
+            <p class="text-indigo-100 mt-1 text-sm sm:text-base font-medium">Science, Industry and Mankind</p>
+        </div>
+
+        <!-- Dynamic Content Container -->
+        <div id="content" class="flex-grow min-h-0 flex flex-col bg-white">
+            <!-- Content will be injected by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Question Bank derived from GES 104 materials (GES 104 Original, Science and Mankind e-module, GES 104 Summary)
+        // Q(topic, difficulty, question, correctAnswer, [distractors], rationale)
+        // Options are shuffled at test start, so the correct answer is always written first here.
+        const TOPICS = {
+            origin: "Man: Origin, Nature & Cosmic Environment",
+            method: "Science, Scientific Method & Philosophy of Science",
+            history: "History of Science & Origin of the Universe",
+            physics: "Physics, Space Exploration & Exploitation",
+            chemistry: "Chemistry & Industry",
+            maths: "Mathematics, Statistics & Computing",
+            biology: "The Cell, Ecosystem & Conservation",
+            zoology: "Zoology in Food Production & Pest Control",
+            geology: "Geology & the Environment of Man",
+            tech: "Technology, Natural Resources & Energy",
+            hazards: "Hazards, Pollution & Plastics",
+            hiv: "HIV/AIDS"
+        };
+
+        const questionBank = [];
+        function Q(topic, difficulty, text, answer, distractors, rationale) {
+            questionBank.push({ topic, difficulty, text, options: [answer, ...distractors], correct: 0, rationale });
+        }
+
+        // ===================== MAN: ORIGIN & NATURE =====================
+        Q("origin", "easy", "'Man know thyself' is described in the text as an ancient:",
+            "Greek aphorism", ["Roman law", "Egyptian proverb", "Hebrew commandment"],
+            "An aphorism is an original thought, spoken or written in memorable form; this one explains man's quest for knowledge.");
+        Q("origin", "easy", "Which of these is NOT one of the three postulations on the origin of man discussed?",
+            "The theory of spontaneous generation", ["Creation of the world and mankind by God", "The theory of natural selection (evolution)", "The theory of creationism"],
+            "The three postulations are creation by God, natural selection (evolution) and creationism.");
+        Q("origin", "easy", "According to the creation account, man was created to be tripartite, consisting of:",
+            "Spirit, soul and body", ["Mind, will and emotions", "Flesh, blood and bone", "Reason, faith and love"],
+            "Man is spirit, soul and body; the soul in turn consists of mind, will and emotions.");
+        Q("origin", "medium", "The soul of man consists of:",
+            "Mind, will and emotions", ["Spirit, soul and body", "Heart, lungs and brain", "Love, wisdom and glory"],
+            "He understands with his mind and receives love and wisdom through his emotions and will.");
+        Q("origin", "medium", "In the creation account, man's WILL is described as the receptacle of:",
+            "Love", ["Wisdom", "Fear", "Knowledge"],
+            "The will is the receptacle of love (free decisions); the understanding (mind) is the receptacle of wisdom.");
+        Q("origin", "medium", "Man's 'danger', according to the text, was believing that:",
+            "He really had life in himself instead of being merely a recipient of life", ["He was created by evolution", "He had no free will", "The earth was flat"],
+            "This error led to self-love, a decline from the image of God into the 'image of hell or self-love'.");
+        Q("origin", "medium", "The theory of natural selection is associated with:",
+            "Charles Darwin", ["Philip Henry Gosse", "William Paley", "Carolus Linnaeus"],
+            "Darwin's evolutionary selection was strongly opposed because it conflicted with the religious creation story.");
+        Q("origin", "medium", "The text describes creationism and evolution as:",
+            "Not a dichotomy but ends of a continuum", ["Identical theories", "Completely unrelated ideas", "Both rejected by science"],
+            "Many intermediate positions (e.g. day-age, theistic evolution) lie between the two ends.");
+        Q("origin", "easy", "Creationism is subdivided into:",
+            "Christian and non-Christian creationists", ["Old and new creationists", "Eastern and Western creationists", "Scientific and religious creationists"],
+            "Christian creationists include flat earthers, geocentrists and young-earth creationists; non-Christian include Raelians, panspermia and Vedic creationism.");
+        Q("origin", "easy", "'Flat earthers' believe the earth is flat and covered by:",
+            "A solid dome or firmament", ["A sea of fire", "An ozone shell", "Nothing at all"],
+            "They hold that waters above the firmament caused Noah's flood.");
+        Q("origin", "medium", "Geocentrists accept a spherical earth but deny that:",
+            "The sun is the centre of the solar system or that the earth moves", ["God created the world", "Noah's flood occurred", "The earth is old"],
+            "Geocentrism keeps the earth at the centre and stationary.");
+        Q("origin", "medium", "Young-Earth Creationists (YEC) believe the earth is about:",
+            "6,000 – 10,000 years old", ["4.5 billion years old", "15 billion years old", "1 million years old"],
+            "YEC is based on a literal reading of the Bible, with a six-day creation; it is probably the most influential brand of creationism today.");
+        Q("origin", "hard", "Which brand of creationism popularized the modern movement of 'scientific creationism'?",
+            "Young-Earth Creationism", ["Gap Creationism", "Omphalos", "Day-Age Creationism"],
+            "YEC accepts a spherical earth and heliocentric solar system but interprets geology in terms of Noah's flood.");
+        Q("origin", "medium", "The 'Omphalos' idea, that the universe was created young but with the appearance of age, first appeared in a book by:",
+            "Philip Henry Gosse (1857)", ["William Paley (1803)", "Charles Darwin (1859)", "John Locke (1690)"],
+            "Omphalos holds that even earth's original soils were created looking old.");
+        Q("origin", "hard", "Gap (Restitution) Creationism holds that:",
+            "There was a long time gap between Genesis 1:1 and Genesis 1:2, after which God recreated the world in six days", ["Each day of creation was millions of years long", "God creates through evolution", "Life was brought by aliens"],
+            "Gap creationism places a long temporal gap before a six-day recreation.");
+        Q("origin", "medium", "Day-Age Creationism interprets each 'day' of creation as:",
+            "A long period, even thousands or millions of years", ["A literal 24-hour day", "One thousand years exactly", "A symbolic moral lesson only"],
+            "It sees a parallel between the creation story and the order accepted by mainstream science.");
+        Q("origin", "hard", "The most common old-earth creationist view today, which sees the Big Bang as evidence of God's creative power, is:",
+            "Progressive Creationism", ["Gap Creationism", "Omphalos", "Raelianism"],
+            "Progressive creationism rejects much of modern biology, holding that newer kinds were specially created.");
+        Q("origin", "hard", "Intelligent Design Creationism descends from whose argument (1803) that God's design can be seen in life?",
+            "Paley", ["Gosse", "Darwin", "Kant"],
+            "Today ID is used as an umbrella for the anti-evolution position.");
+        Q("origin", "hard", "Evolutionary Creationism differs from theistic evolution only in its:",
+            "Theology, not its science", ["Science, not its theology", "Age of the earth", "View of Noah's flood"],
+            "It holds that Adam was not the first biological human but the first spiritually aware one.");
+        Q("origin", "medium", "Theistic evolution holds that:",
+            "God creates through evolution", ["The supernatural does not exist", "The earth is flat", "Life came from other planets"],
+            "It accepts most of modern science but invokes God for things like the creation of the human soul; it is promoted by the Pope.");
+        Q("origin", "hard", "Philosophical Materialistic Evolution holds that:",
+            "The supernatural does not exist", ["God actively guides evolution", "The supernatural is neither affirmed nor denied", "Evolution was driven by catastrophes"],
+            "Methodological materialism says nothing about the supernatural; philosophical materialism denies it.");
+        Q("origin", "medium", "Which group believes life was created by scientists from another planet who were mistaken for gods?",
+            "Raelians", ["Panspermia theorists", "Vedic creationists", "Geocentrists"],
+            "Raelians say these scientists continue to visit the earth.");
+        Q("origin", "medium", "Panspermia holds that:",
+            "Primitive life (bacteria/microbes) was carried to earth from other star systems", ["Evolution happened suddenly through catastrophes", "Modern humans have existed for billions of years", "Giants and megafauna once co-existed"],
+            "Other life then evolved from these microbes.");
+        Q("origin", "hard", "Vedic creationism (from Hinduism) claims that:",
+            "Anatomically modern humans have existed for billions of years", ["The earth is 6,000 years old", "Life came from aliens", "People shrank after a golden age"],
+            "Hinduism speaks of a very old earth.");
+        Q("origin", "hard", "Which creationist view says people and animals shrank in stature after a golden age ended with fire from volcanism?",
+            "American-Indian creationism", ["Catastrophic evolution", "Vedic creationism", "Omphalos"],
+            "It also holds that originally there was no essential difference between animals and people.");
+        Q("origin", "easy", "The cosmic environment is made up of the geosphere, hydrosphere, atmosphere and:",
+            "Biosphere", ["Ionosphere", "Exosphere", "Stratosphere"],
+            "Geosphere (earth crust), hydrosphere (water), atmosphere (air), biosphere (living organisms).");
+        Q("origin", "medium", "The two global problems named as resulting from human exploitation of the earth are:",
+            "Climate change and ozone layer depletion", ["Earthquakes and volcanoes", "Floods and droughts", "Tsunamis and tides"],
+            "Disturbing the carbon cycle raises earth's temperature; ozone-depleting substances create a hole in the ozone layer.");
+        Q("origin", "easy", "The ozone layer protects the earth from:",
+            "Cancer-causing ultraviolet rays from the sun", ["Meteorites", "Acid rain", "Cosmic dust"],
+            "ODS (ozone-depleting substances) create holes in this protective layer.");
+        Q("origin", "medium", "Polylactides are:",
+            "Biodegradable plastics produced from lactic acid", ["Fossil fuels", "Nanoparticles in sunscreen", "Ozone-depleting gases"],
+            "The lactic acid is obtained from fermentation of corn, a biotechnology concept.");
+        Q("origin", "medium", "The use of biotechnology to treat waste through bioremediation is called:",
+            "Environmental biotechnology", ["Nanotechnology", "Sericulture", "Genetic engineering"],
+            "Biotechnology is also used for biofuels such as bioethanol and biodiesel.");
+        Q("origin", "easy", "The word 'nano' comes from the Greek 'nanos', meaning:",
+            "Dwarf", ["Tiny atom", "Invisible", "Fast"],
+            "Nanotechnology uses bottom-up and top-down approaches.");
+        Q("origin", "medium", "Which nanoparticle is used in antimicrobial bandages?",
+            "Silver", ["Zinc oxide", "Aluminium silicate", "Titanium oxide"],
+            "Sunscreen uses zinc or titanium oxide; scratch-resistant coatings use aluminium silicate.");
+        Q("origin", "hard", "Self-cleaning glass made with nanotechnology is described as photocatalytic and:",
+            "Hydrophilic – water spreads evenly across it, helping wash it clean", ["Hydrophobic – water forms beads", "Magnetic", "Radioactive"],
+            "Hydrophilic glass lets water spread evenly over its surface.");
+        Q("origin", "easy", "COMSAT stands for:",
+            "Communication Satellite", ["Computer Satellite", "Commercial Satellite", "Combined Space Technology"],
+            "Science and technology created a revolution in space through satellite and communication technology.");
+
+        // ===================== SCIENCE, METHOD & PHILOSOPHY =====================
+        Q("method", "easy", "The word 'science' comes from the Latin word 'scientia', which means:",
+            "Knowledge", ["Experiment", "Nature", "Wisdom"],
+            "The German 'Wissenschaft' means systematic investigation of objectively verifiable material phenomena.");
+        Q("method", "easy", "The two broad classes of science are:",
+            "Natural sciences and formal sciences", ["Pure and applied sciences only", "Physics and chemistry", "Ancient and modern sciences"],
+            "Natural sciences study material beings; formal sciences (mathematics, sometimes logic) exist only in the mind.");
+        Q("method", "medium", "Geology, geography and archaeology are classified as:",
+            "Earth sciences", ["Physical sciences", "Biological sciences", "Mathematical sciences"],
+            "Physical sciences: chemistry, physics, astronomy; biological: botany, zoology, microbiology, genetics.");
+        Q("method", "medium", "Mathematics, statistics and computer science belong to the:",
+            "Mathematical (numerate) sciences", ["Earth sciences", "Physical sciences", "Social sciences"],
+            "They are the numerate sciences — they deal with numbers.");
+        Q("method", "medium", "The problem of saying what is scientific and what is not is called the:",
+            "Demarcation problem", ["Induction problem", "Paradigm shift", "Mind-body problem"],
+            "Astrology and creationism are examples of beliefs claiming scientific status.");
+        Q("method", "easy", "The only acceptable method of learning about a natural law, according to the text, is:",
+            "Observation", ["Revelation", "Intuition", "Authority"],
+            "Observation involves gathering data by taking measurements.");
+        Q("method", "easy", "The correct order of the four main stages of the scientific method is:",
+            "Observation → hypothesis → experiment → conclusion", ["Hypothesis → observation → conclusion → experiment", "Experiment → observation → hypothesis → conclusion", "Conclusion → hypothesis → experiment → observation"],
+            "Observe, turn the observation into a hypothesis, test it with experiment, then draw a conclusion.");
+        Q("method", "medium", "For a hypothesis to be considered scientific it must be:",
+            "Falsifiable – worded so that it can be proven incorrect", ["Already proven true", "Approved by religious authority", "Impossible to test"],
+            "In research we do not set out to 'prove' a hypothesis; we only test it.");
+        Q("method", "medium", "The principle that the simplest satisfactory explanation is usually the best is the:",
+            "Principle of parsimony", ["Principle of uncertainty", "Principle of falsifiability", "Principle of causation"],
+            "Also expressed as Ockham's razor: entities should not be multiplied beyond necessity.");
+        Q("method", "medium", "An experiment in which the experimental variable is NOT applied but dependent variables are measured the same way is a:",
+            "Control experiment", ["Pilot experiment", "Field experiment", "Thought experiment"],
+            "A control removes extraneous factors.");
+        Q("method", "hard", "In scientific measurement, error due to the INSTRUMENT is called:",
+            "Random error", ["Systematic error", "Human bias", "Parallax"],
+            "Error in the method used is systematic or non-random error (bias in one direction).");
+        Q("method", "hard", "Error in the METHOD used, which biases results in one direction, is called:",
+            "Systematic (non-random) error", ["Random error", "Standard deviation", "Serendipity"],
+            "Errors are usually considered in terms of standard deviation.");
+        Q("method", "medium", "When a hypothesis has been proved by various independent researchers at various times, it becomes a:",
+            "Scientific theory", ["Scientific law", "Scientific model", "Natural law"],
+            "Theories are more certain than hypotheses but less certain than laws.");
+        Q("method", "medium", "When overwhelming evidence supports a theory over a period of time, it becomes a:",
+            "Scientific law", ["Hypothesis", "Model", "Paradigm"],
+            "Examples: the law of gravity, the laws of thermodynamics.");
+        Q("method", "hard", "The Bohr model of the atom is cited as an example of a scientific model because it:",
+            "Gives good energy estimates but fails for angular momentum, so it has limited application", ["Has been proved under all conditions", "Was never tested", "Is a law of nature"],
+            "A proven hypothesis with limited application becomes a model rather than a theory.");
+        Q("method", "medium", "Theories can never be proved, only disproved. A conflict between a new observation and a long-standing theory often leads to what Kuhn called a:",
+            "Paradigm shift", ["Scientific law", "Serendipity", "Demarcation"],
+            "New observations can always conflict with old theories.");
+        Q("method", "easy", "A discovery in science that came about accidentally is called:",
+            "Serendipity", ["Induction", "Teleology", "Parsimony"],
+            "Serendipity is listed alongside the common mistakes in scientific method application.");
+        Q("method", "medium", "Drawing conclusions from empirical premises or observations is:",
+            "Induction", ["Deduction", "Anthropomorphism", "Superstition"],
+            "Induction can be by enumeration or by elimination.");
+        Q("method", "hard", "'All fires that have been tested burn; therefore any fire will burn' is an example of:",
+            "Induction by enumeration", ["Induction by elimination", "Deduction", "Teleological explanation"],
+            "Enumeration compares the frequency of the event in samples with the untested population.");
+        Q("method", "medium", "Deductive reasoning is:",
+            "Drawing a conclusion from a set of pre-existing premises (general to specific)", ["Generalising from observed instances", "Explaining events by their purposes", "Attributing human features to objects"],
+            "E.g. the earth rotates west to east, so the sun will always rise in the east.");
+        Q("method", "medium", "Explaining events in terms of the purposes they serve is:",
+            "Teleological explanation", ["Anthropomorphism", "Deduction", "Empiricism"],
+            "It is listed as an unscientific method of thinking.");
+        Q("method", "easy", "Attributing human characteristics to non-humans (objects, gods, devils) is called:",
+            "Anthropomorphism", ["Superstition", "Teleology", "Relativism"],
+            "Another unscientific method of thinking.");
+        Q("method", "medium", "Which is a limitation of science stated in the text?",
+            "Science cannot measure values like goodness, beauty or morality", ["Science can prove supernatural events", "Science is 100% certain", "Observers are never biased"],
+            "Science only applies to observable events and no conclusion is free from legitimate doubt.");
+        Q("method", "medium", "The school of thought that holds theories describe the world as it really is, independent of our perceptions, is:",
+            "Scientific realism", ["Idealism", "Pragmatism", "Relativism"],
+            "Realists say science reveals the hidden structure of the world.");
+        Q("method", "medium", "Which school maintains that the aim of a theory is to be useful to us?",
+            "Pragmatism", ["Realism", "Empiricism", "Idealism"],
+            "Empiricism: a theory need only be empirically adequate; idealism: the world is constructed by the mind.");
+        Q("method", "hard", "Relativism in science, which suggests that facts may change as theories change, was proposed by:",
+            "Thomas Kuhn", ["Karl Popper", "David Hume", "William of Ockham"],
+            "If evidence changes as theories change, perhaps the facts change too.");
+        Q("method", "hard", "According to Wolpert (2005), cited in the text:",
+            "A technologist need not know Newton's laws to design a bicycle", ["Science and technology are identical", "Technology always follows science", "Bicycles prove Newton's laws"],
+            "Technology can advance by trial and error without in-depth understanding.");
+        Q("method", "medium", "Ockham's razor states that:",
+            "Entities should not be multiplied beyond necessity", ["Theories must be falsifiable", "Language biases observation", "Knowledge is updated with probabilities"],
+            "Einstein rephrased it: 'make everything as simple as possible, but not simpler'.");
+        Q("method", "hard", "The idea that the language we use biases the observations we make is:",
+            "Whorfianism (Sapir-Whorf hypothesis)", ["Bayesianism", "Falsifiability", "Ockham's razor"],
+            "Proposed by Edward Sapir and Benjamin Whorf in the 1930s.");
+        Q("method", "medium", "The theory that for something to be science it must have the potential to be refuted was advanced by:",
+            "Karl Popper", ["W.V. Quine", "Thomas Bayes", "Edward Sapir"],
+            "Popper rejected Quine's view and proposed falsifiability.");
+        Q("method", "hard", "Bayesianism, which holds that we never know anything 100% but update our confidence with evidence, is linked to Thomas Bayes and:",
+            "E.T. Jaynes", ["Karl Popper", "W.V. Quine", "Benjamin Whorf"],
+            "Jaynes formalised hypothesis construction using Bayes' rule.");
+        Q("method", "medium", "Philosophy of science is defined as the branch of philosophy that studies:",
+            "The philosophical assumptions, foundations and implications of science", ["Only laboratory techniques", "The history of inventions", "Religious beliefs about nature"],
+            "It covers natural, social and formal sciences.");
+        Q("method", "medium", "The argument from science to religion in the text is based on the theory of:",
+            "Causation – every effect must have a cause", ["Relativity", "Natural selection", "Falsifiability"],
+            "The order of the universe suggests a sole cause, which religion calls God.");
+
+        // ===================== HISTORY OF SCIENCE & UNIVERSE =====================
+        Q("history", "easy", "According to history, the first true scientists were the:",
+            "Ancient Greeks (600 B.C. – 500 A.D.)", ["Ancient Egyptians", "Romans", "Chinese"],
+            "Egyptians, Mesopotamians and Chinese collected facts but did not develop explanations.");
+        Q("history", "medium", "Which Greek correctly predicted a 'short-term disappearance of the sun' (solar eclipse)?",
+            "Thales", ["Anaximenes", "Ptolemy", "Archimedes"],
+            "Thales studied the heavens and the movement of heavenly bodies.");
+        Q("history", "medium", "Who was the first scientist to explain the origin of the human race without reference to a creator, saying life began in the sea?",
+            "Anaximander", ["Aristotle", "Thales", "Leucippus"],
+            "Darwin later restarted the idea, today called evolution.");
+        Q("history", "medium", "The 'father of atomic theory', who proposed all matter is made of 'atoms', was:",
+            "Leucippus", ["Dalton", "Anaximenes", "Archimedes"],
+            "Leucippus built on Anaximenes' single-substance concept.");
+        Q("history", "medium", "Aristotle's greatest scientific work was in:",
+            "The classification of living things", ["The study of fluids", "Planetary orbits", "Optics"],
+            "He also wrongly promoted spontaneous generation.");
+        Q("history", "medium", "Archimedes is best known for his work on:",
+            "Fluids – predicting whether an object will float", ["The geocentric system", "Microscopes", "Gravity"],
+            "He also designed levers and screws.");
+        Q("history", "easy", "The system in which the earth sits motionless at the centre of the universe is the:",
+            "Geocentric (Ptolemaic) system", ["Heliocentric system", "Copernican system", "Newtonian system"],
+            "It was considered correct until about the 1700s.");
+        Q("history", "medium", "Science was impeded during the Dark Ages (500–1000 A.D.) largely because of the influence of the:",
+            "Roman Empire", ["Greek city-states", "Islamic Empire", "Chinese dynasties"],
+            "The Romans saw little use in explaining the world, though alchemists still experimented.");
+        Q("history", "hard", "Who is often called the father of the scientific method and applied it to explaining the rainbow?",
+            "Robert Grosseteste", ["Roger Bacon", "Galileo", "Francis Bacon"],
+            "He said a scientist should observe, propose a tentative explanation, then test it with more observations.");
+        Q("history", "hard", "Roger Bacon disproved the belief that a diamond could only be broken by:",
+            "Goat's blood", ["Fire", "Hammering with gold", "Lion's fat"],
+            "He used Grosseteste's method to break the shackles of superstition.");
+        Q("history", "hard", "Who used mathematics and experiments to show most of Aristotle's ideas on motion were wrong?",
+            "Thomas Bradwardine", ["Nicholas of Cusa", "Roger Bacon", "Ptolemy"],
+            "Galileo later confirmed Bradwardine's work.");
+        Q("history", "medium", "The Renaissance (1500–1660 A.D.) is called the:",
+            "Golden Age of Science", ["Dark Ages", "Industrial Revolution", "Era of Newton"],
+            "Copernicus, Vesalius, Kepler and Galileo worked in this period.");
+        Q("history", "easy", "The heliocentric system places the sun at the centre and is also called the:",
+            "Copernican system", ["Ptolemaic system", "Aristotelian system", "Geocentric system"],
+            "Named in honour of Nicolaus Copernicus.");
+        Q("history", "medium", "Kepler's data showed that planets travel around the sun in:",
+            "Ellipses (oval paths)", ["Perfect circles", "Straight lines", "Spirals"],
+            "Kepler's laws were among the strongest arguments for heliocentrism.");
+        Q("history", "medium", "Andreas Vesalius is known for:",
+            "Accurate illustrations of human organs, muscles and skeleton", ["Building the first microscope", "Discovering bacteria", "The laws of motion"],
+            "He was a medical doctor of the Renaissance.");
+        Q("history", "medium", "Galileo showed that the light from Venus goes through phases like the moon. This supported:",
+            "The heliocentric view", ["The geocentric view", "Spontaneous generation", "Alchemy"],
+            "He also showed planets only reflect sunlight.");
+        Q("history", "medium", "Who built the first microscope and discovered bacteria during the Era of Newton?",
+            "Antoni van Leeuwenhoek", ["Robert Boyle", "Robert Hooke", "Louis Pasteur"],
+            "This revealed a previously invisible world of tiny life forms.");
+        Q("history", "medium", "The Law of Mass Conservation (matter cannot be created or destroyed) is credited to:",
+            "Antoine-Laurent Lavoisier", ["John Dalton", "James Joule", "Robert Boyle"],
+            "Lavoisier was also the first to properly explain combustion.");
+        Q("history", "medium", "Louis Pasteur finally destroyed the idea of:",
+            "Spontaneous generation", ["Heliocentrism", "Atomic theory", "Natural selection"],
+            "He also developed pasteurization and laid the foundation for most vaccines.");
+        Q("history", "medium", "Who developed mathematical equations proving electricity and magnetism are aspects of one phenomenon?",
+            "James Clerk Maxwell", ["Michael Faraday", "James Joule", "Max Planck"],
+            "Faraday believed it but could not offer evidence; Maxwell proved it (electromagnetism).");
+        Q("history", "medium", "The First Law of Thermodynamics (energy cannot be created or destroyed) is credited in the text to:",
+            "James Joule", ["Lavoisier", "Carnot", "Newton"],
+            "It is the guiding principle in the study of energy.");
+        Q("history", "medium", "Max Planck proposed that energy exists in tiny packets called:",
+            "Quanta", ["Atoms", "Molecules", "Electrons"],
+            "This idea led to quantum mechanics.");
+        Q("history", "hard", "Einstein used Planck's quanta to explain the:",
+            "Photoelectric effect", ["Law of gravity", "Rainbow", "Theory of evolution"],
+            "The photoelectric effect could not be explained by Newton's laws.");
+        Q("history", "medium", "The Greek philosopher who first asked what the world was made of and answered 'water' was:",
+            "Thales", ["Heraclitus", "Pythagoras", "Plato"],
+            "His courage opened the floodgate for later scholars.");
+        Q("history", "medium", "Who said 'You cannot step into the same river' and held the universe came from everlasting fire?",
+            "Heraclitus", ["Anaximander", "Aristotle", "Thales"],
+            "He held that the world is in a state of flux.");
+        Q("history", "medium", "Pythagoras claimed the first substance and origin of the universe is:",
+            "Number", ["Water", "Fire", "Air"],
+            "Everything in the world is related in terms of numbers.");
+        Q("history", "hard", "Aristotle attributed the origin of the universe to:",
+            "A First Order unmoved mover", ["Water", "Number", "A Big Bang"],
+            "The creator moves everything but remains unmoved.");
+        Q("history", "hard", "Georges Lemaître called his version of the Big Bang theory the:",
+            "Hypothesis of the primeval atom", ["Steady state theory", "Quantum cosmology", "Theory of everything"],
+            "The model relies on Einstein's general relativity as formulated by Friedmann.");
+        Q("history", "hard", "In 1912, who measured the first Doppler shift of a 'spiral nebula', finding galaxies receding from earth?",
+            "Vesto Slipher", ["Edwin Hubble", "Alexander Friedmann", "Robert Penrose"],
+            "Hubble confirmed in 1924 that spiral nebulae were other galaxies.");
+        Q("history", "medium", "According to the Big Bang theory as presented, the universe was created about:",
+            "15 billion years ago", ["6,000 years ago", "4.5 billion years ago", "500 million years ago"],
+            "It expanded from a hot, dense initial condition and is still expanding.");
+        Q("history", "hard", "Quantum cosmologists criticised the Big Bang theory and viewed the universe as:",
+            "A dynamic force of self-creation", ["A clock fixed in every detail", "Made of water", "A static, unchanging system"],
+            "But they too fail to explain the origin of the universe itself.");
+        Q("history", "medium", "Until the 1840s, what we now call science was called:",
+            "Natural philosophy", ["Alchemy", "Metaphysics", "Theology"],
+            "Pre-modern science was natural philosophy.");
+
+        // ===================== PHYSICS =====================
+        Q("physics", "easy", "The word 'physics' comes from the Greek 'physis', meaning:",
+            "Nature", ["Motion", "Energy", "Matter"],
+            "Physics studies matter and its motion through space and time.");
+        Q("physics", "medium", "The branch of mechanics that studies motion WITHOUT reference to the forces causing it is:",
+            "Kinematics", ["Dynamics", "Statics", "Thermodynamics"],
+            "Dynamics includes the force; statics studies equilibrium.");
+        Q("physics", "medium", "Statics deals with:",
+            "The equilibrium of objects under the action of forces", ["Motion with reference to force", "Heat flow", "Sound waves"],
+            "Mechanics = statics, kinematics and dynamics.");
+        Q("physics", "easy", "Velocity is defined as:",
+            "Displacement divided by time", ["Distance divided by time", "Change in speed over distance", "Mass times acceleration"],
+            "Speed = distance/time; velocity uses displacement (distance in a specific direction).");
+        Q("physics", "medium", "Acceleration is given by:",
+            "a = (v − u)/t", ["a = d/t", "a = mgh", "a = ½mv²"],
+            "Change in velocity divided by time; the opposite is deceleration or retardation.");
+        Q("physics", "easy", "Potential energy is calculated as:",
+            "mgh", ["½mv²", "hf", "mc²"],
+            "PE is energy due to elevation; KE = ½mv² is energy of motion.");
+        Q("physics", "medium", "A falling body's PE converting fully into KE just before landing illustrates the:",
+            "Principle of conservation of energy", ["Law of gravity", "Uncertainty principle", "Second law of thermodynamics"],
+            "The total energy stays constant during conversion.");
+        Q("physics", "easy", "Normal human body temperature is:",
+            "37°C (98.6°F)", ["32°C (89.6°F)", "40°C (104°F)", "35°C (95°F)"],
+            "Common temperature scales: Celsius, Kelvin, Fahrenheit.");
+        Q("physics", "medium", "One calorie, the heat to raise 1 g of water by 1°C, equals about:",
+            "4.18 J", ["1 J", "9.8 J", "100 J"],
+            "Heat was originally measured in calories, now in joules.");
+        Q("physics", "medium", "Heat absorbed during a phase change without a change in temperature is called:",
+            "Latent heat", ["Specific heat", "Kinetic heat", "Radiant heat"],
+            "Latent means hidden: fusion (solid to liquid), vaporization (liquid to gas).");
+        Q("physics", "hard", "The volatile liquid usually used in refrigerators, which vaporizes in the freezer, is:",
+            "Ammonia (NH₃)", ["Water", "Mercury", "Petrol"],
+            "The refrigerator is the modern version of the cooling clay pot.");
+        Q("physics", "medium", "Egbin power station near Lagos is an example of:",
+            "Thermal electricity", ["Hydroelectricity", "Solar power", "Nuclear power"],
+            "Electricity obtained from heat produced by burning fuel.");
+        Q("physics", "easy", "Sound travels in air at about:",
+            "340 m/s", ["3 × 10⁸ m/s", "34 m/s", "3,400 m/s"],
+            "Sound is a longitudinal mechanical wave.");
+        Q("physics", "medium", "The range of frequencies a healthy human can hear is:",
+            "20 Hz to 20,000 Hz", ["2 Hz to 2,000 Hz", "200 Hz to 200,000 Hz", "20 kHz to 100 kHz"],
+            "Some dogs hear up to 30 kHz and bats up to 100 kHz.");
+        Q("physics", "medium", "Sound below the audible range, such as that produced during earthquakes, is:",
+            "Infrasonic", ["Ultrasonic", "Supersonic", "Electromagnetic"],
+            "Ultrasonic waves are above the audible range and are used in medicine.");
+        Q("physics", "medium", "The decibel (dB) unit of sound level honours:",
+            "Graham Bell, inventor of the telephone in 1876", ["Heinrich Hertz", "Isaac Newton", "Michael Faraday"],
+            "The faintest audible sound is about 10⁻¹² W/m².");
+        Q("physics", "medium", "The S.I. unit of sound intensity is:",
+            "W/m²", ["dB/s", "Hz", "J/s"],
+            "Intensity is energy per second through a square metre; 1 W/m² is about the loudest tolerable.");
+        Q("physics", "medium", "All electromagnetic waves travel in a vacuum at:",
+            "3 × 10⁸ m/s", ["340 m/s", "3 × 10⁶ m/s", "1.5 × 10⁸ m/s"],
+            "EM waves need no medium to propagate.");
+        Q("physics", "hard", "The energy of a wave is E = hf, where h is:",
+            "Planck's constant", ["Height", "Hubble's constant", "Heat"],
+            "h ≈ 6.626 × 10⁻³⁴ Js; f is frequency.");
+        Q("physics", "medium", "A coil rotating in a magnetic field producing current is the phenomenon of:",
+            "Electromagnetic induction", ["Electrostatics", "Coulomb's force", "Latent heat"],
+            "It converts mechanical energy to electricity.");
+        Q("physics", "easy", "Magnetic metals named in the text include cobalt, nickel and:",
+            "Iron", ["Copper", "Aluminium", "Gold"],
+            "Magnetic force is used in electric bells, telephone receivers, fans and motors.");
+        Q("physics", "medium", "Leonardo da Vinci's imagined flying machine was called the:",
+            "Ornithopter", ["Hot air balloon", "Sputnik", "Zeppelin"],
+            "Designed in the late 15th century from observing winged animals.");
+        Q("physics", "easy", "The Wright brothers flew the first powered and piloted aeroplane in:",
+            "1903", ["1876", "1957", "1945"],
+            "This marked man's active powered flight.");
+        Q("physics", "medium", "The space age began with the launch of the first artificial satellite, Sputnik, by the Soviet Union on:",
+            "4 October 1957", ["20 July 1969", "17 December 1903", "1 January 1945"],
+            "Rocket propulsion was introduced for military purposes during WWII.");
+        Q("physics", "hard", "Who first confirmed experimentally (1785) that charges attract or repel by an inverse square law?",
+            "Charles Augustin de Coulomb", ["Georg Ohm", "Alessandro Volta", "Hans Christian Oersted"],
+            "Volta made the chemical battery in 1800; Ohm discovered resistance.");
+        Q("physics", "hard", "Who generated electromagnetic waves electrically in 1887, laying the foundation for radio and TV?",
+            "Heinrich Hertz", ["James Clerk Maxwell", "Michael Faraday", "Thomas Young"],
+            "Maxwell's equations had predicted such waves.");
+        Q("physics", "hard", "The speed of light was first measured in 1676 by:",
+            "Olaus Roemer", ["Albert Michelson", "Armand Fizeau", "Isaac Newton"],
+            "Later refined by Fizeau and Michelson.");
+        Q("physics", "hard", "The Michelson-Morley experiment (1887) was performed to measure the earth's motion through the:",
+            "Ether", ["Vacuum", "Atmosphere", "Magnetic field"],
+            "Its unexpected result was explained by relativity in 1905.");
+        Q("physics", "medium", "Einstein's equation E = mc² expresses the equivalence of:",
+            "Matter and energy", ["Force and acceleration", "Heat and work", "Wave and particle"],
+            "c is the speed of light, 3 × 10⁸ m/s.");
+        Q("physics", "hard", "The principle that it is impossible to know both the position and momentum of a particle precisely is:",
+            "Heisenberg's uncertainty principle", ["Wave-particle duality", "Pauli's spin", "Newton's second law"],
+            "It makes quantum calculations probabilistic rather than deterministic.");
+        Q("physics", "hard", "The postulate that all particles have both wave and particle properties (1923) is due to:",
+            "de Broglie", ["Heisenberg", "Pauli", "Bohr"],
+            "This is wave-particle duality.");
+        Q("physics", "medium", "Radioactivity was discovered in uranium ore in 1896 by:",
+            "Henri Becquerel", ["Wilhelm Roentgen", "J.J. Thomson", "Enrico Fermi"],
+            "Roentgen discovered X-rays (1895); Thomson the electron.");
+        Q("physics", "medium", "Alpha rays are:",
+            "Doubly ionized helium atoms", ["Very fast electrons", "High-energy electromagnetic radiation", "Neutrons"],
+            "Beta rays are fast electrons; gamma rays are energetic EM radiation.");
+        Q("physics", "medium", "The splitting of uranium nuclei into two parts with huge energy release is:",
+            "Nuclear fission", ["Nuclear fusion", "Radioactive decay", "Photoelectric effect"],
+            "Fusion (four hydrogen nuclei into helium) powers stars and the hydrogen bomb.");
+        Q("physics", "hard", "The first nuclear reactor operated in 1942 under:",
+            "Enrico Fermi and his group", ["Robert Oppenheimer", "Albert Einstein", "Marie Curie"],
+            "Oppenheimer directed the atomic bomb deployed in 1945.");
+        Q("physics", "medium", "Major nuclear reactor accidents cited in the text occurred at:",
+            "Chernobyl (1986) and Fukushima (2011)", ["Hiroshima and Nagasaki", "Lagos and Abuja", "Three Mile Island and Paris"],
+            "Hiroshima and Nagasaki were atomic bombings, not reactor accidents.");
+        Q("physics", "hard", "Besides gravity, the fundamental forces named in the text are electromagnetic, nuclear and:",
+            "The weak force accounting for radioactivity", ["Friction", "Magnetic force only", "Centrifugal force"],
+            "Newton's work elucidated gravity, one of four fundamental forces.");
+
+        // ===================== CHEMISTRY & INDUSTRY =====================
+        Q("chemistry", "easy", "Organic chemistry is concerned with the study of:",
+            "Carbon compounds", ["All elements except carbon", "What a sample contains", "Physical properties of atoms"],
+            "Inorganic covers other elements; analytical determines sample composition.");
+        Q("chemistry", "medium", "Which branch of chemistry studies what a sample contains and how much of each constituent is present?",
+            "Analytical chemistry", ["Physical chemistry", "Organic chemistry", "Biochemistry"],
+            "Used in medical and ecosystem analysis.");
+        Q("chemistry", "easy", "Which of these is a NON-renewable resource?",
+            "Fossil fuels", ["Wind", "Water", "Geothermal heat"],
+            "Fossil fuels take thousands of years to form and are used faster than replaced.");
+        Q("chemistry", "medium", "A solar cell (photovoltaic cell) converts:",
+            "Sunlight directly into electricity", ["Heat into motion", "Wind into light", "Chemical energy into heat"],
+            "Major obstacles: intermittent arrival and large collection area.");
+        Q("chemistry", "medium", "The first geothermal power station was built at:",
+            "Larderello, Italy", ["Reykjavik, Iceland", "Tokyo, Japan", "Manila, Philippines"],
+            "Japan, Iceland, the Philippines and the USA also have them.");
+        Q("chemistry", "easy", "The most common biomass fuels are:",
+            "Wood, crops and agricultural residues", ["Coal and petroleum", "Uranium and radium", "Sand and limestone"],
+            "Biomass is organic matter convertible to energy.");
+        Q("chemistry", "medium", "The best form of cracking in petroleum refining because it produces the exact product needed is:",
+            "Catalytic cracking", ["Thermal cracking", "Fractional distillation", "Purification"],
+            "Refining processes: purification, fractional distillation and cracking.");
+        Q("chemistry", "easy", "The three essential elements in fertilizers are:",
+            "Nitrogen, phosphorus and potassium", ["Carbon, hydrogen and oxygen", "Iron, zinc and copper", "Calcium, sodium and sulphur"],
+            "NPK fertilizers increase crop yield.");
+        Q("chemistry", "medium", "Paint is made up of a solid pigment and a liquid portion called the:",
+            "Vehicle", ["Binder only", "Monomer", "Slurry"],
+            "The vehicle has a non-volatile binder and a volatile thinner.");
+        Q("chemistry", "hard", "In paint, the component that gives hardness and ease of drying is the:",
+            "Binder", ["Thinner", "Pigment", "Solvent"],
+            "Linseed oil, glue, honey and wax serve as binders.");
+        Q("chemistry", "medium", "The joining of many small molecules to form large molecules, as in making plastics, is:",
+            "Polymerization", ["Saponification", "Cracking", "Fermentation"],
+            "Small units are monomers; the large molecules are polymers.");
+        Q("chemistry", "medium", "Glass is made by melting silica (sand) with limestone and:",
+            "Sodium carbonate", ["Gypsum", "Clay", "Sodium hydroxide"],
+            "Glass is slow-cooled to avoid strains that cause cracking.");
+        Q("chemistry", "medium", "In cement manufacture, gypsum is added to:",
+            "Retard (slow) the setting of cement", ["Make it set faster", "Add colour", "Increase volume"],
+            "Cement is made from limestone and clay mixed with water.");
+        Q("chemistry", "easy", "The process of making soap is called:",
+            "Saponification", ["Polymerization", "Distillation", "Vulcanization"],
+            "Fats/oils are boiled with sodium or potassium hydroxide.");
+        Q("chemistry", "medium", "Detergents differ from soap in that they:",
+            "Work well in hard water", ["Cannot be made from petrochemicals", "Only work in soft water", "Are natural products"],
+            "Detergents are synthetic cleaning products made from petrochemicals.");
+        Q("chemistry", "hard", "Terylene fibre is prepared by condensation of dimethyl terephthalate and:",
+            "Ethylene glycol", ["Glycerol", "Ammonia", "Lactic acid"],
+            "Synthetic fibres come from petroleum sources.");
+        Q("chemistry", "medium", "Which plastic is commonly used for soft drink and cooking oil bottles?",
+            "PETE (Polyethylene terephthalate)", ["PVC", "HDPE", "Polystyrene"],
+            "HDPE: milk jars/detergent bottles; PVC: pipes.");
+        Q("chemistry", "hard", "John Dalton proposed the modern atomic theory in:",
+            "1808", ["1661", "1895", "1953"],
+            "Dalton is considered the father of chemistry.");
+        Q("chemistry", "medium", "Robert Boyle's 1661 book that helped prove alchemy a myth was:",
+            "The Sceptical Chymist", ["Principia", "On the Origin of Species", "Elements"],
+            "Boyle's law relates pressure and volume of gases.");
+        Q("chemistry", "medium", "The two quests of the alchemists were to change lead into gold (Philosopher's Stone) and to find the:",
+            "Elixir of Life", ["Periodic table", "Universal solvent", "Atomic nucleus"],
+            "Alchemists discovered hydrogen, phosphorus, filtration and distillation.");
+        Q("chemistry", "hard", "The Islamic alchemist who introduced crystallization, distillation and filtration around 815 A.D. was:",
+            "Jabir ibn Hayyan (Geber)", ["Al-Khwarizmi", "Ibn al-Haytham", "Omar Khayyam"],
+            "He introduced a systematic, laboratory-based approach.");
+        Q("chemistry", "medium", "The double helix structure of DNA was deduced in 1953 by:",
+            "Watson and Crick", ["Marie and Pierre Curie", "Avery and Mendel", "Boyle and Dalton"],
+            "This ushered in molecular biology and biochemistry.");
+        Q("chemistry", "medium", "Substances that speed up chemical reactions are:",
+            "Catalysts", ["Reactants", "Products", "Polymers"],
+            "Catalysts are used in making margarine and vegetable oils.");
+        Q("chemistry", "medium", "Industrial chemistry is the branch that:",
+            "Applies physical and chemical processes to transform raw materials into useful products", ["Studies living organisms", "Studies only carbon compounds", "Measures sample composition"],
+            "Applied in pharmaceutical, petrochemical, soap, paint and food industries.");
+
+        // ===================== MATHS, STATISTICS & COMPUTING =====================
+        Q("maths", "medium", "The oldest known mathematical object, the Lebombo bone, was discovered in:",
+            "Swaziland (about 35,000 BC)", ["Egypt", "Babylon", "Greece"],
+            "The Ishango bones near the Nile are about 20,000 years old.");
+        Q("maths", "medium", "Who said 'Egypt was the cradle of mathematics'?",
+            "Aristotle", ["Pythagoras", "Herodotus", "Euclid"],
+            "Herodotus linked Egyptian mathematics to the flooding of the Nile.");
+        Q("maths", "medium", "The Babylonians used which number system?",
+            "Base-60 (sexagesimal)", ["Base-10", "Base-20", "Base-2"],
+            "Our 24-hour day with 60 minutes and 60 seconds survives from it.");
+        Q("maths", "hard", "The Maya civilization used which number system and independently developed zero?",
+            "Vigesimal (base-20)", ["Sexagesimal (base-60)", "Binary", "Base-12"],
+            "They developed zero as early as 36 BC.");
+        Q("maths", "medium", "Who coined the term 'mathematics' (from 'mathema', subject of instruction) and said 'Numbers rule the universe'?",
+            "Pythagoras", ["Thales", "Euclid", "Archimedes"],
+            "Pythagoras' theorem has over 50 proofs.");
+        Q("maths", "hard", "Who is generally considered the father of trigonometry?",
+            "Hipparchus of Rhodes", ["Euclid", "Diophantus", "Ptolemy"],
+            "He imported the sexagesimal system into Greek geometry.");
+        Q("maths", "medium", "Roman numerals were inefficient for arithmetic mainly because they:",
+            "Had no concept of zero", ["Used too many symbols", "Were based on base-60", "Could not show large numbers"],
+            "Calculations were therefore performed on an abacus.");
+        Q("maths", "hard", "Diophantus is credited as the first to:",
+            "Recognise fractions as numbers", ["Develop calculus", "Invent the abacus", "Introduce zero"],
+            "Euclid: geometry; Archimedes: first latitude/longitude system.");
+        Q("maths", "medium", "The Hindu-Arabic numerals (1–9 and 0) are often erroneously attributed to:",
+            "Al-Khwarizmi", ["Fibonacci", "Euler", "Pythagoras"],
+            "Al-Khwarizmi introduced algebraic calculus.");
+        Q("maths", "medium", "Who spread the use of Hindu-Arabic numerals in Europe?",
+            "Leonardo of Pisa (Fibonacci)", ["John Napier", "René Descartes", "Simon Stevin"],
+            "Napier investigated logarithms in 1614.");
+        Q("maths", "medium", "Who is the father of modern decimal notation (1585)?",
+            "Simon Stevin", ["Gauss", "Leibniz", "Pascal"],
+            "It allows representation of rational and irrational numbers.");
+        Q("maths", "hard", "Who named √−1 as 'i' and popularized π, founding graph theory with the Königsberg bridges?",
+            "Leonhard Euler", ["Carl Gauss", "Pierre Fermat", "Blaise Pascal"],
+            "Euler was the most influential European mathematician of the 1700s.");
+        Q("maths", "medium", "Boolean algebra, the foundation of computer science, was introduced by:",
+            "George Boole", ["Karl Pearson", "Alan Turing", "Leibniz"],
+            "It began mathematical logic.");
+        Q("maths", "hard", "Muhammad al-Fullani al-Kishnawi, a Fulani from northern Nigeria, wrote in 1732 on:",
+            "Constructing magic squares up to order 11", ["Calculus", "Statistics of census", "Binary numbers"],
+            "He died in Cairo in 1741.");
+        Q("maths", "easy", "Statistics derives from the Latin 'statis', meaning:",
+            "Political state", ["Numbers", "Data", "Chance"],
+            "Statistics was a by-product of administrative activity, mainly war and finance.");
+        Q("maths", "medium", "The two broad areas of statistics are:",
+            "Descriptive and inferential", ["Experimental and observational", "Nominal and ordinal", "Population and sample"],
+            "Inferential generalises from a sample to a population.");
+        Q("maths", "medium", "A variable that a researcher can manipulate to effect change is the:",
+            "Independent variable", ["Dependent variable", "Extraneous variable", "Parameter"],
+            "Also called the causal variable; the DV is the outcome variable.");
+        Q("maths", "medium", "Which level of measurement has an absolute zero?",
+            "Ratio", ["Interval", "Ordinal", "Nominal"],
+            "Interval has an arbitrary zero (0°C is still a temperature).");
+        Q("maths", "medium", "Hostel room numbers and nationality are examples of which level of measurement?",
+            "Nominal", ["Ordinal", "Interval", "Ratio"],
+            "Nominal identifies but does not rank.");
+        Q("maths", "medium", "Military rank and birth order are examples of:",
+            "Ordinal measurement", ["Nominal measurement", "Ratio measurement", "Interval measurement"],
+            "Ordinal shows meaningful order among values.");
+        Q("maths", "hard", "A Type I error occurs when:",
+            "A true null hypothesis is falsely rejected", ["A false null hypothesis is accepted", "The sample is too large", "The alternate hypothesis is accepted correctly"],
+            "Type II error: accepting a false null hypothesis.");
+        Q("maths", "medium", "The mathematical foundations of statistics were laid with probability theory by:",
+            "Blaise Pascal and Pierre de Fermat", ["Galton and Fisher", "Mendel and Darwin", "Newton and Leibniz"],
+            "This was in the 17th century.");
+        Q("maths", "hard", "Who developed statistical methods in experimental design and analysis of variance?",
+            "Sir Ronald Fisher", ["Sir Francis Galton", "John Graunt", "Karl Pearson"],
+            "Galton did correlation studies; Graunt wrote on the Bills of Mortality.");
+        Q("maths", "hard", "The statistical study of all populations is:",
+            "Demography", ["Epidemiology", "Biostatistics", "Chemometrics"],
+            "Epidemiology studies factors affecting health and illness of populations.");
+        Q("maths", "medium", "Computer science emerged in the mid-1940s from algorithm theory, mathematical logic and the invention of:",
+            "The stored-program electronic computer", ["The abacus", "The telephone", "The transistor radio"],
+            "Its process involves abstraction, automation and implementation.");
+        Q("maths", "hard", "The first computer science degree programme in the world was established in 1953 at:",
+            "University of Cambridge", ["Purdue University", "University of Ibadan", "MIT"],
+            "Purdue (1962) had the first US department; UI's department came in 1974.");
+        Q("maths", "medium", "The University of Ibadan established its department of computer science in:",
+            "1974", ["1962", "1953", "1990"],
+            "Cambridge 1953, Purdue 1962, Ibadan 1974.");
+        Q("maths", "medium", "The gap between people with effective access to digital technology and those without is the:",
+            "Digital divide", ["Turing gap", "Information lag", "Bandwidth gap"],
+            "A key social issue in computing.");
+        Q("maths", "medium", "The CPU consists of two parts:",
+            "Control unit and arithmetic & logic unit", ["RAM and ROM", "Input and output units", "Motherboard and bus"],
+            "The CPU largely determines a computer's power and price.");
+        Q("maths", "easy", "Which hardware generation used integrated circuits (1964–1971)?",
+            "Third generation", ["First generation", "Second generation", "Fourth generation"],
+            "1st vacuum tubes, 2nd transistors, 4th microprocessors, 5th AI.");
+        Q("maths", "easy", "The first generation of computers (1940–1956) used:",
+            "Vacuum tubes", ["Transistors", "Microprocessors", "Integrated circuits"],
+            "Transistors came in the second generation.");
+        Q("maths", "medium", "The core of system software is the:",
+            "Operating system", ["Word processor", "Database", "Spreadsheet"],
+            "OS roles: memory, process, file and disk management, CPU scheduling.");
+        Q("maths", "medium", "The Turing test determines whether:",
+            "A machine is intelligent by fooling a human interrogator", ["A computer has a virus", "A network is secure", "Software is error-free"],
+            "AI aspects include expert systems, neural networks, NLP and robotics.");
+        Q("maths", "medium", "Which of these is NOT a type of malicious code listed?",
+            "Firewall", ["Virus", "Worm", "Logic bomb"],
+            "A firewall is a protection, not malicious code.");
+        Q("maths", "medium", "Which wired medium transmits LIGHT rather than electrical signals?",
+            "Fibre optic cable", ["Twisted pair cable", "Coaxial cable", "Telephone wire"],
+            "Twisted pair and coaxial transmit electrical signals.");
+        Q("maths", "hard", "Bluetooth has a short range of up to about:",
+            "30 feet", ["300 feet", "3 miles", "3,000 feet"],
+            "WiFi reaches about 300 ft.");
+
+        // ===================== BIOLOGY: CELL, ECOSYSTEM, CONSERVATION =====================
+        Q("biology", "easy", "The functional unit of an organism is the:",
+            "Cell", ["Tissue", "Organ", "Gene"],
+            "All living things are made of cells.");
+        Q("biology", "medium", "Eukaryotic cells are found in all living organisms EXCEPT:",
+            "Bacteria and blue-green algae", ["Plants", "Animals", "Fungi"],
+            "Bacteria and blue-green algae are prokaryotes (false nucleus).");
+        Q("biology", "medium", "Plant cell walls are made of:",
+            "Cellulose", ["Peptidoglycan", "Chitin", "Protein"],
+            "In bacteria the cell wall is made of peptidoglycan.");
+        Q("biology", "hard", "Which organisms lack cell walls?",
+            "Mycoplasmas", ["Plants", "Fungi", "Bacteria in general"],
+            "Penicillin prevents cell wall formation in microbial pathogens.");
+        Q("biology", "medium", "The cell membrane is composed of lipids and proteins arranged in a:",
+            "Fluid mosaic pattern", ["Double helix", "Crystal lattice", "Rigid sheet"],
+            "It allows lateral diffusion of nutrients.");
+        Q("biology", "medium", "Organelles that make proteins and are made of RNA and protein are:",
+            "Ribosomes", ["Lysosomes", "Mitochondria", "Golgi bodies"],
+            "Antibiotics like chloramphenicol and streptomycin inhibit bacterial protein synthesis.");
+        Q("biology", "easy", "The 'powerhouse of the cell' is the:",
+            "Mitochondrion", ["Nucleus", "Ribosome", "Vacuole"],
+            "It transforms energy into ATP.");
+        Q("biology", "medium", "The organelle that wraps up products to be passed out of the cell is the:",
+            "Golgi apparatus", ["Lysosome", "Endoplasmic reticulum", "Plastid"],
+            "It consists of stacks of flattened sacs (cisternae).");
+        Q("biology", "medium", "Lysosomes contain:",
+            "Hydrolytic (digestive) enzymes", ["Chlorophyll", "DNA", "Cell sap"],
+            "They digest polysaccharides, proteins and lipids.");
+        Q("biology", "easy", "The control centre of the cell is the:",
+            "Nucleus", ["Cytoplasm", "Cell membrane", "Vacuole"],
+            "It contains DNA, the seat of heredity.");
+        Q("biology", "medium", "Plastids containing the green pigment chlorophyll are:",
+            "Chloroplasts", ["Leucoplasts", "Chromoplasts", "Lysosomes"],
+            "Leucoplasts are colourless (starch); chromoplasts colour ripe fruits.");
+        Q("biology", "medium", "In an ecosystem, unlike materials, energy:",
+            "Moves in one direction and is not recycled", ["Is recycled in the soil", "Flows from consumers to the sun", "Is created by animals"],
+            "Energy flows from sunlight to producers then consumers.");
+        Q("biology", "medium", "Animals that feed on dead remains of plants and animals (e.g. earthworms, millipedes) are:",
+            "Detritivores", ["Producers", "Herbivores", "Parasites"],
+            "They help recycle materials.");
+        Q("biology", "easy", "The basic unit of classification is the:",
+            "Species", ["Genus", "Kingdom", "Phylum"],
+            "Members interbreed freely and successfully.");
+        Q("biology", "medium", "Mammals, birds, reptiles, amphibians and fish make up the phylum:",
+            "Chordata", ["Arthropoda", "Mammalia", "Artiodactyla"],
+            "Mammalia is a class; Artiodactyla is an order.");
+        Q("biology", "medium", "The binomial system of nomenclature was founded in 1753 by:",
+            "Carolus Linnaeus", ["Charles Darwin", "Aristotle", "Gregor Mendel"],
+            "Linnaeus is called the Father of Taxonomy.");
+        Q("biology", "medium", "In Theobroma cacao L., the 'L.' stands for:",
+            "Linnaeus, the author who described it", ["Latin", "Living", "Leaf"],
+            "Well-known author names are abbreviated.");
+        Q("biology", "medium", "The correct order of Linnaeus' taxonomic hierarchy is:",
+            "Kingdom, Phylum, Class, Order, Family, Genus, Species", ["Kingdom, Class, Phylum, Order, Genus, Family, Species", "Species, Genus, Order, Family, Class, Phylum, Kingdom", "Phylum, Kingdom, Class, Family, Order, Genus, Species"],
+            "Kingdom is the biggest group.");
+        Q("biology", "medium", "Darwin published 'On the Origin of Species' in:",
+            "1859", ["1753", "1865", "1953"],
+            "He was the first to describe evolution by natural selection.");
+        Q("biology", "hard", "Robert Hooke first saw and named cells in 1665 by examining:",
+            "Cork bark", ["Pond water", "Human blood", "Onion skin"],
+            "Cells looked like little rooms (cubicles).");
+        Q("biology", "hard", "Who demonstrated (1668) that maggots do not arise from covered meat?",
+            "Francesco Redi", ["John Needham", "Lazzaro Spallanzani", "Louis Pasteur"],
+            "Needham supported spontaneous generation; Spallanzani and Pasteur disproved it.");
+        Q("biology", "medium", "Louis Pasteur used which device to show there is no spontaneous generation?",
+            "Swan-necked flasks", ["Covered jars of meat", "Microscopes with sand lenses", "Boiled broth in sealed tins"],
+            "Microbes fell into the curved neck rather than the broth.");
+        Q("biology", "medium", "The 'Father of Modern Genetics' (1865), who experimented on garden peas, is:",
+            "Gregor Mendel", ["Oswald Avery", "James Watson", "Linnaeus"],
+            "He was an Austrian monk.");
+        Q("biology", "hard", "In 1944, DNA was shown to carry the instructions directing organisms' activities by:",
+            "Oswald Avery", ["Watson and Crick", "Gregor Mendel", "Robert Hooke"],
+            "Watson and Crick (1953) proposed how DNA replicates.");
+        Q("biology", "medium", "Fermenting fresh milk into yoghurt, cheese and butter mainly uses:",
+            "Lactic acid bacteria", ["Yeast only", "Viruses", "Moulds only"],
+            "Fermentation preserves dairy products.");
+        Q("biology", "medium", "Penicillin is obtained from:",
+            "Penicillium notatum (a fungus)", ["Streptomyces griseus", "S. venezuelae", "Micromonospora purpurea"],
+            "Streptomycin comes from Streptomyces griseus.");
+        Q("biology", "medium", "The neem tree, locally called 'Dongoyaro', is noted for treating:",
+            "Malaria fever", ["Sickle cell anaemia", "Diabetes", "Tuberculosis"],
+            "Sickle cell anaemia has been managed with Fagara sp.");
+        Q("biology", "hard", "Who discovered in 1884 that cocaine could be used as a pain deadener in surgery?",
+            "Carl Koller", ["Oliver Wendell Holmes", "Louis Pasteur", "Joseph Lister"],
+            "Holmes coined the term 'anesthetics' (no feeling).");
+        Q("biology", "medium", "Biochemistry and biophysics merged to form:",
+            "Molecular biology", ["Microbiology", "Genetics", "Ecology"],
+            "Molecular biology revolutionized the pharmaceutical industry.");
+        Q("biology", "medium", "More than 90% of the wood used in Tropical Africa is consumed as:",
+            "Fuel wood", ["Furniture", "Paper pulp", "Matchsticks"],
+            "Hence conservation is very important.");
+        Q("biology", "hard", "According to the NCF (1990), which is NOT one of the three objectives of plant and animal conservation?",
+            "Maximising timber exports", ["Maintenance of essential processes and life support systems", "Preservation of genetic diversity", "Sustainable utilization of species and ecosystems"],
+            "Conservation aims at balance for future biodiversity.");
+        Q("biology", "medium", "Conserving species OUTSIDE their natural habitat includes:",
+            "Botanical gardens, zoological gardens and arboreta", ["National parks", "Game reserves", "Forest reserves"],
+            "National parks and reserves conserve species in their natural habitat.");
+
+        // ===================== ZOOLOGY =====================
+        Q("zoology", "easy", "The management of bees in hives is known as:",
+            "Beekeeping (apiculture)", ["Sericulture", "Aquaculture", "Heliciculture"],
+            "Bees provide products and pollination for food production.");
+        Q("zoology", "medium", "In beekeeping, the smoker is used to:",
+            "Make bees release alarm pheromones (calming the colony)", ["Extract honey", "Measure sugar content", "Scrape wax"],
+            "The hive tool scrapes wax; the extractor removes honey by centrifugal force.");
+        Q("zoology", "medium", "The honey refractometer measures:",
+            "Sugar and moisture content of honey", ["Hive temperature", "Number of bees", "Pollen quantity"],
+            "The pollen trap collects pollen.");
+        Q("zoology", "medium", "A place where bees are kept (a collection of hives) is an:",
+            "Apiary", ["Aviary", "Hatchery", "Paddock"],
+            "Site factors include water, wind, vegetation and safety from vandals.");
+        Q("zoology", "easy", "Sericulture is the production of raw silk from the larva of the moth:",
+            "Bombyx mori", ["Apis mellifera", "Clarias gariepinus", "Achatina"],
+            "Silk consists of fibroin and sericin.");
+        Q("zoology", "hard", "Twisting several thin silk strands into a thicker, stronger yarn is called:",
+            "Throwing", ["Reeling", "Spinning", "Degumming"],
+            "Silk still containing sericin is raw silk.");
+        Q("zoology", "medium", "The culture of organisms in salt water is:",
+            "Mariculture", ["Freshwater aquaculture", "Sericulture", "Apiculture"],
+            "Aquaculture is rearing aquatic organisms under controlled conditions.");
+        Q("zoology", "medium", "The African catfish (Clarias gariepinus) is best described as:",
+            "An omnivore", ["A herbivore", "A strict carnivore", "A detritivore"],
+            "It can reach 130 cm and 12.8 kg.");
+        Q("zoology", "medium", "Snail species commonly reared are:",
+            "Achatina and Limicolaria", ["Bombyx and Apis", "Clarias and Tilapia", "Helix and Octopus"],
+            "Temperature and humidity are key factors.");
+        Q("zoology", "medium", "In Integrated Pest Management (IPM), pesticides should be used:",
+            "Only as a last resort", ["First, before other methods", "Daily as prevention", "Never at all"],
+            "IPM combines exclusion, sanitation, biological control, etc.");
+
+        // ===================== GEOLOGY & ENVIRONMENT =====================
+        Q("geology", "easy", "Geology is the science of the earth's:",
+            "History, composition and structure", ["Weather only", "Living organisms", "Political boundaries"],
+            "It involves study of minerals, rocks and fossils.");
+        Q("geology", "medium", "The study of rock composition is:",
+            "Petrology", ["Mineralogy", "Stratigraphy", "Geomorphology"],
+            "Mineralogy studies minerals; stratigraphy studies layered rocks.");
+        Q("geology", "medium", "The study of the development of landforms is:",
+            "Geomorphology", ["Hydrogeology", "Sedimentology", "Palaeontology"],
+            "Hydrogeology studies surface and groundwater.");
+        Q("geology", "medium", "Rocks formed by cooling and consolidation of magma or lava are:",
+            "Igneous", ["Sedimentary", "Metamorphic", "Clastic"],
+            "Sedimentary: lithification; metamorphic: heat, pressure, chemical activity.");
+        Q("geology", "medium", "Marble is an example of a rock that is:",
+            "Monomineralic", ["Polymineralic", "Igneous", "Organic"],
+            "Granite is polymineralic.");
+        Q("geology", "hard", "Dating rocks using the rate of disintegration of radioactive elements is:",
+            "Absolute (radiometric) dating", ["Relative dating", "Stratigraphy", "Carbon cycling"],
+            "Relative dating compares fossil contents.");
+        Q("geology", "medium", "About what proportion of Nigeria's land mass is underlain by crystalline basement complex rocks?",
+            "About 50%", ["About 10%", "About 90%", "About 25%"],
+            "The rest is sedimentary basins.");
+        Q("geology", "hard", "The three phases of mineral exploration are:",
+            "Reconnaissance survey, target investigation and economic evaluation", ["Mining, refining and selling", "Drilling, blasting and hauling", "Mapping, sampling and dating"],
+            "Methods include geochemical, geophysical, remote sensing and aerial photography.");
+        Q("geology", "medium", "The earth's single natural satellite is the:",
+            "Moon", ["Sun", "Titan", "Phobos"],
+            "Per the text, Mars has two moons and Jupiter 13.");
+        Q("geology", "medium", "Pluto was recently downgraded and is now referred to as a:",
+            "Dwarf planet", ["Moon", "Comet", "Star"],
+            "It takes about 247 years to orbit the sun.");
+        Q("geology", "medium", "Because the earth rotates 360° in 24 hours, places 15° of longitude apart differ in local time by:",
+            "One hour", ["Four minutes", "Fifteen minutes", "Two hours"],
+            "1° = 4 minutes.");
+        Q("geology", "hard", "If Town A (3°E) is at 8:00 am, what is the local time in Town B at 11°E?",
+            "8:32 am", ["7:28 am", "8:08 am", "9:00 am"],
+            "8° × 4 minutes = 32 minutes ahead (east is ahead).");
+        Q("geology", "hard", "Two towns 30° of longitude apart differ in local time by:",
+            "Two hours", ["Thirty minutes", "One hour", "Four hours"],
+            "30 ÷ 15 = 2 hours.");
+        Q("geology", "medium", "Air masses and ocean currents in the northern hemisphere are deflected to the:",
+            "Right", ["Left", "Equator", "Poles directly"],
+            "In the southern hemisphere they are deflected to the left.");
+        Q("geology", "medium", "The line of longitude 0° passes through Greenwich (London) and:",
+            "Accra, Ghana", ["Lagos, Nigeria", "Cairo, Egypt", "Dakar, Senegal"],
+            "Ibadan lies at about 7°25'N, 3°25'E.");
+        Q("geology", "hard", "One complete precession cycle takes about:",
+            "21,000 years", ["365 days", "220 million years", "1,000 years"],
+            "Galactic rotation takes about 220 million years.");
+        Q("geology", "medium", "The two motions of the earth most important to man are:",
+            "Rotation and revolution", ["Precession and galactic rotation", "Wobble and tilt", "Rotation and precession"],
+            "Rotation gives day/night; revolution gives seasons.");
+        Q("geology", "medium", "Internal processes that build up landforms are called:",
+            "Endogenous processes", ["Exogenous processes", "Weathering", "Aggradation"],
+            "Exogenous processes are external and shape initial landforms.");
+        Q("geology", "medium", "Upfolds of rock are anticlines; downfolds are:",
+            "Synclines", ["Horsts", "Grabens", "Calderas"],
+            "Folding results from compressional tectonic forces.");
+        Q("geology", "hard", "A narrow block elevated between two normal faults is a:",
+            "Horst", ["Syncline", "Caldera", "Dyke"],
+            "Normal faults are associated with crustal rifting.");
+        Q("geology", "medium", "The San Andreas fault is an example of a:",
+            "Transcurrent (strike-slip) fault", ["Normal fault", "Reverse fault", "Fold mountain"],
+            "Plates slide past one another horizontally.");
+        Q("geology", "medium", "The point on the earth's surface directly above an earthquake's focus is the:",
+            "Epicentre", ["Origin", "Seismograph", "Fault plane"],
+            "The instrument is a seismometer; its record is a seismograph.");
+        Q("geology", "medium", "Earthquake magnitude is measured on the:",
+            "Richter scale", ["Beaufort scale", "Kelvin scale", "Decibel scale"],
+            "Waves: primary (P), secondary (S), lateral (L).");
+        Q("geology", "medium", "The fastest earthquake wave, arriving first, is the:",
+            "Primary (P/push) wave", ["Secondary (S) wave", "Lateral (L) wave", "Tidal wave"],
+            "S waves arrive a few minutes later.");
+        Q("geology", "medium", "Acid lavas are:",
+            "Light-coloured, silica-rich and explosive", ["Dark, iron-rich and quiet", "Highly fluid", "Always intrusive"],
+            "Basic lavas are dark, rich in iron and magnesium, fluid and quiet.");
+        Q("geology", "hard", "Vertical masses of magma cutting across bedding planes are:",
+            "Dykes", ["Sills", "Batholiths", "Laccoliths"],
+            "Sills lie along bedding planes.");
+        Q("geology", "medium", "The text cites the Jos Plateau as an example of a:",
+            "Dormant volcano area", ["Active volcano", "Caldera lake", "Fold mountain"],
+            "Dormant: no recent eruption but signs of possible future eruption.");
+        Q("geology", "hard", "The Tangale Peak in Bauchi State is an example of a:",
+            "Volcanic plug", ["Caldera", "Ash cone", "Composite cone"],
+            "A resistant vent exposed after denudation.");
+        Q("geology", "medium", "A depression formed when a violent eruption blows off a volcano's top is a:",
+            "Caldera", ["Plug", "Dyke", "Horst"],
+            "E.g. Crater Lake, Oregon.");
+        Q("geology", "medium", "Breaking down of rocks without changing their chemical composition is:",
+            "Physical weathering", ["Chemical weathering", "Carbonation", "Hydrolysis"],
+            "Caused by temperature change, frost or plant roots.");
+        Q("geology", "hard", "Rainwater acting as weak carbonic acid on chalk and limestone is:",
+            "Carbonation", ["Oxidation", "Hydration", "Reduction"],
+            "Common in limestone areas.");
+        Q("geology", "medium", "The largest vegetation belt in Nigeria, occupying the central region, is the:",
+            "Guinea savanna", ["Sudan savanna", "Sahel savanna", "Rain forest"],
+            "It receives about 1000–1400 mm rainfall annually.");
+        Q("geology", "medium", "The derived savanna was originally rain forest degraded by:",
+            "Burning and cultivation by man", ["Volcanic eruptions", "Rising sea level", "Earthquakes"],
+            "It lies at the northern edge of the rain forest.");
+        Q("geology", "hard", "The Sahel savanna occurs where mean annual rainfall is below:",
+            "650 mm, with about eight months of drought", ["1500 mm", "1000 mm", "2000 mm"],
+            "Acacias are its most characteristic trees.");
+        Q("geology", "medium", "Mangrove swamp water is described as brackish, meaning:",
+            "A mixture of fresh and salt water", ["Completely fresh", "Highly acidic", "Frozen"],
+            "Mangroves have stilt roots for muddy substrates.");
+
+        // ===================== TECHNOLOGY, RESOURCES & ENERGY =====================
+        Q("tech", "easy", "Technology is defined in the text as:",
+            "Systematic knowledge of industrial art", ["Pure investigation to satisfy the need to know", "The study of matter", "Faith-based knowledge"],
+            "Also 'technical method for achieving a particular purpose'.");
+        Q("tech", "medium", "In the American moon programme example, constructing the rocket was:",
+            "Technology", ["Pure science", "Applied science", "Philosophy"],
+            "Knowing gravitation = pure science; designing trajectories = applied science.");
+        Q("tech", "medium", "Which is NOT one of the distinctions between science and technology listed?",
+            "Technology always requires science first", ["Time lag", "Satisfaction of practical needs", "Technology came earlier historically"],
+            "Technology came long before science and can exist without it.");
+        Q("tech", "medium", "Another name for intermediate (appropriate) technology is:",
+            "Low cost technology", ["High technology", "Nanotechnology", "Space technology"],
+            "It uses local materials and semi-skilled labour.");
+        Q("tech", "hard", "According to the text, which aspect of technology CANNOT be transferred and must be developed on site?",
+            "Software (organizational know-how, institutions, management)", ["Hardware (machines and tools)", "Products", "Workshops"],
+            "Software is location specific.");
+        Q("tech", "medium", "Tie-in loans, a negative effect of foreign aid, require:",
+            "Spending the money back in the donor country", ["No interest", "Military assistance only", "Local manufacturing"],
+            "Even when goods are cheaper elsewhere.");
+        Q("tech", "medium", "The agricultural revolution began about 10,000 years ago in the:",
+            "River Nile Valley", ["Europe", "China", "Americas"],
+            "The industrial revolution began about 200 years ago in Europe.");
+        Q("tech", "medium", "Resources that can be replenished after use (forests, fisheries, wind) are:",
+            "Renewable (flow) resources", ["Stock resources", "Localized resources", "Potential resources"],
+            "Stock (non-renewable) resources cannot be replenished in human time.");
+        Q("tech", "medium", "Sunlight and air, whose quantity is not affected by human consumption, are:",
+            "Perpetual resources", ["Stock resources", "Reserved resources", "Localized resources"],
+            "They are of continued supply.");
+        Q("tech", "hard", "Coal, petroleum and limestone are classified by origin as:",
+            "Biotic resources", ["Non-biotic resources", "Perpetual resources", "International resources"],
+            "They formed from the remains of once living organisms.");
+        Q("tech", "hard", "Petroleum known to exist in the Chad basin but not yet drilled is a:",
+            "Potential resource", ["Actual resource", "Ubiquitous resource", "Perpetual resource"],
+            "Niger Delta petroleum, being exploited, is an actual resource.");
+        Q("tech", "medium", "Water, air and solar radiation found everywhere are:",
+            "Ubiquitous resources", ["Localized resources", "Individual resources", "Stock resources"],
+            "Minerals are mainly localized.");
+        Q("tech", "medium", "The Chad Basin and Rivers Niger and Benue are examples of:",
+            "International resources", ["Individual resources", "Perpetual resources", "Potential resources"],
+            "Shared by two or more countries.");
+        Q("tech", "medium", "The first energy source used for transportation was:",
+            "Wind (sailing boats)", ["Coal", "Petrol", "Electricity"],
+            "Windmills and water wheels came about 2,500 years ago.");
+        Q("tech", "hard", "A major criticism of bio-fuels from energy crops is that they:",
+            "Threaten food security", ["Produce nuclear waste", "Cannot generate electricity", "Are non-renewable"],
+            "Grain and oil for food is turned into fuel.");
+
+        // ===================== HAZARDS, POLLUTION & PLASTICS =====================
+        Q("hazards", "easy", "The four main types of hazard are physical, biological, ergonomic and:",
+            "Chemical", ["Political", "Economic", "Spiritual"],
+            "A hazard is anything that can hurt you or make you ill.");
+        Q("hazards", "medium", "Which hazards are the HARDEST to spot?",
+            "Ergonomic hazards", ["Physical hazards", "Chemical hazards", "Biological hazards"],
+            "Strain on the body is not immediately noticed.");
+        Q("hazards", "medium", "The three routes by which toxic chemicals enter the body are:",
+            "Inhalation, skin absorption and ingestion", ["Sight, hearing and touch", "Blood, saliva and sweat", "Injection, osmosis and diffusion"],
+            "Effects may be acute or chronic.");
+        Q("hazards", "medium", "Which physical form of chemical is LEAST likely to cause poisoning?",
+            "Solids", ["Gases", "Vapours", "Dusts"],
+            "But processes can turn solids into dusts or fumes.");
+        Q("hazards", "medium", "Tiny droplets of liquid suspended in the air are called:",
+            "Mists", ["Vapours", "Dusts", "Fumes"],
+            "A vapour is the gas phase of a normally liquid material.");
+        Q("hazards", "medium", "Beta decay occurs when:",
+            "The neutron-to-proton ratio is too great", ["The nucleus has too many protons", "The nucleus is at too high energy", "There are no neutrons"],
+            "A neutron turns into a proton and an electron, which is emitted.");
+        Q("hazards", "medium", "Gamma decay occurs because:",
+            "The nucleus is at too high an energy and emits a high-energy photon", ["There are too many protons", "An electron is captured", "A helium nucleus tunnels out"],
+            "Alpha decay emits a helium nucleus.");
+        Q("hazards", "medium", "The unit of radiation dosage, 'rem', stands for:",
+            "Roentgen equivalent in man", ["Radiation emission measure", "Radioactive element mass", "Relative energy mean"],
+            "Doses of 800 rems or more are always fatal.");
+        Q("hazards", "hard", "Half of all people exposed to what dose of radiation die?",
+            "450 rems", ["25 rems", "100 rems", "50 rems"],
+            "Above 100 rems radiation sickness begins.");
+        Q("hazards", "hard", "Radioactive strontium-90 causes bone cancer because it is mistaken for:",
+            "Calcium", ["Iodine", "Iron", "Sodium"],
+            "Iodine-131 concentrates in the thyroid gland.");
+        Q("hazards", "medium", "The main way radiation is spread about the environment is the:",
+            "Water cycle", ["Carbon cycle", "Nitrogen cycle", "Rock cycle"],
+            "Radionuclides in water are absorbed by vegetation and animals.");
+        Q("hazards", "medium", "Smoke detectors contain the radioactive element:",
+            "Americium-241", ["Uranium-235", "Iodine-131", "Strontium-90"],
+            "Used smoke detectors are a radioactive hazard.");
+        Q("hazards", "medium", "Pollutants for which the environment has little or no absorptive capacity (e.g. heavy metals) are:",
+            "Stock pollutants", ["Fund pollutants", "Biodegradable pollutants", "Point pollutants"],
+            "Fund pollutants, like CO₂, can be absorbed up to a limit.");
+        Q("hazards", "medium", "The increasing accumulation of toxic substances (e.g. DDT) in food chains is:",
+            "Biological magnification", ["Eutrophication", "Fluorosis", "Leaching"],
+            "It thins egg shells of predatory birds.");
+        Q("hazards", "hard", "Nitrates converted to nitrites in infants can cause 'blue babies', a condition called:",
+            "Methaemoglobinaemia", ["Fluorosis", "Leukaemia", "Xeroderma pigmentosum"],
+            "Nitrites combine with haemoglobin and reduce oxygen transport.");
+        Q("hazards", "hard", "Which crop is the sensitive indicator of fluoride pollution?",
+            "Maize", ["Rice", "Cassava", "Yam"],
+            "In humans, mottling of teeth (fluorosis) indicates fluoride excess.");
+        Q("hazards", "medium", "Over-illumination that makes it impossible to see stars is:",
+            "Light pollution", ["Visual pollution", "Thermal pollution", "Noise pollution"],
+            "Visual pollution refers to eyesores like billboards.");
+        Q("hazards", "medium", "Plastics that soften and melt if enough heat is applied are:",
+            "Thermoplastics", ["Thermosets", "Biopolymers", "Composites"],
+            "Thermosets stay solid after first setting.");
+        Q("hazards", "medium", "Plastic bags take about how long to decompose?",
+            "1,000 years", ["10 years", "100 years", "1 year"],
+            "They are non-biodegradable.");
+        Q("hazards", "hard", "Diethylhexyl phthalate (DEHP) used in plastics is cited as a:",
+            "Carcinogen", ["Vitamin", "Fertilizer", "Antibiotic"],
+            "Lead, cadmium and mercury cause direct toxicity.");
+
+        // ===================== HIV/AIDS =====================
+        Q("hiv", "easy", "HIV stands for:",
+            "Human Immunodeficiency Virus", ["Human Infection Virus", "Hereditary Immune Virus", "Human Influenza Virus"],
+            "It causes AIDS.");
+        Q("hiv", "medium", "HIV is a retrovirus, meaning its genetic messenger is:",
+            "RNA", ["DNA", "Protein", "Lipid"],
+            "Most cellular organisms use DNA.");
+        Q("hiv", "medium", "HIV-2 is found mostly in:",
+            "West Africa", ["Southern Africa", "Europe", "Asia"],
+            "HIV-1 is the primary cause of AIDS worldwide.");
+        Q("hiv", "medium", "A person is defined as having AIDS if the CD4 count falls below:",
+            "200 per cubic millimetre", ["1,200 per cubic millimetre", "600 per cubic millimetre", "1,000 per cubic millimetre"],
+            "HIV destroys CD4 lymphocytes.");
+        Q("hiv", "medium", "The chronic asymptomatic stage of HIV lasts on average:",
+            "8 to 10 years", ["2 weeks", "6 months", "30 years"],
+            "The three stages: primary, chronic asymptomatic, symptomatic (AIDS).");
+        Q("hiv", "medium", "The most common test for diagnosing HIV is:",
+            "ELISA", ["Western blot", "PCR", "X-ray"],
+            "A positive ELISA is confirmed by Western blot.");
+        Q("hiv", "easy", "Which is NOT a mode of HIV transmission?",
+            "Mosquito bites", ["Sexual relations with an infected person", "Sharing needles", "Mother to child during breastfeeding"],
+            "If mosquitoes transmitted HIV, many more young children would be infected.");
+        Q("hiv", "medium", "Sub-Saharan Africa is home to what percentage of people living with HIV?",
+            "67%", ["25%", "91%", "10%"],
+            "And 91% of new infections among children.");
+        Q("hiv", "medium", "The best way to avoid sexual transmission of HIV is:",
+            "Abstinence", ["Antibiotics", "Vaccination", "Kissing only"],
+            "Next best: one uninfected partner and use of condoms.");
+        Q("hiv", "medium", "The drug therapy that delays progression of HIV is called:",
+            "Antiretroviral therapy", ["Antimalarial therapy", "Antibiotic therapy", "Chemotherapy"],
+            "No treatment cures AIDS.");
+
+        // Application State
+        let state = {
+            questions: [],
+            currentQuestionIndex: 0,
+            answers: {},
+            timeLimit: 0, 
+            timeRemaining: 0,
+            timerId: null
+        };
+
+        const contentDiv = document.getElementById('content');
+
+        // Initialize App
+        function initApp() {
+            renderSetupScreen();
+        }
+
+        // --- SCREEN RENDERERS ---
+
+        function renderSetupScreen() {
+            contentDiv.className = "flex-grow min-h-0 overflow-y-auto flex flex-col p-5 sm:p-8 bg-white";
+            contentDiv.innerHTML = `
+                <div class="w-full max-w-xl mx-auto my-auto fade-in">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Test Preferences</h2>
+                    
+                    <div class="space-y-5 bg-gray-50 p-5 sm:p-6 rounded-2xl border border-gray-100 shadow-inner">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Number of Questions</label>
+                            <select id="numQuestions" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
+                                <option value="10">10 Questions</option>
+                                <option value="20">20 Questions</option>
+                                <option value="40" selected>40 Questions</option>
+                                <option value="60">60 Questions (Exam Length)</option>
+                                <option value="100">100 Questions</option>
+                                <option value="0">All Questions (${questionBank.length})</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Topic</label>
+                            <select id="topic" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
+                                <option value="all" selected>All Topics</option>
+                                ${Object.entries(TOPICS).map(([key, name]) => `<option value="${key}">${name} (${questionBank.filter(q => q.topic === key).length})</option>`).join('')}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Difficulty Level</label>
+                            <select id="difficulty" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
+                                <option value="mixed" selected>Mixed (All Levels)</option>
+                                <option value="easy">Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Time Limit</label>
+                            <select id="timeLimit" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
+                                <option value="auto" selected>Exam Pace (45 seconds per question)</option>
+                                <option value="10">10 Minutes</option>
+                                <option value="20">20 Minutes</option>
+                                <option value="30">30 Minutes</option>
+                                <option value="45">45 Minutes</option>
+                                <option value="60">60 Minutes</option>
+                                <option value="120">2 Hours</option>
+                            </select>
+                        </div>
+
+                        <button onclick="startTest()" class="w-full mt-8 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold text-lg py-4 sm:py-3 px-4 rounded-xl transition duration-200 shadow-md">
+                            <i class="fa-solid fa-play mr-2"></i> Start Test
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTestScreen() {
+            // Adjust padding specifically for test view
+            contentDiv.className = "flex-grow min-h-0 flex flex-col bg-white relative";
+            
+            const question = state.questions[state.currentQuestionIndex];
+            const progress = ((state.currentQuestionIndex) / state.questions.length) * 100;
+            const isLastQuestion = state.currentQuestionIndex === state.questions.length - 1;
+
+            let optionsHtml = '';
+            question.options.forEach((opt, index) => {
+                const isSelected = state.answers[state.currentQuestionIndex] === index;
+                optionsHtml += `
+                    <div class="mb-3 sm:mb-4 relative">
+                        <input type="radio" name="option" id="opt_${index}" value="${index}" class="option-radio opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10" ${isSelected ? 'checked' : ''} onchange="selectOption(${index})">
+                        <label for="opt_${index}" class="option-label block w-full border border-gray-200 rounded-xl p-4 sm:p-5 cursor-pointer active:bg-gray-100 hover:bg-gray-50 flex items-center">
+                            <span class="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0 border-2 rounded-full mr-4 flex items-center justify-center ${isSelected ? 'border-indigo-600 bg-indigo-600' : 'border-gray-300'}">
+                                ${isSelected ? '<div class="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-white rounded-full"></div>' : ''}
+                            </span>
+                            <span class="text-base sm:text-lg text-gray-800 leading-snug">${opt}</span>
+                        </label>
+                    </div>
+                `;
+            });
+
+            contentDiv.innerHTML = `
+                <!-- Sticky Header for Mobile & Desktop -->
+                <div class="shrink-0 bg-white/95 backdrop-blur-sm z-20 px-5 sm:px-8 py-4 border-b border-gray-100 shadow-sm">
+                    <div class="flex justify-between items-center mb-3">
+                        <div class="text-xs sm:text-sm font-bold text-gray-500 uppercase tracking-wider">
+                            Q ${state.currentQuestionIndex + 1} <span class="text-gray-300 mx-1">/</span> ${state.questions.length}
+                        </div>
+                        <div class="flex items-center text-base sm:text-lg font-bold ${state.timeRemaining <= 60 ? 'text-red-500 animate-pulse' : 'text-indigo-600'} bg-indigo-50 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg">
+                            <i class="fa-regular fa-clock mr-2"></i> <span id="timerDisplay">--:--</span>
+                        </div>
+                    </div>
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-gray-200 rounded-full h-1.5 sm:h-2">
+                        <div class="bg-indigo-500 h-1.5 sm:h-2 rounded-full transition-all duration-300 ease-out" style="width: ${progress}%"></div>
+                    </div>
+                </div>
+
+                <!-- Scrollable Question Area -->
+                <div class="flex-grow min-h-0 px-5 sm:px-8 py-6 overflow-y-auto fade-in">
+                    <p class="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-2">${TOPICS[question.topic]}</p>
+                    <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-6 sm:mb-8 leading-relaxed">
+                        ${question.text}
+                    </h3>
+                    <div class="mb-4">
+                        ${optionsHtml}
+                    </div>
+                </div>
+
+                <!-- Sticky Footer -->
+                <div class="shrink-0 w-full bg-white border-t border-gray-200 p-4 sm:px-8 sm:py-5 z-20 flex justify-between items-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] sm:shadow-none">
+                    <button onclick="prevQuestion()" class="${state.currentQuestionIndex === 0 ? 'invisible' : ''} w-1/2 sm:w-auto px-4 py-3 sm:py-2.5 text-gray-600 font-bold bg-gray-100 active:bg-gray-200 hover:bg-gray-200 rounded-xl sm:rounded-lg transition text-center mr-2">
+                        <i class="fa-solid fa-arrow-left sm:mr-2"></i> <span class="hidden sm:inline">Previous</span>
+                    </button>
+                    
+                    ${isLastQuestion ? 
+                        `<button onclick="submitTest()" class="w-1/2 sm:w-auto px-4 py-3 sm:py-2.5 bg-green-600 active:bg-green-700 hover:bg-green-700 text-white font-bold rounded-xl sm:rounded-lg transition shadow-md text-center ml-2">
+                            Submit <i class="fa-solid fa-check ml-1 sm:ml-2"></i>
+                        </button>` 
+                        : 
+                        `<button onclick="nextQuestion()" class="w-1/2 sm:w-auto px-4 py-3 sm:py-2.5 bg-indigo-600 active:bg-indigo-700 hover:bg-indigo-700 text-white font-bold rounded-xl sm:rounded-lg transition shadow-md text-center ml-2">
+                            Next <i class="fa-solid fa-arrow-right ml-1 sm:ml-2"></i>
+                        </button>`
+                    }
+                </div>
+            `;
+            
+            updateTimerDisplay(); // Ensure immediate render
+        }
+
+        function renderReviewScreen() {
+            // Adjust padding to allow full natural scrolling on mobile
+            contentDiv.className = "flex-grow min-h-0 flex flex-col px-4 py-6 sm:p-8 bg-white overflow-y-auto";
+            
+            let score = 0;
+            state.questions.forEach((q, idx) => {
+                if (state.answers[idx] === q.correct) score++;
+            });
+
+            const percentage = Math.round((score / state.questions.length) * 100);
+            let feedback = '';
+            if (percentage >= 80) feedback = "Excellent work! You have a solid grasp of the GES 104 material.";
+            else if (percentage >= 50) feedback = "Good effort! Review the concepts below to solidify your understanding.";
+            else feedback = "Keep studying! Carefully review the detailed rationales below to master these concepts.";
+
+            let reviewHtml = `
+                <div class="fade-in w-full max-w-3xl mx-auto pb-8">
+                    
+                    <!-- Score Card -->
+                    <div class="text-center mb-8 bg-indigo-50 p-6 sm:p-8 rounded-2xl border border-indigo-100 shadow-sm">
+                        <div class="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full shadow mb-4">
+                            <h2 class="text-3xl font-black text-indigo-600">${score}<span class="text-lg text-gray-400">/${state.questions.length}</span></h2>
+                        </div>
+                        <p class="text-xl font-bold text-gray-800 mb-2">Score: ${percentage}%</p>
+                        <p class="text-sm sm:text-base text-gray-600 px-4">${feedback}</p>
+                        <button onclick="initApp()" class="mt-6 w-full sm:w-auto px-8 py-3.5 sm:py-2.5 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold rounded-xl transition shadow-md">
+                            <i class="fa-solid fa-rotate-right mr-2"></i> Retake Setup
+                        </button>
+                    </div>
+                    
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4 border-b pb-3 pl-1">Score by Topic</h3>
+                    <div class="space-y-2 mb-8">
+                        ${Object.entries(TOPICS).map(([key, name]) => {
+                            const qs = state.questions.map((q, i) => ({ q, i })).filter(x => x.q.topic === key);
+                            if (qs.length === 0) return '';
+                            const right = qs.filter(x => state.answers[x.i] === x.q.correct).length;
+                            const pct = Math.round(right / qs.length * 100);
+                            const bar = pct >= 70 ? 'bg-green-500' : pct >= 50 ? 'bg-yellow-400' : 'bg-red-500';
+                            return `<div class="text-sm">
+                                <div class="flex justify-between mb-1"><span class="text-gray-700 pr-2">${name}</span><span class="font-semibold text-gray-800 shrink-0">${right}/${qs.length}</span></div>
+                                <div class="w-full bg-gray-200 rounded-full h-2"><div class="${bar} h-2 rounded-full" style="width:${pct}%"></div></div>
+                            </div>`;
+                        }).join('')}
+                    </div>
+
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-5 border-b pb-3 pl-1">Informed Review</h3>
+                    <div class="space-y-5 sm:space-y-6">
+            `;
+
+            state.questions.forEach((q, idx) => {
+                const userAnswer = state.answers[idx];
+                const isCorrect = userAnswer === q.correct;
+                const unanswered = userAnswer === undefined;
+
+                let userChoiceText = unanswered ? "<span class='italic text-gray-400'>Not answered</span>" : q.options[userAnswer];
+                let correctChoiceText = q.options[q.correct];
+
+                reviewHtml += `
+                    <div class="bg-white border rounded-2xl p-4 sm:p-6 ${isCorrect ? 'border-green-200 shadow-sm' : 'border-red-200 shadow-sm'}">
+                        <div class="flex items-start">
+                            <div class="mt-1 mr-3 sm:mr-4 flex-shrink-0 bg-white rounded-full">
+                                ${isCorrect ? '<i class="fa-solid fa-circle-check text-green-500 text-2xl"></i>' : '<i class="fa-solid fa-circle-xmark text-red-500 text-2xl"></i>'}
+                            </div>
+                            <div class="flex-grow min-w-0"> <!-- min-w-0 fixes flexbox text truncation issues -->
+                                <p class="font-semibold text-gray-800 mb-4 text-base sm:text-lg leading-relaxed"><span class="text-gray-400 mr-1">${idx + 1}.</span> ${q.text}</p>
+                                
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5 text-sm sm:text-base">
+                                    <div class="bg-gray-50 p-3.5 sm:p-4 rounded-xl border border-gray-200">
+                                        <p class="text-gray-500 mb-1.5 text-xs font-bold uppercase tracking-wider">Your Answer</p>
+                                        <p class="${isCorrect ? 'text-green-700 font-semibold' : 'text-red-700 font-medium'} break-words">${userChoiceText}</p>
+                                    </div>
+                                    ${!isCorrect ? `
+                                    <div class="bg-green-50 p-3.5 sm:p-4 rounded-xl border border-green-200">
+                                        <p class="text-green-600 mb-1.5 text-xs font-bold uppercase tracking-wider">Correct Answer</p>
+                                        <p class="text-green-800 font-semibold break-words">${correctChoiceText}</p>
+                                    </div>
+                                    ` : ''}
+                                </div>
+
+                                <div class="bg-blue-50/70 border-l-4 border-blue-400 p-4 sm:p-5 rounded-r-xl">
+                                    <h4 class="text-xs font-bold text-blue-800 uppercase tracking-wider mb-2 flex items-center"><i class="fa-solid fa-book-open mr-2"></i> Rationale</h4>
+                                    <p class="text-sm sm:text-base text-blue-900 leading-relaxed">${q.rationale}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            reviewHtml += `
+                    </div>
+                </div>
+            `;
+            
+            contentDiv.innerHTML = reviewHtml;
+            // Scroll to top of review screen
+            window.scrollTo(0,0);
+            if(contentDiv.scrollTo) contentDiv.scrollTo(0,0);
+        }
+
+        // --- APP LOGIC ---
+
+        function startTest() {
+            const numQ = parseInt(document.getElementById('numQuestions').value);
+            const diff = document.getElementById('difficulty').value;
+            const topic = document.getElementById('topic').value;
+            const timeChoice = document.getElementById('timeLimit').value;
+
+            // Filter questions
+            let filteredQuestions = questionBank.filter(q =>
+                (diff === 'mixed' || q.difficulty === diff) && (topic === 'all' || q.topic === topic));
+            if (filteredQuestions.length === 0) {
+                alert("No questions match that topic and difficulty. Try 'Mixed' difficulty.");
+                return;
+            }
+
+            // Shuffle questions, take the requested count, then shuffle each question's options
+            filteredQuestions = shuffleArray([...filteredQuestions]);
+            const count = numQ === 0 ? filteredQuestions.length : Math.min(numQ, filteredQuestions.length);
+            const selectedQuestions = filteredQuestions.slice(0, count).map(q => {
+                const order = shuffleArray(q.options.map((_, i) => i));
+                return { ...q, options: order.map(i => q.options[i]), correct: order.indexOf(q.correct) };
+            });
+
+            // Setup state
+            state.questions = selectedQuestions;
+            state.currentQuestionIndex = 0;
+            state.answers = {};
+            state.timeLimit = timeChoice === 'auto' ? Math.max(60, count * 45) : parseInt(timeChoice) * 60;
+            state.timeRemaining = state.timeLimit;
+            
+            // Start Timer
+            if (state.timerId) clearInterval(state.timerId);
+            state.timerId = setInterval(timerTick, 1000);
+
+            renderTestScreen();
+            window.scrollTo(0,0);
+        }
+
+        function timerTick() {
+            state.timeRemaining--;
+            updateTimerDisplay();
+
+            if (state.timeRemaining <= 0) {
+                clearInterval(state.timerId);
+                alert("Time's up! Submitting your test automatically.");
+                submitTest();
+            }
+        }
+
+        function updateTimerDisplay() {
+            const timerEl = document.getElementById('timerDisplay');
+            if (!timerEl) return;
+            
+            const m = Math.floor(state.timeRemaining / 60).toString().padStart(2, '0');
+            const s = (state.timeRemaining % 60).toString().padStart(2, '0');
+            timerEl.textContent = `${m}:${s}`;
+            
+            if (state.timeRemaining <= 60 && state.timeRemaining > 0) {
+                timerEl.parentElement.classList.remove('text-indigo-600', 'bg-indigo-50');
+                timerEl.parentElement.classList.add('text-red-600', 'bg-red-50', 'animate-pulse');
+            }
+        }
+
+        function selectOption(index) {
+            state.answers[state.currentQuestionIndex] = index;
+            // Force re-render to update radio visual states
+            renderTestScreen();
+        }
+
+        function nextQuestion() {
+            if (state.currentQuestionIndex < state.questions.length - 1) {
+                state.currentQuestionIndex++;
+                renderTestScreen();
+                window.scrollTo(0,0);
+            }
+        }
+
+        function prevQuestion() {
+            if (state.currentQuestionIndex > 0) {
+                state.currentQuestionIndex--;
+                renderTestScreen();
+                window.scrollTo(0,0);
+            }
+        }
+
+        function submitTest() {
+            clearInterval(state.timerId);
+            renderReviewScreen();
+        }
+
+        // Utility: Fisher-Yates Shuffle
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Boot
+        initApp();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GES 107: Reproductive Health, STIs and HIV Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            -webkit-tap-highlight-color: transparent; /* Removes tap highlight on mobile */
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .option-label {
+            transition: all 0.2s;
+        }
+        .option-radio:checked + .option-label {
+            background-color: #e0e7ff;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+        /* Custom scrollbar only for desktop */
+        @media (min-width: 640px) {
+            ::-webkit-scrollbar { width: 8px; }
+            ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+            ::-webkit-scrollbar-thumb { background: #c7c7cc; border-radius: 4px; }
+            ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+        }
+        /* Hide scrollbar for clean mobile sticky header/footer */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<!-- pb-20 keeps a strip clear at the bottom for the Netlify badge -->
+<body class="min-h-screen pb-20 text-gray-800 sm:flex sm:items-center sm:justify-center sm:px-4 sm:pt-4 bg-gray-100 sm:bg-gradient-to-br sm:from-blue-50 sm:to-indigo-100">
+
+    <!-- Mobile: Full height, Desktop: Rounded card -->
+    <div id="app" class="w-full max-w-3xl bg-white sm:shadow-2xl sm:rounded-2xl overflow-hidden h-[calc(100dvh-5rem)] sm:h-auto sm:max-h-[calc(100dvh-6rem)] flex flex-col relative fade-in">
+        
+        <!-- Header -->
+        <div class="bg-indigo-600 text-white px-4 py-5 sm:p-6 text-center shrink-0 z-30 shadow-md">
+            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight"><i class="fa-solid fa-graduation-cap mr-2"></i> GES 107</h1>
+            <p class="text-indigo-100 mt-1 text-sm sm:text-base font-medium">Reproductive Health, STIs and HIV</p>
+        </div>
+
+        <!-- Dynamic Content Container -->
+        <div id="content" class="flex-grow min-h-0 flex flex-col bg-white">
+            <!-- Content will be injected by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Question Bank derived from GES 107 materials (GES 107 Textbook and the printed GES 107 book)
+        // Q(topic, difficulty, question, correctAnswer, [distractors], rationale)
+        // Options are shuffled at test start, so the correct answer is always written first here.
+        const TOPICS = {
+            living: "Healthy Living & Lifestyle",
+            nutrition: "Nutrition: Carbohydrates, Fats, Protein & Water",
+            micronutrients: "Vitamins & Minerals",
+            microbes: "Microbes, Infection & Disease Transmission",
+            reproductive: "Reproductive System & Health",
+            sexuality: "Human Sexuality & Adolescent Behaviour",
+            sti: "Sexually Transmitted Infections",
+            hiv: "HIV: Epidemiology, Transmission & Prevention",
+            hct: "HIV Counselling, Testing, Treatment & Care",
+            sickle: "Sickle Cell Disease & Non-Communicable Diseases",
+            drugs: "Drugs and Mankind",
+            gender: "Gender Issues & Sexual Harassment"
+        };
+
+        const questionBank = [];
+        function Q(topic, difficulty, text, answer, distractors, rationale) {
+            questionBank.push({ topic, difficulty, text, options: [answer, ...distractors], correct: 0, rationale });
+        }
+
+        // ===================== HEALTHY LIVING =====================
+        Q("living", "easy", "The WHO defines health as:",
+            "A state of complete physical, mental and social well-being, and not merely the absence of disease", ["The absence of disease or infirmity", "Physical fitness only", "Having access to a hospital"],
+            "Being healthy is more than not being ill.");
+        Q("living", "easy", "Which is a characteristic of health?",
+            "It is dynamic – active and ever changing", ["It is static and fixed", "Only the rich have a right to it", "It is only physical"],
+            "Health is complete, has physical, mental and social components, and everyone has a right to it.");
+        Q("living", "easy", "Lifestyle or behaviour simply refers to:",
+            "What people do or fail to do", ["The genes a person inherits", "The hospital a person attends", "The climate where people live"],
+            "Also called the habits of individuals.");
+        Q("living", "medium", "According to Green & Kreuter (1991), lifestyle can:",
+            "Add to or decrease a person's years of potential life", ["Not affect health at all", "Only affect mental health", "Only affect children"],
+            "Lifestyles contribute to health, disease and quality of life.");
+        Q("living", "medium", "The text says 'every disease whose cause is known has a':",
+            "Behavioural component", ["Genetic component only", "Viral cause", "Cure"],
+            "E.g. HIV is transmitted through modifiable behaviours.");
+        Q("living", "medium", "Which behavioural risk factor is linked to malaria in the text?",
+            "Not sleeping under an ITN and over-grown weeds", ["Smoking tobacco", "Use of alcohol", "Excessive speed"],
+            "ITN = insecticide-treated net.");
+        Q("living", "medium", "Cancer of the lungs is mainly linked to which behaviour?",
+            "Smoking tobacco products", ["Eating fruits", "Lack of sleep", "Drinking water"],
+            "Cancer of the liver is linked to alcohol use.");
+        Q("living", "easy", "The three major lifestyle behaviours to stay healthy are:",
+            "Eat well, rest well and exercise well", ["Work hard, study hard and pray", "Sleep, eat and drink", "Travel, read and dance"],
+            "These are the three pillars of healthy living in the text.");
+        Q("living", "medium", "How much physical activity is recommended daily to reap the full benefits of exercise?",
+            "At least 30 minutes", ["At least 5 minutes", "At least 3 hours", "Once a week"],
+            "Exercise helps maintain healthy weight and prevents heart disease, hypertension and diabetes.");
+        Q("living", "medium", "Adults need an average of how many hours of sleep every day?",
+            "8 hours", ["4 hours", "12 hours", "6 hours"],
+            "Children need more; adequate rest prevents stress.");
+        Q("living", "medium", "A person is said to be stressed when he/she is:",
+            "Tense, anxious, worried and nervous", ["Well rested", "Physically fit", "Calm and focused"],
+            "Stress limits the body's ability to prevent diseases.");
+        Q("living", "easy", "Which of these is recommended for good eating?",
+            "Eat more baked, steamed or grilled foods and fewer fried ones", ["Skip breakfast", "Drink more sugary beverages", "Eat more junk food"],
+            "Also eat plenty of fruits and vegetables and drink plenty of water.");
+        Q("living", "medium", "Which is a challenge of university life listed in the text?",
+            "Pressure to become romantically involved", ["Too much free money", "No academic workload", "Lack of new freedom"],
+            "Others: loneliness, new environment, accommodation, heavy workload.");
+        Q("living", "hard", "Non-communicable diseases (NCDs) are described in the printed book as conditions that:",
+            "Cannot be transmitted from one person to another and have no causative agent", ["Spread through the air", "Are caused by bacteria", "Only affect children"],
+            "Unhealthy diet, inactivity and smoking are major risk factors for NCDs.");
+        Q("living", "hard", "According to the printed book, which country has the second highest number of people living with HIV in the world (about 3.5 million in 2010)?",
+            "Nigeria", ["South Africa", "Kenya", "India"],
+            "The 2010 national survey showed adult HIV prevalence of 4.2%.");
+        Q("living", "hard", "In Nigeria, unlike most of sub-Saharan Africa, HIV prevalence is higher in:",
+            "Rural areas than urban areas", ["Urban areas than rural areas", "Only the northern states", "Only among the elderly"],
+            "Stated in the introduction of the printed GES 107 book.");
+        Q("living", "medium", "About 75% of malaria deaths in Nigeria occur among:",
+            "Children under five", ["Adolescents", "The elderly", "Pregnant women only"],
+            "One in ten maternal deaths is also due to malaria.");
+
+        // ===================== NUTRITION =====================
+        Q("nutrition", "easy", "Nutrition is the science that studies:",
+            "How living organisms take in and use food for energy, growth, maintenance and health", ["Only how food is cooked", "Only the taste of food", "How food is sold"],
+            "It includes digestion, absorption and use of nutrients by cells.");
+        Q("nutrition", "medium", "Nutritional status can be assessed through dietary, biochemical, clinical and:",
+            "Anthropometric methods", ["Astrological methods", "Psychological methods only", "Genetic methods only"],
+            "Nutritional status is the health condition of an individual in relation to nutrition.");
+        Q("nutrition", "medium", "An essential nutrient is one that:",
+            "Cannot be synthesized in the body and must be obtained from the diet", ["The body makes in excess", "Is not needed by the body", "Is only found in drugs"],
+            "Nutrients are grouped into macro and micronutrients.");
+        Q("nutrition", "easy", "Diet refers to:",
+            "What a person habitually eats", ["Only a weight-loss plan", "Fasting", "Medicine"],
+            "Everyone is always on a diet; special diets can also be prescribed.");
+        Q("nutrition", "easy", "The macronutrients are:",
+            "Protein, fat and carbohydrate", ["Vitamins and minerals", "Water and fibre", "Iron and iodine"],
+            "Micronutrients are vitamins and minerals.");
+        Q("nutrition", "medium", "Which statement about food is correct according to the text?",
+            "No single food item can supply all the necessary nutrients", ["Abundance of food guarantees good nutrition", "Too much food is never harmful", "All foods have identical nutrients"],
+            "A variety of foods must be combined.");
+        Q("nutrition", "medium", "Failure to grow in height due to poor nutrition is called:",
+            "Stunting", ["Wasting", "Obesity", "Rickets"],
+            "Wasting is sudden loss of weight.");
+        Q("nutrition", "easy", "In carbohydrates, hydrogen and oxygen are present in the ratio:",
+            "2:1 (as in water)", ["1:1", "1:2", "3:1"],
+            "All carbohydrates contain carbon, hydrogen and oxygen.");
+        Q("nutrition", "medium", "Plants manufacture carbohydrates through:",
+            "Photosynthesis", ["Respiration", "Fermentation", "Digestion"],
+            "Plants are the main source of carbohydrates.");
+        Q("nutrition", "medium", "The form in which carbohydrate exists in the blood is:",
+            "Glucose", ["Fructose", "Sucrose", "Starch"],
+            "Fructose and galactose are converted to glucose.");
+        Q("nutrition", "medium", "Fructose is also called:",
+            "Levulose or fruit sugar", ["Milk sugar", "Table sugar", "Malt sugar"],
+            "Sources: honey, fruits, vegetables.");
+        Q("nutrition", "medium", "Sucrose (table sugar) consists of:",
+            "One glucose and one fructose molecule", ["Two glucose molecules", "One glucose and one galactose", "Two fructose molecules"],
+            "Maltose = 2 glucose; lactose = glucose + galactose.");
+        Q("nutrition", "medium", "Lactose is found only in:",
+            "Milk", ["Cane sugar", "Honey", "Cereals"],
+            "Milk is the chief animal source of carbohydrate.");
+        Q("nutrition", "hard", "Ranked in decreasing order of sweetness, which comes first?",
+            "Fructose", ["Sucrose", "Glucose", "Lactose"],
+            "Order: fructose, sucrose, glucose, lactose, dextrin, starch.");
+        Q("nutrition", "medium", "When carbohydrate is adequate in the diet, it:",
+            "Spares proteins from being used for energy", ["Causes protein deficiency", "Stops fat oxidation", "Destroys vitamins"],
+            "Its chief function is to provide energy.");
+        Q("nutrition", "hard", "Accumulation of ketones when too little carbohydrate is available, common in diabetics, is called:",
+            "Diabetic acidosis", ["Kwashiorkor", "Marasmus", "Pellagra"],
+            "Carbohydrates are needed for complete oxidation of fats.");
+        Q("nutrition", "medium", "Dietary fibre (cellulose and hemicellulose) helps the body by:",
+            "Absorbing water to form softer, bulkier stools for easy elimination", ["Providing most of the body's energy", "Building muscle", "Carrying oxygen"],
+            "Fibre is undigested carbohydrate.");
+        Q("nutrition", "medium", "What percentage of daily calorie intake should come from carbohydrates?",
+            "45–50%", ["10–15%", "80–90%", "5%"],
+            "The daily diet should contain not less than 100 g carbohydrate.");
+        Q("nutrition", "medium", "Blood glucose is primarily regulated by the hormone:",
+            "Insulin, produced by the pancreas", ["Adrenaline, from the adrenal gland", "Thyroxine, from the thyroid", "Oestrogen, from the ovary"],
+            "Insufficient insulin causes excess blood sugar.");
+        Q("nutrition", "medium", "Excess glucose is stored in the liver and muscles as:",
+            "Glycogen", ["Starch", "Protein", "Cholesterol"],
+            "And later as body fat.");
+        Q("nutrition", "medium", "Dietary goals suggest that processed sugar intake should be reduced to:",
+            "10% of total calories", ["50% of total calories", "30% of total calories", "0%"],
+            "Excess sugar contributes to obesity, diabetes and tooth decay.");
+        Q("nutrition", "medium", "Fat provides how many kilocalories per gram?",
+            "9 kcal/g", ["4 kcal/g", "2 kcal/g", "15 kcal/g"],
+            "Fat is a concentrated source of calories.");
+        Q("nutrition", "medium", "Triglycerides, generally called neutral fats, are:",
+            "Simple lipids", ["Compound lipids", "Derived lipids", "Proteins"],
+            "Compound lipids include phospholipids; derived lipids include cholesterol.");
+        Q("nutrition", "hard", "Cholesterol and bile salts are classified as:",
+            "Derived lipids", ["Simple lipids", "Compound lipids", "Phospholipids"],
+            "Derived from hydrolysis of simple or compound lipids.");
+        Q("nutrition", "medium", "Diets rich in saturated fat and cholesterol are associated with:",
+            "Coronary heart disease and atherosclerosis", ["Rickets", "Scurvy", "Night blindness"],
+            "Polyunsaturated fats help reduce blood cholesterol.");
+        Q("nutrition", "medium", "Protein contains about what percentage of nitrogen?",
+            "16%", ["4%", "50%", "1%"],
+            "Proteins are built from 20 amino acids.");
+        Q("nutrition", "medium", "When nitrogen excretion is greater than nitrogen supplied by the diet, a person is in:",
+            "Negative nitrogen balance", ["Positive nitrogen balance", "Nitrogen equilibrium", "Ketosis"],
+            "Immunity and resistance to stress decline.");
+        Q("nutrition", "medium", "The two forms of Protein-Energy Malnutrition (PEM) are:",
+            "Kwashiorkor and marasmus", ["Rickets and scurvy", "Beriberi and pellagra", "Goitre and cretinism"],
+            "Seen in infants and young children in poverty or neglect.");
+        Q("nutrition", "medium", "Kwashiorkor typically occurs when a child:",
+            "Gets enough calories from high-carbohydrate family diet but inadequate protein", ["Is weaned very early on a diet low in both calories and protein", "Eats too much protein", "Lacks vitamin C"],
+            "Marasmus results from diets low in both calories and protein.");
+        Q("nutrition", "medium", "The human body is made of about what percentage of water?",
+            "60–75%", ["10–20%", "90–99%", "30–40%"],
+            "Water helps regulate body temperature.");
+        Q("nutrition", "medium", "Which is a function of water in the body?",
+            "Serving as the body's transportation system for nutrients and wastes", ["Providing 9 kcal per gram", "Building bones directly", "Producing insulin"],
+            "Water is also a lubricant and regulates temperature.");
+        Q("nutrition", "medium", "Who needs MORE water according to the text?",
+            "People on a high-fibre diet", ["People who are inactive", "People in cold climates only", "People who skip meals"],
+            "Also children, the elderly, the physically active and those with vomiting/diarrhoea.");
+
+        // ===================== VITAMINS & MINERALS =====================
+        Q("micronutrients", "easy", "The fat-soluble vitamins are:",
+            "A, D, E and K", ["B and C", "A, B, C and D", "C, D, E and K"],
+            "Water-soluble vitamins are the B-complex and vitamin C.");
+        Q("micronutrients", "medium", "A substance from which the body can synthesize a specific vitamin is a:",
+            "Precursor or provitamin", ["Coenzyme", "Antioxidant", "Mineral"],
+            "E.g. beta carotene is converted to retinol.");
+        Q("micronutrients", "medium", "How many parts of beta carotene are needed to form one part of retinol?",
+            "Six", ["Two", "Ten", "One"],
+            "Beta carotene gives plants their orange/yellow colour.");
+        Q("micronutrients", "easy", "Deficiency of vitamin A can result in:",
+            "Night blindness", ["Scurvy", "Rickets", "Pellagra"],
+            "Also dry skin and increased susceptibility to infection.");
+        Q("micronutrients", "medium", "Vitamin A is stored in the:",
+            "Liver", ["Kidney", "Bone", "Skin"],
+            "So daily intake is not always necessary.");
+        Q("micronutrients", "medium", "Vitamin D promotes the absorption of:",
+            "Calcium and phosphorus", ["Iron and zinc", "Sodium and potassium", "Iodine and copper"],
+            "This is needed for normal bone and tooth mineralisation.");
+        Q("micronutrients", "medium", "Vitamin D deficiency in young children causes:",
+            "Rickets", ["Beriberi", "Goitre", "Night blindness"],
+            "In adults it causes osteomalacia (adult rickets).");
+        Q("micronutrients", "medium", "Vitamin E is also known as:",
+            "Tocopherol", ["Retinol", "Ascorbic acid", "Cobalamin"],
+            "It is an antioxidant protecting polyunsaturated fatty acids.");
+        Q("micronutrients", "medium", "Vitamin K is essential for:",
+            "Blood clotting (formation of prothrombin)", ["Vision", "Bone growth", "Energy release"],
+            "Its deficiency results in pronounced blood loss before coagulation.");
+        Q("micronutrients", "medium", "Water-soluble vitamins must be taken daily because they:",
+            "Are not stored in appreciable amounts in the body", ["Are toxic in small amounts", "Are made by the body", "Never get destroyed by cooking"],
+            "They are easily destroyed by air, light and cooking.");
+        Q("micronutrients", "medium", "Extreme thiamine (B1) deficiency, which can occur in alcoholics, results in:",
+            "Beriberi", ["Pellagra", "Scurvy", "Rickets"],
+            "Thiamine is essential for carbohydrate metabolism.");
+        Q("micronutrients", "medium", "Niacin (vitamin B3) prevents:",
+            "Pellagra", ["Beriberi", "Rickets", "Anaemia"],
+            "Pellagra: skin sores, diarrhoea, dementia and death if untreated.");
+        Q("micronutrients", "hard", "Sores on the lips and cracks at the corners of the mouth indicate deficiency of:",
+            "Riboflavin (vitamin B2)", ["Vitamin K", "Vitamin D", "Iron"],
+            "Riboflavin is destroyed by light.");
+        Q("micronutrients", "hard", "Folate deficiency in pregnancy can lead to which defect in the baby?",
+            "Spina bifida", ["Rickets", "Goitre", "Night blindness"],
+            "Folate deficiency also causes megaloblastic anaemia.");
+        Q("micronutrients", "medium", "Cobalamin (vitamin B12) is found in useful amounts only in:",
+            "Animal foods", ["Fruits", "Cereals", "Vegetables"],
+            "Its deficiency causes megaloblastic anaemia.");
+        Q("micronutrients", "medium", "Bleeding gums and loosening of teeth indicate deficiency of:",
+            "Vitamin C", ["Vitamin A", "Vitamin K", "Vitamin E"],
+            "Vitamin C is needed for connective tissue and aids iron absorption.");
+        Q("micronutrients", "medium", "Macro minerals are needed in amounts greater than:",
+            "100 mg per day", ["1 mg per day", "10 g per day", "1,000 mg per day"],
+            "Micro (trace) minerals are needed in amounts below 100 mg/day.");
+        Q("micronutrients", "medium", "About 99% of the body's calcium is found in:",
+            "The skeleton and teeth", ["The blood", "The muscles", "The liver"],
+            "The remaining 1% is in the blood.");
+        Q("micronutrients", "medium", "The best sources of calcium are:",
+            "Milk and milk products", ["Citrus fruits", "Cereals", "Vegetable oils"],
+            "Phytic and oxalic acids reduce calcium absorption from green vegetables.");
+        Q("micronutrients", "medium", "Weak, fragile bones due to calcium deficiency is:",
+            "Osteoporosis", ["Osteomalacia", "Arthritis", "Goitre"],
+            "Calcium deficiency can also cause rickets.");
+        Q("micronutrients", "medium", "Excess sodium is associated with:",
+            "Hypertension and oedema", ["Night blindness", "Goitre", "Scurvy"],
+            "Sodium controls fluid balance in extracellular fluid.");
+        Q("micronutrients", "medium", "Potassium is an electrolyte found mainly in the:",
+            "Intracellular fluid", ["Extracellular fluid", "Bones", "Hair"],
+            "Sodium is in the extracellular fluid.");
+        Q("micronutrients", "medium", "Iron is a component of haemoglobin; its principal role is to:",
+            "Deliver oxygen to the body", ["Clot blood", "Form thyroid hormones", "Build teeth"],
+            "Its deficiency results in anaemia.");
+        Q("micronutrients", "medium", "Absorption of non-haem iron is enhanced by:",
+            "Vitamin C", ["Phytic acid", "Oxalic acid", "Antacids"],
+            "Phytic and oxalic acids reduce iron absorption.");
+        Q("micronutrients", "medium", "Iodine deficiency causes goitre in adults and, in children:",
+            "Cretinism", ["Rickets", "Kwashiorkor", "Beriberi"],
+            "Iodine is a component of thyroid hormones.");
+        Q("micronutrients", "hard", "Which mineral is essential for growth, wound healing, taste acuity and mobilization of vitamin A?",
+            "Zinc", ["Copper", "Manganese", "Sodium"],
+            "Its deficiency causes dwarfism and hypogonadism.");
+        Q("micronutrients", "medium", "Unlike vitamins, minerals:",
+            "Are not destroyed in food preparation but can be lost in discarded cooking water", ["Are organic compounds", "Provide energy directly", "Are made by the body"],
+            "Minerals are inorganic and represent about 4% of body weight.");
+
+        // ===================== MICROBES & INFECTION =====================
+        Q("microbes", "easy", "Microorganisms that cause disease are called:",
+            "Pathogens", ["Non-pathogens", "Normal flora", "Vectors"],
+            "Non-pathogens do not cause disease and can be beneficial.");
+        Q("microbes", "medium", "E. coli is beneficial in the large intestine but in the urinary system it:",
+            "Causes an infection", ["Is also beneficial", "Dies immediately", "Becomes a virus"],
+            "A microbe beneficial in one system can be pathogenic in another.");
+        Q("microbes", "hard", "Surface molecules by which pathogens attach to host tissue are called:",
+            "Adhesins or ligands", ["Antibodies", "Fomites", "Antigens only"],
+            "They bind to complementary receptors on host cells.");
+        Q("microbes", "medium", "Less than what percentage of bacteria are harmful?",
+            "1%", ["50%", "25%", "90%"],
+            "There are more bacteria in our mouths than humans on the planet.");
+        Q("microbes", "medium", "Rod-shaped bacteria are called:",
+            "Bacilli", ["Cocci", "Spirilla", "Vibrios"],
+            "Streptococci form chains; staphylococci form clusters.");
+        Q("microbes", "medium", "Bacteria arranged in clusters are:",
+            "Staphylococci", ["Streptococci", "Diplococci", "Bacilli"],
+            "Diplococci occur in pairs.");
+        Q("microbes", "medium", "Ringworm, athlete's foot and thrush are caused by:",
+            "Fungi", ["Bacteria", "Viruses", "Rickettsiae"],
+            "Antibiotics do not kill fungi.");
+        Q("microbes", "medium", "Malaria, trichomonas and amoebic dysentery are caused by:",
+            "Protozoa", ["Fungi", "Viruses", "Helminths"],
+            "Protozoa are one-celled animal-like organisms.");
+        Q("microbes", "medium", "Parasites living inside cells, transmitted by fleas, lice and ticks, are:",
+            "Rickettsiae", ["Viruses", "Fungi", "Protozoa"],
+            "They cause typhus and Rocky Mountain spotted fever.");
+        Q("microbes", "easy", "The smallest of all microorganisms, visible only with an electron microscope, are:",
+            "Viruses", ["Bacteria", "Fungi", "Protozoa"],
+            "They cannot reproduce outside a living cell and are not affected by antibiotics.");
+        Q("microbes", "medium", "Which of the three viruses of major concern to health workers has a vaccine?",
+            "Hepatitis B", ["Hepatitis C", "HIV", "None of them"],
+            "Hepatitis C and HIV have no vaccine.");
+        Q("microbes", "medium", "Microbes that grow best in the absence of oxygen are:",
+            "Anaerobic", ["Aerobic", "Pathogenic", "Opportunistic"],
+            "Aerobic microbes live only in the presence of oxygen.");
+        Q("microbes", "medium", "An infection acquired in a health care facility is:",
+            "Nosocomial", ["Endogenous", "Opportunistic", "Exogenous"],
+            "About 5–6% of US hospital patients develop one.");
+        Q("microbes", "medium", "Infections that occur when the body's defences are weak, e.g. pneumonia with AIDS, are:",
+            "Opportunistic", ["Nosocomial", "Endogenous", "Zoonotic"],
+            "They take advantage of weakened immunity.");
+        Q("microbes", "medium", "How many elements make up the chain of infection?",
+            "Six", ["Three", "Four", "Ten"],
+            "Agent, reservoir, portal of exit, mode of transmission, portal of entry, susceptible host.");
+        Q("microbes", "medium", "Objects contaminated with infectious material, such as doorknobs and linens, are:",
+            "Fomites", ["Vectors", "Hosts", "Carriers"],
+            "Fomites are reservoirs in the chain of infection.");
+        Q("microbes", "easy", "One of the most effective means of preventing the spread of pathogens is:",
+            "Hand washing", ["Taking antibiotics daily", "Avoiding water", "Wearing jewellery"],
+            "Contaminated hands are a common source of direct transmission.");
+        Q("microbes", "medium", "Diseases of animals that can be transmitted to humans, e.g. rabies, are called:",
+            "Zoonoses", ["Nosocomial infections", "Endogenous diseases", "Prions"],
+            "Animals are living reservoirs.");
+        Q("microbes", "medium", "The two major non-living reservoirs of infectious disease are:",
+            "Soil and water", ["Air and fire", "Food and drugs", "Metal and glass"],
+            "Soil harbours fungi and Clostridium botulinum.");
+        Q("microbes", "medium", "The easiest and most frequently travelled portal of entry for microbes is the:",
+            "Respiratory tract", ["Skin", "Urogenital tract", "Eye"],
+            "Examples: cold, pneumonia, influenza, measles.");
+        Q("microbes", "medium", "Treponema pallidum, which penetrates genitourinary mucous membranes, causes:",
+            "Syphilis", ["Gonorrhoea", "Chancroid", "Herpes"],
+            "It is a bacterial STI.");
+        Q("microbes", "medium", "Droplet transmission involves droplets propelled a short distance of:",
+            "Less than 1 metre", ["More than 10 metres", "About 5 metres", "Any distance"],
+            "Airborne transmission spreads over more than 1 metre.");
+        Q("microbes", "medium", "Chickenpox, measles and tuberculosis are spread mainly by:",
+            "Airborne transmission", ["Vector-borne transmission", "Common vehicle", "Direct sexual contact"],
+            "Prevent by separate rooms and masks/respirators.");
+        Q("microbes", "medium", "Meningococcus, influenza and pertussis are examples of:",
+            "Droplet transmission", ["Airborne transmission", "Vector-borne transmission", "Parenteral transmission"],
+            "Prevention: masks when within 1 metre, hand hygiene.");
+        Q("microbes", "medium", "Transmission of disease agents by a common inanimate reservoir such as food or blood is:",
+            "Common vehicle transmission", ["Vector-borne transmission", "Droplet transmission", "Airborne transmission"],
+            "E.g. salmonellosis through contaminated food and water.");
+        Q("microbes", "medium", "A vector that carries pathogens on its feet is a:",
+            "Mechanical vector", ["Biological vector", "Fomite", "Carrier"],
+            "Biological vectors transmit by bite or faeces.");
+        Q("microbes", "medium", "The phenomenon where a critical concentration of immune hosts prevents spread of infection is:",
+            "Herd immunity", ["Quarantine", "Isolation", "Contact tracing"],
+            "Vaccination increases herd immunity.");
+        Q("microbes", "medium", "Which is a classic sign of infection?",
+            "Redness, swelling and warmth", ["Improved appetite", "Lower body temperature", "Increased energy"],
+            "Others: tenderness, drainage and red streaks from a wound.");
+        Q("microbes", "hard", "The infective dose of Salmonella in a host with normal gastric acidity is about:",
+            "1 million organisms", ["10 organisms", "1 billion organisms", "100 organisms"],
+            "Gastric acid is a natural host defence.");
+        Q("microbes", "medium", "A disease that originates within the body, e.g. metabolic disorders, is:",
+            "Endogenous", ["Exogenous", "Nosocomial", "Opportunistic"],
+            "Exogenous diseases originate outside the body.");
+
+        // ===================== REPRODUCTIVE SYSTEM =====================
+        Q("reproductive", "medium", "The reproductive system is unique because it is:",
+            "The only organ system not vital for survival of the individual", ["The largest organ system", "Not regulated by hormones", "Only present in females"],
+            "Its major function is to ensure continuity of the species.");
+        Q("reproductive", "easy", "The primary reproductive organs (gonads) are:",
+            "Ovaries and testes", ["Uterus and penis", "Ducts and glands", "Kidneys and bladder"],
+            "They produce gametes and hormones.");
+        Q("reproductive", "medium", "Failure of the testes to descend is called:",
+            "Cryptorchidism", ["Varicocele", "Anorchia", "Orchitis"],
+            "Vanishing testes syndrome is bilateral anorchia.");
+        Q("reproductive", "medium", "Scrotal varicocele results from:",
+            "Backflow of blood due to incompetent valves in the spermatic veins", ["Failure of the testes to descend", "Mumps infection", "Excess sperm production"],
+            "It is a problem associated with the scrotum.");
+        Q("reproductive", "hard", "Erection occurs mainly due to:",
+            "Parasympathetic nerve activity dilating penile blood vessels", ["Sympathetic nerve activity", "Muscle contraction of the scrotum", "Closure of the urethra"],
+            "Ejaculation involves a massive increase in sympathetic activity.");
+        Q("reproductive", "medium", "What percentage of semen is seminal fluid?",
+            "60%", ["10%", "30%", "90%"],
+            "10% sperm and testicular fluid; 30% prostatic fluid.");
+        Q("reproductive", "medium", "How many sperm are present in a typical ejaculate?",
+            "20–100 million", ["1,000", "1 billion", "5,000"],
+            "Only a few hundred thousand pass through the cervix.");
+        Q("reproductive", "medium", "Semen is alkaline in order to:",
+            "Neutralise the normally acidic vagina so sperm can survive", ["Kill sperm", "Prevent fertilisation", "Increase sperm count"],
+            "Sperm can then survive for several hours.");
+        Q("reproductive", "medium", "The menstrual cycle is regulated by oestrogen and progesterone, modulated by:",
+            "FSH and LH", ["Insulin and glucagon", "Thyroxine", "Adrenaline"],
+            "Each cycle is about 28 days.");
+        Q("reproductive", "medium", "Polycystic ovary syndrome, a cause of ovulation problems, is characterised by:",
+            "Excess weight and excess male hormones produced by the ovaries", ["Low weight only", "Absence of ovaries", "Excess oestrogen only"],
+            "Other causes: diabetes, obesity, excessive exercise, stress.");
+        Q("reproductive", "medium", "Excessive menstrual blood loss with regular menstruation (over 7 days or above 80 ml) is:",
+            "Menorrhagia", ["Metrorrhagia", "Amenorrhoea", "Oligomenorrhoea"],
+            "Metrorrhagia is regular intermenstrual bleeding.");
+        Q("reproductive", "medium", "Absence of menstruation for more than 6 months is:",
+            "Amenorrhoea", ["Menorrhagia", "Polymenorrhoea", "Oligomenorrhoea"],
+            "Oligomenorrhoea: menses at intervals over 35 days.");
+        Q("reproductive", "medium", "Menses occurring at intervals of less than 21 days is:",
+            "Polymenorrhoea", ["Oligomenorrhoea", "Amenorrhoea", "Menometrorrhagia"],
+            "Menometrorrhagia: prolonged menses with intermenstrual bleeding.");
+        Q("reproductive", "medium", "Tanner staging is a rating system of:",
+            "Pubertal development", ["Menstrual blood loss", "HIV progression", "Sperm count"],
+            "There are five stages for girls and five for boys.");
+        Q("reproductive", "medium", "The first visible evidence of puberty in girls is:",
+            "The breast bud", ["Menarche", "Pubic hair", "Growth spurt"],
+            "In boys it is darkening and thinning of the scrotum, at about 10–11 years.");
+        Q("reproductive", "medium", "In girls, menarche (onset of menstruation) occurs:",
+            "Late in puberty", ["Before breast budding", "At birth", "Early in puberty before any other sign"],
+            "Spermarche in boys occurs early in puberty.");
+        Q("reproductive", "medium", "Any secondary sexual characteristic appearing before age 8 is termed:",
+            "Precocious puberty", ["Delayed puberty", "Menopause", "Normal puberty"],
+            "Absence of sexual hair and breast tissue by 15 is delayed puberty.");
+        Q("reproductive", "medium", "The mean age of menopause is:",
+            "51 years", ["40 years", "60 years", "35 years"],
+            "Normal range 45–56; one year without menstruation confirms post-menopause.");
+
+        // ===================== SEXUALITY & ADOLESCENTS =====================
+        Q("sexuality", "easy", "According to the WHO, an adolescent is someone aged:",
+            "10–19 years", ["15–24 years", "10–24 years", "13–21 years"],
+            "Youth: 15–24; young person: 10–24.");
+        Q("sexuality", "medium", "A 'youth' is someone aged:",
+            "15–24 years", ["10–19 years", "10–24 years", "18–30 years"],
+            "A young person is 10–24 years.");
+        Q("sexuality", "medium", "Early adolescence covers ages:",
+            "10–14 years", ["15–19 years", "12–18 years", "8–12 years"],
+            "Late adolescence is 15–19 years.");
+        Q("sexuality", "medium", "Among the Yoruba of South West Nigeria, an individual is socially considered an adult once he/she:",
+            "Marries", ["Turns 18", "Is circumcised", "Finishes school"],
+            "Among the Zulu, a boy is considered an adult once circumcised.");
+        Q("sexuality", "medium", "According to the 2006 census, adolescents and young persons aged 10–24 constitute what proportion of Nigeria's population?",
+            "37.1%", ["10%", "60%", "5%"],
+            "Their large number is one reason adolescence is significant.");
+        Q("sexuality", "hard", "In a 2003 UI study of 609 male students, 51 accepted VCT. How many of these tested HIV positive?",
+            "8 (15.7%)", ["51 (100%)", "1 (2%)", "25 (49%)"],
+            "All positives were sexually experienced.");
+        Q("sexuality", "medium", "Which is a reason HIV is hitting young persons so hard?",
+            "Perceived invulnerability ('it cannot happen to me')", ["Too much information", "Low sexual activity", "Strict parental supervision"],
+            "Others: lack of information, denial, risky sex, gender issues.");
+        Q("sexuality", "medium", "According to WHO, sexuality encompasses sex, gender identities and roles, sexual orientation, eroticism, pleasure, intimacy and:",
+            "Reproduction", ["Wealth", "Religion", "Education"],
+            "Sexuality is a major aspect of being human throughout life.");
+        Q("sexuality", "medium", "Which is a safe sexual behaviour promoted by sexuality education?",
+            "Correct and consistent condom use", ["Multiple partners", "Early sexual debut", "Sex with casual partners"],
+            "Also abstinence and non-penetrative sex.");
+        Q("sexuality", "medium", "According to the NDHS (1999), by age 18 what proportion of Nigerian adolescents have had sexual intercourse?",
+            "Over 60%", ["About 5%", "About 10%", "Over 95%"],
+            "Over 25% have had sex by age 15.");
+        Q("sexuality", "medium", "Adolescent girls are more vulnerable to STIs partly because:",
+            "Their cervix has fewer protective antibodies than older women's", ["They have stronger immunity", "Their reproductive organs are fully mature", "STIs cannot infect them"],
+            "Immature organs may also suffer sores during sex, easing infection.");
+        Q("sexuality", "medium", "Among sexually active 15–19 year olds (NARHS), what percentage used a condom at the most recent sexual encounter?",
+            "34.4%", ["90%", "5%", "75%"],
+            "Only 34% of female UI students used condoms consistently.");
+        Q("sexuality", "medium", "A psychoactive drug is any substance that affects the:",
+            "Mind, mood and behaviour", ["Bones and muscles only", "Hair and skin", "Blood sugar only"],
+            "E.g. cigarettes, alcohol, cannabis, heroin, cocaine.");
+        Q("sexuality", "medium", "The most widely used drug among young persons in Nigeria is:",
+            "Alcohol", ["Heroin", "Cocaine", "LSD"],
+            "It impairs judgement and increases risky behaviours.");
+        Q("sexuality", "medium", "Which is a consequence of risky sex for adolescents listed in the text?",
+            "Dropping out of school", ["Better grades", "Improved immunity", "Higher income"],
+            "Others: unwanted pregnancy, STI/HIV, unsafe abortion, death.");
+        Q("sexuality", "hard", "A study of female UI students found the mean number of lifetime sexual partners to be:",
+            "3.4", ["1.0", "10", "20"],
+            "Range 1 to 20 (Iwuagwu et al, 2000).");
+        Q("sexuality", "hard", "According to the printed book, about what percentage of pregnancies among unmarried young women in Nigeria are unplanned?",
+            "80%", ["20%", "50%", "5%"],
+            "With a high rate of unsafe abortion.");
+        Q("sexuality", "hard", "In Calabar, 72% of patients admitted for complications of abortion were aged:",
+            "12–20 years", ["30–40 years", "40–49 years", "Over 50 years"],
+            "Illustrating the burden of risky sex among young people.");
+
+        // ===================== STIs =====================
+        Q("sti", "easy", "STIs were traditionally referred to as:",
+            "Venereal diseases", ["Opportunistic infections", "Nosocomial infections", "Zoonoses"],
+            "Their main mode of transmission is sexual intercourse.");
+        Q("sti", "medium", "STIs can be classified in two ways:",
+            "Aetiological and clinical", ["Acute and chronic only", "Male and female", "Viral and fungal only"],
+            "Aetiological is by causative agent; clinical by presence of ulcers.");
+        Q("sti", "easy", "Gonorrhoea is caused by:",
+            "Neisseria gonorrhoeae", ["Treponema pallidum", "Haemophilus ducreyi", "Chlamydia trachomatis"],
+            "It is an intracellular Gram-negative diplococcus.");
+        Q("sti", "medium", "Chancroid is caused by:",
+            "Haemophilus ducreyi", ["Treponema pallidum", "Gardnerella vaginalis", "Herpes simplex virus"],
+            "It produces multiple necrotic, dirty, painful ulcers.");
+        Q("sti", "medium", "Bacterial vaginosis is caused by:",
+            "Gardnerella vaginalis", ["Candida albicans", "Trichomonas vaginalis", "Neisseria gonorrhoeae"],
+            "Candidiasis is fungal; trichomoniasis is protozoal.");
+        Q("sti", "medium", "Non-gonococcal urethritis/cervicitis (NGU/C) is commonly caused by:",
+            "Chlamydia trachomatis", ["Neisseria gonorrhoeae", "Treponema pallidum", "HIV"],
+            "It also causes lymphogranuloma venereum.");
+        Q("sti", "medium", "A single painless ulcer called a chancre is characteristic of:",
+            "Syphilis", ["Chancroid", "Herpes genitalis", "Gonorrhoea"],
+            "It can heal on its own and progress to a latent stage.");
+        Q("sti", "medium", "Multiple vesicles on the genitals that may form shallow ulcers and recur suggest:",
+            "Herpes genitalis", ["Syphilis", "Gonorrhoea", "Candidiasis"],
+            "Caused by the herpes simplex virus.");
+        Q("sti", "medium", "Genital warts, which can lead to cervical cancer, are caused by:",
+            "Papilloma virus", ["Herpes simplex virus", "Hepatitis B virus", "Chlamydia"],
+            "They are fleshy, usually painless growths.");
+        Q("sti", "medium", "Which is a Genital Ulcer Disease (GUD)?",
+            "Chancroid", ["Gonorrhoea", "Trichomoniasis", "Bacterial vaginosis"],
+            "GUDs: syphilis, chancroid, herpes, LGV, granuloma inguinale.");
+        Q("sti", "medium", "Which is a NON-genital ulcer disease?",
+            "Gonorrhoea", ["Syphilis", "Herpes genitalis", "Lymphogranuloma venereum"],
+            "Others: NGU, candidiasis, trichomoniasis, bacterial vaginosis, warts.");
+        Q("sti", "hard", "In comparing ulcers, which STI typically has a clean, firm, painless ulcer?",
+            "Syphilis", ["Chancroid", "Herpes", "Granuloma inguinale"],
+            "Chancroid ulcers are multiple, dirty, soft and painful.");
+        Q("sti", "medium", "The average prevalence rate of STIs among outpatients in Nigeria is about:",
+            "9.3%", ["50%", "1%", "30%"],
+            "STIs are a leading cause of outpatient visits.");
+        Q("sti", "hard", "The presence of an ulcerative genital lesion increases the chance of acquiring HIV by up to:",
+            "100-fold", ["2-fold", "10%", "No change"],
+            "This is why STI management helps curb HIV.");
+        Q("sti", "medium", "Which occupational groups are at higher risk of STIs due to high mobility?",
+            "Long-distance truck drivers and armed forces members", ["Teachers and farmers", "Nurses and doctors", "Students and pupils"],
+            "Salesmen are also mentioned.");
+        Q("sti", "medium", "A whitish, scanty milky urethral discharge on straining with insidious onset is typical of:",
+            "Non-gonococcal urethritis", ["Gonococcal urethritis", "Syphilis", "Herpes"],
+            "Gonococcal discharge is acute, profuse and pus-like.");
+        Q("sti", "medium", "In females who practise oral sex, an STI may present with:",
+            "Difficulty in swallowing, hoarse voice and throat pain", ["Rectal pain", "Urethral discharge", "Night blindness"],
+            "A throat swab is collected for microscopy, culture and sensitivity.");
+        Q("sti", "medium", "Trichomoniasis is treated with:",
+            "Oral metronidazole", ["Penicillin G", "Clotrimazole cream", "Doxycycline"],
+            "Candidiasis responds to clotrimazole or nystatin.");
+        Q("sti", "hard", "Data from Ibadan showed penicillin G was no longer useful for gonorrhoea because about what proportion of N. gonorrhoeae were resistant?",
+            "98.6%", ["10%", "50%", "25%"],
+            "Quinolones such as ciprofloxacin are recommended.");
+        Q("sti", "medium", "Oral doxycycline is reserved for treating:",
+            "Non-gonococcal urethritis/cervicitis", ["Candidiasis", "Trichomoniasis", "Chancroid"],
+            "Co-trimoxazole is effective for chancroid.");
+        Q("sti", "medium", "STI drugs are given as single doses taken in the presence of a health worker to:",
+            "Ensure compliance and prevent resistant organisms", ["Reduce cost only", "Avoid side effects", "Hide the diagnosis"],
+            "This ensures patients actually take the drug.");
+        Q("sti", "medium", "Screening and treating a patient's sexual partners is called:",
+            "Contact tracing", ["Herd immunity", "Quarantine", "Pharmacovigilance"],
+            "It eradicates the reservoir of infection and prevents re-infection.");
+
+        // ===================== HIV =====================
+        Q("hiv", "easy", "The three major modes of HIV transmission are:",
+            "Sexual contact, mother to child, and blood/contaminated sharp objects", ["Air, water and food", "Hugging, kissing and handshakes", "Insects, pets and toilets"],
+            "Sexual transmission may be heterosexual or homosexual.");
+        Q("hiv", "easy", "Which of these does NOT transmit HIV?",
+            "Sharing cups or eating utensils", ["Sharing needles", "Unprotected sex", "Transfusion of infected blood"],
+            "Casual contact, hugs and insect bites do not transmit HIV.");
+        Q("hiv", "medium", "Mother-to-child transmission of HIV can occur during:",
+            "Pregnancy, delivery and breastfeeding", ["Pregnancy only", "Bathing the baby", "Vaccination"],
+            "PMTCT programmes address all three.");
+        Q("hiv", "easy", "In the ABC of HIV prevention, 'B' stands for:",
+            "Be mutually faithful", ["Blood screening", "Breastfeed", "Be tested"],
+            "A = abstain; C = condom use in casual sex.");
+        Q("hiv", "medium", "Primary prevention of HIV includes:",
+            "IEC, BCC and positive behaviour", ["Early diagnosis and treatment", "Minimising morbidity and mortality", "Antiretroviral therapy for AIDS"],
+            "Secondary: early diagnosis; tertiary: minimise morbidity/mortality.");
+        Q("hiv", "medium", "Post-exposure prophylaxis (PEP) is used after:",
+            "Needle-stick injury or sexual exposure", ["Every meal", "Vaccination", "Blood donation"],
+            "It is a prevention measure.");
+        Q("hiv", "medium", "HIV is a retrovirus because it:",
+            "Uses reverse transcriptase to make DNA from its RNA", ["Has a DNA genome only", "Cannot infect cells", "Reproduces outside cells"],
+            "Viral DNA integrates into the host DNA.");
+        Q("hiv", "medium", "HIV has a particular affinity for:",
+            "CD4-bearing cells", ["Liver cells", "Red blood cells", "Bone cells"],
+            "Hepatitis B virus has affinity for liver cells.");
+        Q("hiv", "medium", "In AIDS, 'Acquired' means the disease:",
+            "Is not hereditary but develops after birth from contact with HIV", ["Is inherited from parents", "Is caused by poor diet", "Is always fatal"],
+            "Immunodeficiency = weakened immune system; syndrome = group of symptoms.");
+        Q("hiv", "hard", "The HIV envelope glycoprotein responsible for attachment (docking) is:",
+            "gp120", ["gp41", "p24", "Reverse transcriptase"],
+            "gp41 is the transmembrane glycoprotein; p24 is a core protein.");
+        Q("hiv", "medium", "HIV-1 strains are classified into three groups:",
+            "M (major), N (non-M) and O (outlier)", ["A, B and C", "1, 2 and 3", "Alpha, beta and gamma"],
+            "Groups N and O are limited to Cameroon and neighbours.");
+        Q("hiv", "medium", "The most predominant HIV-1 subtype globally and in Southern Africa is:",
+            "Subtype C", ["Subtype A", "Subtype B", "Subtype O"],
+            "Subtype A: Central/West/East Africa; B: USA and Western Europe.");
+        Q("hiv", "medium", "In 2008, an estimated how many people were living with HIV worldwide?",
+            "33.4 million", ["3.3 million", "334 million", "1 million"],
+            "2.7 million were newly infected and 2.0 million died of AIDS in 2008.");
+        Q("hiv", "medium", "More than three-quarters (76%) of all women living with HIV live in:",
+            "Sub-Saharan Africa", ["Asia", "Europe", "South America"],
+            "Sub-Saharan Africa had 22.4 million people living with HIV in 2008.");
+        Q("hiv", "medium", "The normal CD4 count in a healthy adult is:",
+            "600 – 1,200 cells/mm³", ["50 – 100 cells/mm³", "5,000 – 10,000 cells/mm³", "200 – 300 cells/mm³"],
+            "A count below 200 greatly increases the risk of opportunistic infection.");
+        Q("hiv", "medium", "Viral load is the amount of HIV in the blood and is measured by:",
+            "HIV-RNA PCR", ["ELISA", "Western blot", "Haemoglobin electrophoresis"],
+            "High viral load means higher transmission risk.");
+        Q("hiv", "medium", "People infected with HIV usually develop antibodies about:",
+            "4 to 6 weeks after infection (up to 3 months)", ["1 day after infection", "10 years after infection", "Never"],
+            "The period before antibodies are detectable is the window period.");
+        Q("hiv", "medium", "During the 'window period', a person:",
+            "May test negative yet still be infectious", ["Cannot transmit HIV", "Always tests positive", "Has full-blown AIDS"],
+            "Hence retesting at 3 months is advised for high-risk persons.");
+        Q("hiv", "medium", "Under the CDC system, an HIV-infected person has AIDS if the CD4 count is below:",
+            "200 cells/ml", ["500 cells/ml", "1,000 cells/ml", "350 cells/ml"],
+            "Or if they have an AIDS-indicator (category C) condition.");
+        Q("hiv", "medium", "How many clinical stages does the WHO staging system for adults have?",
+            "Four", ["Two", "Three", "Nine"],
+            "Based on performance level and associated illnesses.");
+        Q("hiv", "hard", "Weight loss greater than 10% of body weight and oral thrush place an adult in WHO clinical stage:",
+            "III", ["I", "II", "IV"],
+            "Stage II has weight loss below 10%; stage IV includes HIV wasting syndrome and Kaposi's sarcoma.");
+        Q("hiv", "hard", "Kaposi's sarcoma and Pneumocystis jiroveci pneumonia are features of WHO clinical stage:",
+            "IV", ["I", "II", "III"],
+            "Stage IV is the most advanced.");
+        Q("hiv", "medium", "In the WHO clinical case definition, AIDS is defined by at least 2 major signs and:",
+            "At least 1 minor sign", ["At least 3 minor signs", "A positive ELISA only", "No minor signs"],
+            "In the absence of known causes of immunosuppression.");
+        Q("hiv", "medium", "Which is a MAJOR sign in the WHO clinical case definition of AIDS?",
+            "Chronic diarrhoea lasting more than 1 month", ["Persistent cough", "Generalized lymphadenopathy", "Recurrent herpes zoster"],
+            "Major signs: weight loss over 10%, chronic diarrhoea, prolonged fever.");
+        Q("hiv", "medium", "The middle, chronic phase of HIV infection is characterised by:",
+            "Relative containment of the virus and clinical latency", ["Very high viraemia and mononucleosis-like illness", "Full-blown AIDS", "Cure"],
+            "Patients may be asymptomatic or have persistent generalized lymphadenopathy.");
+        Q("hiv", "hard", "During the early acute phase of HIV, about how many new viral particles are produced daily?",
+            "100 billion", ["100", "1 million", "1,000"],
+            "1–2 billion CD4+ T cells die each day.");
+        Q("hiv", "medium", "Which myth about HIV is addressed in the text?",
+            "'I'm safe because I'm a virgin' – oral or anal sex still carries risk", ["HIV can be spread by sharing cups", "HIV is curable with antibiotics", "Mosquitoes spread HIV"],
+            "Risk is about behaviour, not labels.");
+        Q("hiv", "medium", "Young people aged 15–24 account for what share of all new HIV infections worldwide (excluding perinatal cases)?",
+            "More than 50%", ["About 5%", "About 10%", "About 25%"],
+            "More than 6,000 young people are newly infected daily.");
+
+        // ===================== HCT, TREATMENT & CARE =====================
+        Q("hct", "easy", "HCT stands for:",
+            "HIV Counselling and Testing", ["HIV Cure and Treatment", "Health Care Technology", "Hospital Care Team"],
+            "It is an entry point to treatment, care and support.");
+        Q("hct", "medium", "HIV counselling is best described as:",
+            "A confidential interaction empowering the counsellee to make informed decisions about HIV", ["A public announcement of results", "A compulsory blood test", "A form of treatment"],
+            "It can be pre-test, post-test or ongoing.");
+        Q("hct", "medium", "The 'opt-out' technique of pre-test counselling means:",
+            "The counsellor offers the service", ["The counsellee requests the service", "Testing without consent", "Testing only children"],
+            "In 'opt-in', the counsellee requests the service.");
+        Q("hct", "medium", "Information on a client's HIV status should be shared:",
+            "Only with providers directly involved in care, on a need-to-know basis", ["With the client's employer", "With all hospital staff", "With the public"],
+            "Confidentiality is a guiding principle of HCT.");
+        Q("hct", "easy", "HIV test results should always be given:",
+            "In person", ["By text message", "Through a friend", "On a notice board"],
+            "With post-test counselling and referral.");
+        Q("hct", "medium", "For an HIV-negative result, post-test counselling should:",
+            "Review the window period if indicated and how to prevent future infection", ["Start antiretroviral drugs", "Announce the result publicly", "Discourage partner testing"],
+            "Educate partner and encourage partner testing.");
+        Q("hct", "medium", "Which test confirms a positive HIV screening result?",
+            "Western blot", ["ELISA", "Latex agglutination", "Rapid test"],
+            "Other confirmatory tests: indirect immunofluorescence, RIPA.");
+        Q("hct", "medium", "HIV antibody testing is not recommended for infants before 18 months because:",
+            "Maternal antibodies cross the placenta", ["Infants cannot be infected", "Infants have no blood", "The test is too expensive"],
+            "HIV PCR is used to diagnose infants.");
+        Q("hct", "medium", "A rapid HIV test gives results in:",
+            "Less than 30 minutes", ["Up to 1 week", "3 months", "1 year"],
+            "ELISA requires lab equipment and may take up to a week.");
+        Q("hct", "medium", "P24 antigen tests measure:",
+            "One of the proteins found in HIV", ["CD4 cells", "Antibodies to HIV", "Blood glucose"],
+            "PCR tests detect DNA or measure RNA (viral load).");
+        Q("hct", "medium", "Which is a barrier to VCT listed in the text?",
+            "Fear and stigma", ["Free testing", "Youth-friendly centres", "Confidentiality"],
+            "Others: gender inequalities, 'I'm faithful', lack of perceived benefit.");
+        Q("hct", "medium", "An element of youth-friendly HCT services is that it:",
+            "Does not require parental consent", ["Requires parental consent", "Charges high fees", "Publishes results"],
+            "It assures confidentiality and offers free testing and condoms.");
+        Q("hct", "medium", "The most common form of sexual assault is:",
+            "Rape", ["Verbal teasing", "Staring", "Phone calls"],
+            "Rape: resistance overcome by force, fear or coercion.");
+        Q("hct", "medium", "In HCT for sexual assault survivors, counselling should be:",
+            "Offered but not pressured", ["Compulsory", "Delayed for a year", "Done by any untrained person"],
+            "Counselling is more effective when the person is ready.");
+        Q("hct", "medium", "HAART stands for:",
+            "Highly Active Antiretroviral Therapy", ["HIV Antibody and Antigen Rapid Test", "Health Action Against Retroviral Transmission", "High Anti-AIDS Response Treatment"],
+            "It combines three or four drugs.");
+        Q("hct", "medium", "The advantage of HAART over single-drug treatment is that it:",
+            "Maximally suppresses the virus by attacking different points of replication", ["Cures HIV completely", "Has no side effects", "Requires only one dose"],
+            "Combinations also prevent resistance.");
+        Q("hct", "medium", "Antiretroviral drugs:",
+            "Suppress HIV but do not cure it", ["Cure HIV completely", "Prevent all opportunistic infections permanently", "Work as vaccines"],
+            "People on ARVs can still transmit the virus.");
+        Q("hct", "medium", "Zidovudine (AZT) and lamivudine (3TC) belong to the class:",
+            "Nucleoside reverse transcriptase inhibitors (NRTIs)", ["Protease inhibitors", "Integrase inhibitors", "Entry inhibitors"],
+            "Nevirapine and efavirenz are NNRTIs.");
+        Q("hct", "medium", "Nevirapine and efavirenz are:",
+            "Non-nucleoside reverse transcriptase inhibitors (NNRTIs)", ["Protease inhibitors", "NRTIs", "Integrase inhibitors"],
+            "Raltegravir is an integrase inhibitor.");
+        Q("hct", "hard", "Ritonavir, lopinavir and saquinavir are:",
+            "Protease inhibitors", ["NRTIs", "NNRTIs", "Coreceptor antagonists"],
+            "Ritonavir is also used as a boosting agent.");
+        Q("hct", "hard", "Which ARV is an integrase inhibitor?",
+            "Raltegravir", ["Tenofovir", "Efavirenz", "Atazanavir"],
+            "Tenofovir is an NtRTI; atazanavir a protease inhibitor.");
+        Q("hct", "medium", "Which is a criterion for starting antiretroviral therapy?",
+            "The patient's willingness and readiness to begin therapy", ["Having any cold", "Being under 5 years old only", "Having a negative test"],
+            "Also stage of infection and co-infections such as hepatitis B/C and TB.");
+        Q("hct", "hard", "Per the guidelines, HAART should be started for all patients with CD4 count below:",
+            "350/mm³", ["1,000/mm³", "600/mm³", "50/mm³"],
+            "Also all patients in WHO stages 3 and 4.");
+        Q("hct", "hard", "For HIV/TB co-infection, ART should be started:",
+            "After TB treatment begins, within the first 8 weeks", ["Before TB treatment", "Only after TB is cured", "Never"],
+            "All patients with active TB qualify irrespective of CD4.");
+        Q("hct", "hard", "An EFV-based first-line regimen should NOT be initiated during:",
+            "The first trimester of pregnancy", ["Breastfeeding", "TB treatment", "Hepatitis B treatment"],
+            "AZT+3TC+EFV or AZT+3TC+NVP are preferred for ART-naive pregnant women otherwise.");
+        Q("hct", "medium", "Virological suppression in ART is currently defined as viral load below:",
+            "50 copies/ml", ["5,000 copies/ml", "500,000 copies/ml", "1 million copies/ml"],
+            "The goal is maximal and durable suppression.");
+        Q("hct", "medium", "Which is a role of youths in HIV prevention, care and support?",
+            "Be informed and act responsibly, respect others, show care and support", ["Stigmatise infected persons", "Avoid testing", "Share needles"],
+            "Youths are disproportionately affected and must lead change.");
+        Q("hct", "medium", "Treatment as prevention works because:",
+            "ARVs lower viral load, which lowers the chance of transmission", ["ARVs act as vaccines", "ARVs kill all virus permanently", "ARVs replace condoms entirely"],
+            "But it is not 100% protective, so ABC still applies.");
+
+        // ===================== SICKLE CELL & NCDs =====================
+        Q("sickle", "medium", "During intra-uterine life, the haemoglobin of the unborn baby is:",
+            "HbF", ["HbA", "HbS", "HbA2"],
+            "By 6 months, HbF falls below 1% and HbA exceeds 95%.");
+        Q("sickle", "medium", "Normal adult haemoglobin HbA is written as:",
+            "α2β2", ["α2γ2", "α2δ2", "β4"],
+            "It has two alpha and two beta globin chains.");
+        Q("sickle", "medium", "Sickle haemoglobin results from substitution of:",
+            "Valine for glutamic acid at position 6 of the β-chain", ["Glutamic acid for valine in the α-chain", "Lysine for glycine", "Iron for copper"],
+            "The α-chain is normal.");
+        Q("sickle", "easy", "Sickle cell anaemia corresponds to the genotype:",
+            "HbSS", ["HbAS", "HbAA", "HbAC"],
+            "HbAS is sickle cell trait.");
+        Q("sickle", "medium", "Individuals with sickle cell trait (HbAS):",
+            "Usually have no health problem but can transmit the gene", ["Have severe crises", "Cannot have children", "Have no HbA"],
+            "They are carriers.");
+        Q("sickle", "medium", "If both parents are AS, the chance that a child will have sickle cell anaemia (SS) is:",
+            "1 in 4 (25%)", ["1 in 2 (50%)", "100%", "0%"],
+            "There is a 1 in 2 chance the child is a carrier.");
+        Q("sickle", "medium", "If one parent is SS and the other AS, the chance of an SS child is:",
+            "50%", ["25%", "100%", "0%"],
+            "The other 50% will be AS.");
+        Q("sickle", "medium", "HbSC disease results from inheriting:",
+            "A sickle gene from one parent and an HbC gene from the other", ["Two sickle genes", "Two normal genes", "Only HbC genes"],
+            "It is a compound heterozygous state.");
+        Q("sickle", "medium", "The first person to report sickle-shaped cells (1910), in a dental student from Grenada, was:",
+            "James Herrick", ["Linus Pauling", "Vernon Mason", "Gregor Mendel"],
+            "Mason named it in 1922; Pauling linked it to haemoglobin in 1949.");
+        Q("sickle", "medium", "Sickle cell disease was the first identified:",
+            "Molecular disease", ["Viral disease", "Bacterial disease", "Mental disease"],
+            "Linus Pauling linked it to an abnormal haemoglobin molecule in 1949.");
+        Q("sickle", "medium", "What percentage of Nigerians have sickle cell anaemia?",
+            "2%", ["30%", "24%", "50%"],
+            "Trait: about 30% in northern and 24% in southern Nigeria.");
+        Q("sickle", "hard", "The persistence of the sickle gene because the trait gives survival advantage against malaria is called:",
+            "Balanced polymorphism", ["Natural immunity", "Herd immunity", "Codominance"],
+            "Carriers have lower malaria density and less cerebral malaria.");
+        Q("sickle", "medium", "HbS becomes insoluble and polymerises when:",
+            "Oxygen tension is low (deoxygenation)", ["Oxygen tension is high", "Blood sugar rises", "The patient eats protein"],
+            "Red cells become rigid and sickle-shaped.");
+        Q("sickle", "medium", "Red cell survival in sickle cell disease is about:",
+            "4–25 days", ["120 days", "1 year", "1 day"],
+            "Chronic haemolysis occurs.");
+        Q("sickle", "medium", "Hand-foot syndrome (dactylitis) is often the first presentation in children aged:",
+            "Under 2 years", ["10–15 years", "Over 30 years", "At puberty"],
+            "It is a vaso-occlusive feature.");
+        Q("sickle", "medium", "Which is NOT a factor that precipitates sickle cell crisis?",
+            "Adequate hydration", ["Infections", "Cold and wet weather", "Dehydration"],
+            "Others: exertion, acidosis, starvation.");
+        Q("sickle", "medium", "Crisis due to parvovirus infection that shuts down red cell production is:",
+            "Hypoplastic crisis", ["Haemolytic crisis", "Sequestration crisis", "Vaso-occlusive crisis"],
+            "Sequestration: trapping of red cells in liver and spleen.");
+        Q("sickle", "medium", "The often painful crisis due to blockage of small vessels is the:",
+            "Vaso-occlusive (infarctive) crisis", ["Hypoplastic crisis", "Sequestration crisis", "Aplastic crisis"],
+            "E.g. hand-foot syndrome, priapism, acute chest syndrome.");
+        Q("sickle", "medium", "The test that confirms HbS presence using cellulose acetate is:",
+            "Haemoglobin electrophoresis", ["ELISA", "Western blot", "Urinalysis"],
+            "The solubility test is turbid in HbS.");
+        Q("sickle", "medium", "Hydroxyurea helps in sickle cell disease by:",
+            "Increasing HbF levels", ["Destroying HbA", "Curing malaria", "Replacing bone marrow"],
+            "HbF does not interact with HbS in gel formation; it must not be used in pregnancy.");
+        Q("sickle", "medium", "Routine daily supplementation recommended in sickle cell disease is:",
+            "Folic acid", ["Iron", "Vitamin A", "Calcium"],
+            "Plus malaria prophylaxis, penicillin and vaccines.");
+        Q("sickle", "medium", "The key preventive measure for sickle cell disease is:",
+            "Genetic counselling for intending couples", ["Antibiotics", "Bed rest", "Blood donation"],
+            "Prenatal diagnosis and screening also help.");
+        Q("sickle", "hard", "A person with sickle cell disease who is well and free of acute symptoms is said to be in:",
+            "Steady state", ["Crisis", "Remission", "Latent phase"],
+            "That is why the word 'patient' is avoided for them.");
+        Q("sickle", "hard", "Prenatal diagnosis of sickle cell disease uses:",
+            "Amniocentesis or chorionic villus sampling for fetal DNA analysis", ["Urine testing", "Chest X-ray", "Blood pressure"],
+            "This is done before birth.");
+
+        // ===================== DRUGS & MANKIND =====================
+        Q("drugs", "medium", "The WHO defines a drug as any substance used to:",
+            "Modify or explore physiological or pathological systems for the recipient's benefit", ["Make a person feel high", "Replace food", "Poison pests"],
+            "A medicine may contain other substances besides the active drug.");
+        Q("drugs", "medium", "'Poisons in little amounts are useful drugs and drugs in too large amounts are poisons' emphasises the importance of:",
+            "Dose", ["Brand name", "Colour", "Price"],
+            "It is the 'quote of quotes' in the drugs chapter.");
+        Q("drugs", "medium", "Using anaesthetics to induce unconsciousness during surgery is an example of:",
+            "Auxiliary therapy", ["Primary therapy", "Prophylaxis", "Suppressive therapy"],
+            "Primary therapy eliminates the disease and the drug is withdrawn.");
+        Q("drugs", "medium", "Using drugs continuously to maintain health without cure, as in hypertension, is:",
+            "Suppressive use", ["Curative use", "Preventive use", "Auxiliary use"],
+            "Also for diabetes, epilepsy and asthma.");
+        Q("drugs", "easy", "Paracetamol is an example of a drug's:",
+            "Generic (approved) name", ["Brand name", "Full chemical name", "Trade mark"],
+            "Panadol® is a brand name.");
+        Q("drugs", "medium", "Fansidar®, Amalar® and Maloxine® all share the generic name:",
+            "Sulphadoxine-pyrimethamine", ["Chloroquine", "Artesunate", "Quinine"],
+            "Use of generic names saves time and cost.");
+        Q("drugs", "medium", "Drugs that can only be bought with a doctor's prescription are:",
+            "Prescription Only Medicines (POM)", ["Over-the-counter (OTC) medicines", "Vitamins", "Herbal remedies"],
+            "E.g. antibiotics and sedatives like diazepam.");
+        Q("drugs", "medium", "A drug rubbed on the body that is not absorbed into the blood is:",
+            "Non-systemic (localized)", ["Systemic", "Parenteral", "Enteral"],
+            "E.g. creams, ointments and some antacids.");
+        Q("drugs", "medium", "Enteral routes of drug administration include:",
+            "Oral, sublingual and rectal", ["Intramuscular and intravenous", "Topical only", "Inhalation only"],
+            "They pass through the gastrointestinal tract.");
+        Q("drugs", "medium", "Which route is used in severe illness such as coma, e.g. quinine infusion?",
+            "Intravenous", ["Oral", "Topical", "Sublingual"],
+            "IV goes straight into the blood.");
+        Q("drugs", "medium", "Artesunate is produced from artemisinin; it is therefore a:",
+            "Semi-synthetic drug", ["Natural drug", "Fully synthetic drug", "Animal-derived drug"],
+            "Natural compounds are modified in the lab.");
+        Q("drugs", "medium", "Penicillins are natural drugs obtained from:",
+            "Fungi (microorganisms)", ["Plants", "Animals", "Minerals"],
+            "Antibiotics come from microorganisms.");
+        Q("drugs", "medium", "Drugs that lower body temperature in fever are:",
+            "Antipyretics", ["Antiemetics", "Antihistamines", "Anxiolytics"],
+            "Paracetamol is an analgesic-antipyretic.");
+        Q("drugs", "medium", "Drugs that prevent nausea and vomiting are:",
+            "Antiemetics", ["Antitussives", "Antacids", "Anthelmintics"],
+            "E.g. promethazine, prochlorperazine.");
+        Q("drugs", "medium", "Antitussives are used to:",
+            "Suppress cough", ["Expel worms", "Reduce anxiety", "Lower blood pressure"],
+            "E.g. codeine-containing cough mixtures.");
+        Q("drugs", "medium", "Anthelmintics are drugs that:",
+            "Expel worms", ["Kill fungi", "Fight HIV", "Reduce fever"],
+            "E.g. Combantrin®, Ketrax®, Zentel®.");
+        Q("drugs", "medium", "Diazepam (Valium®) is an:",
+            "Anxiolytic", ["Antacid", "Antimalarial", "Anticonvulsant only"],
+            "It reduces anxiety and is a prescription-only medicine.");
+        Q("drugs", "medium", "The WHO defines an Adverse Drug Reaction (ADR) as a response that is:",
+            "Noxious and unintended, occurring at normal doses", ["Always beneficial", "Due to an overdose only", "Intended by the doctor"],
+            "Side effects can be beneficial or not.");
+        Q("drugs", "medium", "Pharmacovigilance is:",
+            "The science of detecting, assessing and preventing adverse drug effects", ["The study of drug prices", "Drug advertising", "Making new drugs"],
+            "NAFDAC launched the National Pharmacovigilance Centre in 2004.");
+        Q("drugs", "medium", "Conditions in which a drug should not be used (e.g. aspirin in ulcer patients) are:",
+            "Contraindications", ["Indications", "Side effects", "Adverse events"],
+            "Contraindications stipulate when not to use a drug.");
+        Q("drugs", "medium", "Needing larger doses to produce the same effect is called:",
+            "Tolerance", ["Dependence", "Addiction", "Contraindication"],
+            "Tolerance may or may not be present in dependence.");
+        Q("drugs", "medium", "Heroin is obtained chemically from:",
+            "Morphine", ["Cannabis", "Cocaine", "Caffeine"],
+            "Opioids derive from opium.");
+        Q("drugs", "easy", "The most commonly taken stimulant, found in coffee, tea and kola nuts, is:",
+            "Caffeine", ["Cocaine", "Heroin", "LSD"],
+            "Students often misuse stimulants to stay awake.");
+        Q("drugs", "medium", "The most extensively used illicit drug is:",
+            "Cannabis", ["Heroin", "LSD", "Cocaine"],
+            "Also called Indian hemp.");
+        Q("drugs", "medium", "LSD (lysergic acid diethylamide) is an example of a:",
+            "Hallucinogen", ["Sedative", "Opioid", "Antacid"],
+            "Hallucinogens cause illusions, delusions and mood changes.");
+        Q("drugs", "medium", "Which is an element of Rational Drug Use (RDU)?",
+            "Appropriate diagnosis", ["Self-medication", "Overprescribing", "Sharing medicines"],
+            "Others: appropriate drug, dose, usage/duration and cost.");
+        Q("drugs", "medium", "The 'pill for every ill' syndrome encourages:",
+            "Overprescribing", ["Rational drug use", "Underdosing", "Pharmacovigilance"],
+            "E.g. periodic 'blood cleansing' by Onitsha traders.");
+        Q("drugs", "medium", "Studies of OAU students and Lagos residents showed how many self-medicate with prescription drugs?",
+            "73–87%", ["5–10%", "20–30%", "100%"],
+            "In Lagos the elite were guiltier.");
+        Q("drugs", "medium", "Underuse of antibiotics can lead to:",
+            "Therapeutic failure and microbial resistance", ["Faster cure", "Better immunity", "No effect at all"],
+            "Overuse can lead to adverse drug reactions.");
+        Q("drugs", "medium", "To be registered with the Pharmacists Council of Nigeria (PCN), a person must have done internship for not less than:",
+            "One year under a registered pharmacist", ["One month", "Five years", "No internship"],
+            "Also good character, approved training and qualification, and fees.");
+        Q("drugs", "medium", "The agency that regulates importation, manufacture, sale and use of food, drugs and cosmetics in Nigeria is:",
+            "NAFDAC", ["NDLEA", "PCN", "WHO"],
+            "NAFDAC was established by a decree of 1993.");
+        Q("drugs", "medium", "The NDLEA Act (CAP 253) commenced on:",
+            "29 December 1989", ["15 December 1992", "1 January 1993", "2004"],
+            "NDLEA enforces laws against hard drugs.");
+        Q("drugs", "hard", "The PCN decree was established on:",
+            "15 December 1992", ["29 December 1989", "11 January 2009", "1981"],
+            "PCN regulates the practice of pharmacy.");
+        Q("drugs", "hard", "The Faculty of Pharmacy, University of Ibadan, was established in:",
+            "1981", ["1948", "1962", "2004"],
+            "Stated in the printed GES 107 book.");
+        Q("drugs", "medium", "A pharmacist working in the drug industry (e.g. Emzor, May & Baker) is:",
+            "An industrial pharmacist", ["A community pharmacist", "A hospital pharmacist", "A regulatory pharmacist"],
+            "Industrial pharmacists handle production, quality control and R&D.");
+
+        // ===================== GENDER & SEXUAL HARASSMENT =====================
+        Q("gender", "easy", "'Sex' refers to:",
+            "The biological and physiological characteristics that define men and women", ["Socially constructed roles", "Cultural expectations of males and females", "Gender stereotypes"],
+            "Sex attributes are biological, universal and enduring.");
+        Q("gender", "easy", "'Gender' refers to:",
+            "Ways society and culture apportion characteristics, requirements and expectations to males and females", ["Biological sex organs", "Chromosomes only", "Hormones only"],
+            "Gender is socially constructed.");
+        Q("gender", "medium", "Gender mainstreaming is:",
+            "Assessing the implications for women and men of any planned action, policy or programme", ["Excluding men from development", "A biology course", "Separating boys and girls in school"],
+            "It aims to stop inequality between men and women being perpetuated.");
+        Q("gender", "medium", "Measures to redress past discrimination against women through intervention projects are called:",
+            "Affirmative action", ["Gender blindness", "Gender budgeting", "Gender stereotype"],
+            "They are temporary measures.");
+        Q("gender", "medium", "A rigid, over-simplified definition labelling all members of a group with similar characteristics is a:",
+            "Gender stereotype", ["Gender analysis", "Gender audit", "Gender equity"],
+            "E.g. 'medicine and engineering are for males'.");
+        Q("gender", "medium", "Examining all expenditure from a gender perspective is:",
+            "Gender budgeting", ["Gender analysis", "Gender awareness", "Affirmative action"],
+            "It checks impacts and consequences for women and men.");
+        Q("gender", "medium", "Planning programmes with no effort to recognise gender issues is:",
+            "Gender blindness", ["Gender sensitivity", "Gender equity", "Gender mainstreaming"],
+            "Gender sensitivity translates awareness into practice.");
+        Q("gender", "medium", "Fairness in representation, participation and benefits according to respective needs is:",
+            "Gender equity", ["Gender gap", "Gender stereotype", "Gender blindness"],
+            "Equality means equal conditions and opportunities.");
+        Q("gender", "medium", "The difference in scores between men and women on attitudes, access or achievement is the:",
+            "Gender gap", ["Gender budget", "Gender role", "Gender equity"],
+            "E.g. access to higher education.");
+        Q("gender", "medium", "Gender violence is any act that results in:",
+            "Physical, sexual or psychological harm to men or women", ["Only physical injury to women", "Only verbal insults", "Only workplace disputes"],
+            "Sexual harassment is one form of gender-based violence.");
+        Q("gender", "medium", "Gender roles are constructed through:",
+            "A gradual, timely and orderly socialisation process", ["Biology alone", "Government decree", "Genetic inheritance"],
+            "Agents include parents, siblings, teachers, peers and religious leaders.");
+        Q("gender", "hard", "Enrolment of females in UI's science-based disciplines has remained at about:",
+            "30%", ["50%", "80%", "10%"],
+            "About 80% of UI academic staff are male.");
+        Q("gender", "medium", "Which constitution prohibits discrimination on grounds of gender in Nigeria?",
+            "The 1999 Constitution of the Federal Republic of Nigeria", ["The 1962 University Act", "The NDLEA Act", "The PCN decree"],
+            "Gender equity is embedded in fundamental human rights.");
+        Q("gender", "medium", "The worst form of gender-based violence, according to the text, is:",
+            "Rape", ["Teasing", "Staring", "Gossip"],
+            "Sexual harassment covers a range of conduct in between.");
+        Q("gender", "medium", "Which is an example of VERBAL sexual harassment?",
+            "Demanding sexual favours in exchange for promotion or benefits", ["Unwelcome brushing against a person's body", "Sending pornographic videos", "Assault or battery"],
+            "Also sexual comments about a person's body or clothing.");
+        Q("gender", "medium", "Forcing someone to watch pornography is an example of:",
+            "Visual and audio sexual harassment", ["Verbal harassment", "Physical harassment", "Not harassment"],
+            "So is taking unwholesome pictures for blackmail.");
+        Q("gender", "medium", "Unwelcome caressing or fondling is:",
+            "Physical sexual harassment", ["Verbal harassment", "Visual harassment", "Acceptable conduct"],
+            "Non-consensual sex is also physical conduct.");
+        Q("gender", "medium", "The UI Sexual Harassment policy was passed by Senate in:",
+            "August 2012", ["1962", "1999", "2004"],
+            "It binds staff, students, contractors and visitors.");
+        Q("gender", "medium", "According to the UI policy, processes for implementing the SH policy should be:",
+            "Corrective and not punitive", ["Punitive only", "Secret and delayed", "Optional"],
+            "Complaints are handled with natural justice, transparency and timeliness.");
+        Q("gender", "medium", "A member of the community who witnesses sexual harassment should:",
+            "Report it, even if they are not the victim", ["Ignore it", "Condone it", "Wait for the victim to leave"],
+            "Zero tolerance is expected from all members.");
+        Q("gender", "hard", "Which statement about gender sensitivity is in the text?",
+            "Not all females are gender sensitive, nor are all males insensitive", ["Only women can be gender sensitive", "Men can never be gender sensitive", "Gender sensitivity is biological"],
+            "Males and females can both be gender-sensitive.");
+
+        // Application State
+        let state = {
+            questions: [],
+            currentQuestionIndex: 0,
+            answers: {},
+            timeLimit: 0, 
+            timeRemaining: 0,
+            timerId: null
+        };
+
+        const contentDiv = document.getElementById('content');
+
+        // Initialize App
+        function initApp() {
+            renderSetupScreen();
+        }
+
+        // --- SCREEN RENDERERS ---
+
+        function renderSetupScreen() {
+            contentDiv.className = "flex-grow min-h-0 overflow-y-auto flex flex-col p-5 sm:p-8 bg-white";
+            contentDiv.innerHTML = `
+                <div class="w-full max-w-xl mx-auto my-auto fade-in">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Test Preferences</h2>
+                    
+                    <div class="space-y-5 bg-gray-50 p-5 sm:p-6 rounded-2xl border border-gray-100 shadow-inner">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Number of Questions</label>
+                            <select id="numQuestions" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
+                                <option value="10">10 Questions</option>
+                                <option value="20">20 Questions</option>
+                                <option value="40" selected>40 Questions</option>
+                                <option value="60">60 Questions (Exam Length)</option>
+                                <option value="100">100 Questions</option>
+                                <option value="0">All Questions (${questionBank.length})</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Topic</label>
+                            <select id="topic" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
+                                <option value="all" selected>All Topics</option>
+                                ${Object.entries(TOPICS).map(([key, name]) => `<option value="${key}">${name} (${questionBank.filter(q => q.topic === key).length})</option>`).join('')}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Difficulty Level</label>
+                            <select id="difficulty" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
+                                <option value="mixed" selected>Mixed (All Levels)</option>
+                                <option value="easy">Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Time Limit</label>
+                            <select id="timeLimit" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
+                                <option value="auto" selected>Exam Pace (45 seconds per question)</option>
+                                <option value="10">10 Minutes</option>
+                                <option value="20">20 Minutes</option>
+                                <option value="30">30 Minutes</option>
+                                <option value="45">45 Minutes</option>
+                                <option value="60">60 Minutes</option>
+                                <option value="120">2 Hours</option>
+                            </select>
+                        </div>
+
+                        <button onclick="startTest()" class="w-full mt-8 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold text-lg py-4 sm:py-3 px-4 rounded-xl transition duration-200 shadow-md">
+                            <i class="fa-solid fa-play mr-2"></i> Start Test
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTestScreen() {
+            // Adjust padding specifically for test view
+            contentDiv.className = "flex-grow min-h-0 flex flex-col bg-white relative";
+            
+            const question = state.questions[state.currentQuestionIndex];
+            const progress = ((state.currentQuestionIndex) / state.questions.length) * 100;
+            const isLastQuestion = state.currentQuestionIndex === state.questions.length - 1;
+
+            let optionsHtml = '';
+            question.options.forEach((opt, index) => {
+                const isSelected = state.answers[state.currentQuestionIndex] === index;
+                optionsHtml += `
+                    <div class="mb-3 sm:mb-4 relative">
+                        <input type="radio" name="option" id="opt_${index}" value="${index}" class="option-radio opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10" ${isSelected ? 'checked' : ''} onchange="selectOption(${index})">
+                        <label for="opt_${index}" class="option-label block w-full border border-gray-200 rounded-xl p-4 sm:p-5 cursor-pointer active:bg-gray-100 hover:bg-gray-50 flex items-center">
+                            <span class="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0 border-2 rounded-full mr-4 flex items-center justify-center ${isSelected ? 'border-indigo-600 bg-indigo-600' : 'border-gray-300'}">
+                                ${isSelected ? '<div class="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-white rounded-full"></div>' : ''}
+                            </span>
+                            <span class="text-base sm:text-lg text-gray-800 leading-snug">${opt}</span>
+                        </label>
+                    </div>
+                `;
+            });
+
+            contentDiv.innerHTML = `
+                <!-- Sticky Header for Mobile & Desktop -->
+                <div class="shrink-0 bg-white/95 backdrop-blur-sm z-20 px-5 sm:px-8 py-4 border-b border-gray-100 shadow-sm">
+                    <div class="flex justify-between items-center mb-3">
+                        <div class="text-xs sm:text-sm font-bold text-gray-500 uppercase tracking-wider">
+                            Q ${state.currentQuestionIndex + 1} <span class="text-gray-300 mx-1">/</span> ${state.questions.length}
+                        </div>
+                        <div class="flex items-center text-base sm:text-lg font-bold ${state.timeRemaining <= 60 ? 'text-red-500 animate-pulse' : 'text-indigo-600'} bg-indigo-50 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg">
+                            <i class="fa-regular fa-clock mr-2"></i> <span id="timerDisplay">--:--</span>
+                        </div>
+                    </div>
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-gray-200 rounded-full h-1.5 sm:h-2">
+                        <div class="bg-indigo-500 h-1.5 sm:h-2 rounded-full transition-all duration-300 ease-out" style="width: ${progress}%"></div>
+                    </div>
+                </div>
+
+                <!-- Scrollable Question Area -->
+                <div class="flex-grow min-h-0 px-5 sm:px-8 py-6 overflow-y-auto fade-in">
+                    <p class="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-2">${TOPICS[question.topic]}</p>
+                    <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-6 sm:mb-8 leading-relaxed">
+                        ${question.text}
+                    </h3>
+                    <div class="mb-4">
+                        ${optionsHtml}
+                    </div>
+                </div>
+
+                <!-- Sticky Footer -->
+                <div class="shrink-0 w-full bg-white border-t border-gray-200 p-4 sm:px-8 sm:py-5 z-20 flex justify-between items-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] sm:shadow-none">
+                    <button onclick="prevQuestion()" class="${state.currentQuestionIndex === 0 ? 'invisible' : ''} w-1/2 sm:w-auto px-4 py-3 sm:py-2.5 text-gray-600 font-bold bg-gray-100 active:bg-gray-200 hover:bg-gray-200 rounded-xl sm:rounded-lg transition text-center mr-2">
+                        <i class="fa-solid fa-arrow-left sm:mr-2"></i> <span class="hidden sm:inline">Previous</span>
+                    </button>
+                    
+                    ${isLastQuestion ? 
+                        `<button onclick="submitTest()" class="w-1/2 sm:w-auto px-4 py-3 sm:py-2.5 bg-green-600 active:bg-green-700 hover:bg-green-700 text-white font-bold rounded-xl sm:rounded-lg transition shadow-md text-center ml-2">
+                            Submit <i class="fa-solid fa-check ml-1 sm:ml-2"></i>
+                        </button>` 
+                        : 
+                        `<button onclick="nextQuestion()" class="w-1/2 sm:w-auto px-4 py-3 sm:py-2.5 bg-indigo-600 active:bg-indigo-700 hover:bg-indigo-700 text-white font-bold rounded-xl sm:rounded-lg transition shadow-md text-center ml-2">
+                            Next <i class="fa-solid fa-arrow-right ml-1 sm:ml-2"></i>
+                        </button>`
+                    }
+                </div>
+            `;
+            
+            updateTimerDisplay(); // Ensure immediate render
+        }
+
+        function renderReviewScreen() {
+            // Adjust padding to allow full natural scrolling on mobile
+            contentDiv.className = "flex-grow min-h-0 flex flex-col px-4 py-6 sm:p-8 bg-white overflow-y-auto";
+            
+            let score = 0;
+            state.questions.forEach((q, idx) => {
+                if (state.answers[idx] === q.correct) score++;
+            });
+
+            const percentage = Math.round((score / state.questions.length) * 100);
+            let feedback = '';
+            if (percentage >= 80) feedback = "Excellent work! You have a solid grasp of the GES 107 material.";
+            else if (percentage >= 50) feedback = "Good effort! Review the concepts below to solidify your understanding.";
+            else feedback = "Keep studying! Carefully review the detailed rationales below to master these concepts.";
+
+            let reviewHtml = `
+                <div class="fade-in w-full max-w-3xl mx-auto pb-8">
+                    
+                    <!-- Score Card -->
+                    <div class="text-center mb-8 bg-indigo-50 p-6 sm:p-8 rounded-2xl border border-indigo-100 shadow-sm">
+                        <div class="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full shadow mb-4">
+                            <h2 class="text-3xl font-black text-indigo-600">${score}<span class="text-lg text-gray-400">/${state.questions.length}</span></h2>
+                        </div>
+                        <p class="text-xl font-bold text-gray-800 mb-2">Score: ${percentage}%</p>
+                        <p class="text-sm sm:text-base text-gray-600 px-4">${feedback}</p>
+                        <button onclick="initApp()" class="mt-6 w-full sm:w-auto px-8 py-3.5 sm:py-2.5 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold rounded-xl transition shadow-md">
+                            <i class="fa-solid fa-rotate-right mr-2"></i> Retake Setup
+                        </button>
+                    </div>
+                    
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4 border-b pb-3 pl-1">Score by Topic</h3>
+                    <div class="space-y-2 mb-8">
+                        ${Object.entries(TOPICS).map(([key, name]) => {
+                            const qs = state.questions.map((q, i) => ({ q, i })).filter(x => x.q.topic === key);
+                            if (qs.length === 0) return '';
+                            const right = qs.filter(x => state.answers[x.i] === x.q.correct).length;
+                            const pct = Math.round(right / qs.length * 100);
+                            const bar = pct >= 70 ? 'bg-green-500' : pct >= 50 ? 'bg-yellow-400' : 'bg-red-500';
+                            return `<div class="text-sm">
+                                <div class="flex justify-between mb-1"><span class="text-gray-700 pr-2">${name}</span><span class="font-semibold text-gray-800 shrink-0">${right}/${qs.length}</span></div>
+                                <div class="w-full bg-gray-200 rounded-full h-2"><div class="${bar} h-2 rounded-full" style="width:${pct}%"></div></div>
+                            </div>`;
+                        }).join('')}
+                    </div>
+
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-5 border-b pb-3 pl-1">Informed Review</h3>
+                    <div class="space-y-5 sm:space-y-6">
+            `;
+
+            state.questions.forEach((q, idx) => {
+                const userAnswer = state.answers[idx];
+                const isCorrect = userAnswer === q.correct;
+                const unanswered = userAnswer === undefined;
+
+                let userChoiceText = unanswered ? "<span class='italic text-gray-400'>Not answered</span>" : q.options[userAnswer];
+                let correctChoiceText = q.options[q.correct];
+
+                reviewHtml += `
+                    <div class="bg-white border rounded-2xl p-4 sm:p-6 ${isCorrect ? 'border-green-200 shadow-sm' : 'border-red-200 shadow-sm'}">
+                        <div class="flex items-start">
+                            <div class="mt-1 mr-3 sm:mr-4 flex-shrink-0 bg-white rounded-full">
+                                ${isCorrect ? '<i class="fa-solid fa-circle-check text-green-500 text-2xl"></i>' : '<i class="fa-solid fa-circle-xmark text-red-500 text-2xl"></i>'}
+                            </div>
+                            <div class="flex-grow min-w-0"> <!-- min-w-0 fixes flexbox text truncation issues -->
+                                <p class="font-semibold text-gray-800 mb-4 text-base sm:text-lg leading-relaxed"><span class="text-gray-400 mr-1">${idx + 1}.</span> ${q.text}</p>
+                                
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5 text-sm sm:text-base">
+                                    <div class="bg-gray-50 p-3.5 sm:p-4 rounded-xl border border-gray-200">
+                                        <p class="text-gray-500 mb-1.5 text-xs font-bold uppercase tracking-wider">Your Answer</p>
+                                        <p class="${isCorrect ? 'text-green-700 font-semibold' : 'text-red-700 font-medium'} break-words">${userChoiceText}</p>
+                                    </div>
+                                    ${!isCorrect ? `
+                                    <div class="bg-green-50 p-3.5 sm:p-4 rounded-xl border border-green-200">
+                                        <p class="text-green-600 mb-1.5 text-xs font-bold uppercase tracking-wider">Correct Answer</p>
+                                        <p class="text-green-800 font-semibold break-words">${correctChoiceText}</p>
+                                    </div>
+                                    ` : ''}
+                                </div>
+
+                                <div class="bg-blue-50/70 border-l-4 border-blue-400 p-4 sm:p-5 rounded-r-xl">
+                                    <h4 class="text-xs font-bold text-blue-800 uppercase tracking-wider mb-2 flex items-center"><i class="fa-solid fa-book-open mr-2"></i> Rationale</h4>
+                                    <p class="text-sm sm:text-base text-blue-900 leading-relaxed">${q.rationale}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            reviewHtml += `
+                    </div>
+                </div>
+            `;
+            
+            contentDiv.innerHTML = reviewHtml;
+            // Scroll to top of review screen
+            window.scrollTo(0,0);
+            if(contentDiv.scrollTo) contentDiv.scrollTo(0,0);
+        }
+
+        // --- APP LOGIC ---
+
+        function startTest() {
+            const numQ = parseInt(document.getElementById('numQuestions').value);
+            const diff = document.getElementById('difficulty').value;
+            const topic = document.getElementById('topic').value;
+            const timeChoice = document.getElementById('timeLimit').value;
+
+            // Filter questions
+            let filteredQuestions = questionBank.filter(q =>
+                (diff === 'mixed' || q.difficulty === diff) && (topic === 'all' || q.topic === topic));
+            if (filteredQuestions.length === 0) {
+                alert("No questions match that topic and difficulty. Try 'Mixed' difficulty.");
+                return;
+            }
+
+            // Shuffle questions, take the requested count, then shuffle each question's options
+            filteredQuestions = shuffleArray([...filteredQuestions]);
+            const count = numQ === 0 ? filteredQuestions.length : Math.min(numQ, filteredQuestions.length);
+            const selectedQuestions = filteredQuestions.slice(0, count).map(q => {
+                const order = shuffleArray(q.options.map((_, i) => i));
+                return { ...q, options: order.map(i => q.options[i]), correct: order.indexOf(q.correct) };
+            });
+
+            // Setup state
+            state.questions = selectedQuestions;
+            state.currentQuestionIndex = 0;
+            state.answers = {};
+            state.timeLimit = timeChoice === 'auto' ? Math.max(60, count * 45) : parseInt(timeChoice) * 60;
+            state.timeRemaining = state.timeLimit;
+            
+            // Start Timer
+            if (state.timerId) clearInterval(state.timerId);
+            state.timerId = setInterval(timerTick, 1000);
+
+            renderTestScreen();
+            window.scrollTo(0,0);
+        }
+
+        function timerTick() {
+            state.timeRemaining--;
+            updateTimerDisplay();
+
+            if (state.timeRemaining <= 0) {
+                clearInterval(state.timerId);
+                alert("Time's up! Submitting your test automatically.");
+                submitTest();
+            }
+        }
+
+        function updateTimerDisplay() {
+            const timerEl = document.getElementById('timerDisplay');
+            if (!timerEl) return;
+            
+            const m = Math.floor(state.timeRemaining / 60).toString().padStart(2, '0');
+            const s = (state.timeRemaining % 60).toString().padStart(2, '0');
+            timerEl.textContent = `${m}:${s}`;
+            
+            if (state.timeRemaining <= 60 && state.timeRemaining > 0) {
+                timerEl.parentElement.classList.remove('text-indigo-600', 'bg-indigo-50');
+                timerEl.parentElement.classList.add('text-red-600', 'bg-red-50', 'animate-pulse');
+            }
+        }
+
+        function selectOption(index) {
+            state.answers[state.currentQuestionIndex] = index;
+            // Force re-render to update radio visual states
+            renderTestScreen();
+        }
+
+        function nextQuestion() {
+            if (state.currentQuestionIndex < state.questions.length - 1) {
+                state.currentQuestionIndex++;
+                renderTestScreen();
+                window.scrollTo(0,0);
+            }
+        }
+
+        function prevQuestion() {
+            if (state.currentQuestionIndex > 0) {
+                state.currentQuestionIndex--;
+                renderTestScreen();
+                window.scrollTo(0,0);
+            }
+        }
+
+        function submitTest() {
+            clearInterval(state.timerId);
+            renderReviewScreen();
+        }
+
+        // Utility: Fisher-Yates Shuffle
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Boot
+        initApp();
+    </script>
+</body>
+</html>

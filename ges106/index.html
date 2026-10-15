@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GES 106: Philosophy, Logic and Critical Thinking Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            -webkit-tap-highlight-color: transparent; /* Removes tap highlight on mobile */
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .option-label {
+            transition: all 0.2s;
+        }
+        .option-radio:checked + .option-label {
+            background-color: #e0e7ff;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+        /* Custom scrollbar only for desktop */
+        @media (min-width: 640px) {
+            ::-webkit-scrollbar { width: 8px; }
+            ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+            ::-webkit-scrollbar-thumb { background: #c7c7cc; border-radius: 4px; }
+            ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+        }
+        /* Hide scrollbar for clean mobile sticky header/footer */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<!-- pb-20 keeps a strip clear at the bottom for the Netlify badge -->
+<body class="min-h-screen pb-20 text-gray-800 sm:flex sm:items-center sm:justify-center sm:px-4 sm:pt-4 bg-gray-100 sm:bg-gradient-to-br sm:from-blue-50 sm:to-indigo-100">
+
+    <!-- Mobile: Full height, Desktop: Rounded card -->
+    <div id="app" class="w-full max-w-3xl bg-white sm:shadow-2xl sm:rounded-2xl overflow-hidden h-[calc(100dvh-5rem)] sm:h-auto sm:max-h-[calc(100dvh-6rem)] flex flex-col relative fade-in">
+        
+        <!-- Header -->
+        <div class="bg-indigo-600 text-white px-4 py-5 sm:p-6 text-center shrink-0 z-30 shadow-md">
+            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight"><i class="fa-solid fa-graduation-cap mr-2"></i> GES 106</h1>
+            <p class="text-indigo-100 mt-1 text-sm sm:text-base font-medium">Philosophy, Logic and Critical Thinking</p>
+        </div>
+
+        <!-- Dynamic Content Container -->
+        <div id="content" class="flex-grow min-h-0 flex flex-col bg-white">
+            <!-- Content will be injected by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Question Bank derived from GES 106 materials (Course Outline, Course Overview, GES 106 Summary, Philosophy and Logic e-module, New Textbook)
+        // Q(topic, difficulty, question, correctAnswer, [distractors], rationale)
+        // Options are shuffled at test start, so the correct answer is always written first here.
+        const TOPICS = {
+            existence: "Philosophy & Human Existence",
+            branches: "Meaning, Methods & Branches of Philosophy",
+            epistemology: "Epistemology: Knowledge & Truth",
+            metaphysics: "Metaphysics: Reality, Mind & God",
+            ethics: "Ethical Theories & Moral Dilemmas",
+            disciplines: "Philosophy, Science, Society & Other Disciplines",
+            logic: "Nature & Scope of Logic; Arguments",
+            formal: "Formal Logic: Connectives, Truth Tables & Inference",
+            fallacies: "Formal & Informal Fallacies",
+            meaning: "Language, Meaning & Definition",
+            relations: "Relational Statements & Logical Puzzles"
+        };
+
+        const questionBank = [];
+        function Q(topic, difficulty, text, answer, distractors, rationale) {
+            questionBank.push({ topic, difficulty, text, options: [answer, ...distractors], correct: 0, rationale });
+        }
+
+        // ===================== PHILOSOPHY & HUMAN EXISTENCE =====================
+        Q("existence", "easy", "Etymologically, 'philosophy' comes from the Greek words 'philo' and 'sophia', meaning:",
+            "Love and wisdom", ["Study and nature", "Truth and reason", "Mind and soul"],
+            "Philosophy is the love of wisdom – a persistent search for wisdom, not a claim to possess it.");
+        Q("existence", "easy", "Who said 'an unexamined life is not worth living'?",
+            "Socrates", ["Plato", "Aristotle", "Descartes"],
+            "The quote captures philosophy as critical thinking.");
+        Q("existence", "medium", "The first step in philosophizing, according to the text, is activating our:",
+            "Curiosity and sense of wonder", ["Faith in authority", "Memory of facts", "Fear of the unknown"],
+            "It is usually said that philosophy begins in wonder.");
+        Q("existence", "medium", "Philosophy is described as inescapable because:",
+            "We are curious beings and it fundamentally determines the quality and essence of our lives", ["It is compulsory in all universities", "It is required by law", "Only philosophers can live without it"],
+            "Everyone consciously or unconsciously tries to make sense of their environment.");
+        Q("existence", "medium", "A worldview is best described as:",
+            "The framework of ideas and beliefs through which an individual interprets and interacts with the world", ["A map of the world's countries", "A scientific law", "A political party's manifesto"],
+            "It explains the nature of the world, one's own nature and achievable goals.");
+        Q("existence", "medium", "Critical thinking demands that you test your worldview for factual adequacy, logical coherence and:",
+            "Explanatory capacity", ["Popularity", "Religious approval", "Emotional appeal"],
+            "These are the three elements at the intersection of philosophy as worldview and as critical thinking.");
+        Q("existence", "medium", "Testing whether your worldview agrees with relevant known facts and experiences is testing for:",
+            "Factual adequacy", ["Logical coherence", "Explanatory capacity", "Soundness"],
+            "Logical coherence asks whether the beliefs hang together without contradiction.");
+        Q("existence", "medium", "If the beliefs making up a worldview contradict one another, the worldview fails the test of:",
+            "Logical coherence", ["Factual adequacy", "Explanatory capacity", "Validity"],
+            "Contradiction means at least one of the beliefs is false.");
+        Q("existence", "hard", "The ability of a worldview to show how entities of the universe are related and to help us transform the universe is its:",
+            "Explanatory capacity", ["Factual adequacy", "Logical coherence", "Prescriptive function"],
+            "It enables us to shape the universe to suit our goals.");
+        Q("existence", "medium", "Which is a reason given for constructing a view of the world for yourself?",
+            "It gives insight into who you are, what you value and what you are capable of", ["It guarantees wealth", "It makes thinking unnecessary", "It replaces science"],
+            "It also gives psychological confidence and helps you understand the physical world.");
+        Q("existence", "hard", "Who observed that what philosophers do is much closer to what some children do?",
+            "Gareth Matthews", ["Bertrand Russell", "Kwame Gyekye", "H.S. Staniland"],
+            "Children's curiosity resembles philosophical wonder; as we grow, we take the world for granted.");
+        Q("existence", "medium", "Philosophy has been described as a 'no-man's land' between:",
+            "Science and theology", ["Art and music", "Law and medicine", "History and geography"],
+            "Like science it critically studies the world; like theology it inquires beyond sense experience.");
+        Q("existence", "medium", "Philosophy is called a 'gadfly' because it:",
+            "Keeps humans always on their toes regarding received opinions", ["Studies insects", "Avoids criticism", "Depends on faith"],
+            "It constantly questions accepted beliefs.");
+        Q("existence", "medium", "The only common element in most definitions of philosophy is its posture as:",
+            "A critical inquiry into the nature of things", ["A religious practice", "An experimental science", "A political ideology"],
+            "There is no univocal definition of philosophy.");
+
+        // ===================== MEANING, METHODS & BRANCHES =====================
+        Q("branches", "medium", "Kwame Gyekye defined philosophy as:",
+            "A critical and systematic inquiry into the fundamental ideas or principles underlying human thought", ["The criticism of the ideas we live by", "The search for the guide of life", "The love of wisdom only"],
+            "Gyekye is an African philosopher.");
+        Q("branches", "medium", "H.S. Staniland defined philosophy simply as:",
+            "The criticism of the ideas we live by", ["The search for the guide of life", "Love of wisdom", "A gadfly"],
+            "This critical tendency is why philosophy engages other disciplines.");
+        Q("branches", "medium", "According to Chatalian, philosophy is essentially:",
+            "The search for the guide of life", ["The criticism of ideas", "Linguistic analysis", "The study of nature"],
+            "Different scholars emphasise different aspects of philosophy.");
+        Q("branches", "hard", "Which African philosopher said philosophy everywhere is to examine the intellectual foundations of life for human well-being?",
+            "Kwasi Wiredu", ["Kwame Gyekye", "Joseph Omoregbe", "C.S. Momoh"],
+            "Wiredu stressed using the best available knowledge and reflection.");
+        Q("branches", "medium", "The Socratic conception of philosophy holds that philosophers should:",
+            "Be critical, live by example as moral exemplars and stand by the truth", ["Limit themselves to linguistic analysis", "Avoid practical life", "Accept tradition without question"],
+            "Associated with Socrates and Plato.");
+        Q("branches", "medium", "Philosophy as Contemplation, where philosophers are 'citizens of the universe' and questions are open-ended, is associated with:",
+            "Bertrand Russell", ["Ludwig Wittgenstein", "Karl Marx", "Socrates"],
+            "It rejects the compartmentalization of knowledge.");
+        Q("branches", "medium", "Philosophy as Analysis, a 'method of therapy' through linguistic clarification, is represented by:",
+            "Ludwig Wittgenstein", ["Bertrand Russell", "Karl Marx", "Plato"],
+            "It is content with conceptual analysis.");
+        Q("branches", "hard", "Philosophy as the Unity of Theory and Practice is exemplified by:",
+            "Marx's eleventh thesis on Feuerbach", ["Wittgenstein's therapy", "Russell's contemplation", "Descartes' methodic doubt"],
+            "It seeks to make the world better than it is, uniting the other conceptions.");
+        Q("branches", "easy", "The four cardinal branches of philosophy are:",
+            "Epistemology, metaphysics, ethics and logic", ["Physics, chemistry, biology and logic", "Ethics, law, politics and art", "Ontology, cosmology, psychology and theology"],
+            "Other branches (philosophy of science, law, etc.) address other disciplines.");
+        Q("branches", "easy", "Epistemology comes from 'episteme' and 'logos', meaning:",
+            "Knowledge and theory", ["Being and study", "Love and wisdom", "Value and judgement"],
+            "Epistemology is the theory of knowledge.");
+        Q("branches", "medium", "Metaphysics is divided into:",
+            "Ontology and cosmology", ["Ethics and aesthetics", "Deductive and inductive", "Normative and meta-ethics"],
+            "Ontology studies being; cosmology studies the physical universe.");
+        Q("branches", "medium", "Value theory is divided into:",
+            "Ethics and aesthetics", ["Ontology and cosmology", "Logic and epistemology", "Rationalism and empiricism"],
+            "Aesthetics studies the production, appreciation and experience of art.");
+        Q("branches", "medium", "The branch of philosophy that studies works of art and beauty is:",
+            "Aesthetics", ["Ethics", "Ontology", "Epistemology"],
+            "It is part of value theory.");
+        Q("branches", "medium", "Which of these is NOT listed among the methods of philosophy?",
+            "Laboratory experimentation", ["Methodic doubt", "Dialectical method", "Philosophical argumentation"],
+            "Methods include criticism, argumentation, methodic doubt, dialectic, inquiry and analysis.");
+        Q("branches", "medium", "The analytic function of philosophy is:",
+            "The analysis and clarification of ideas, concepts, statements or beliefs", ["Formulating norms to guide life", "Speculating about being in general", "Conducting experiments"],
+            "Other functions: speculative, prescriptive and critical thinking.");
+        Q("branches", "medium", "The prescriptive function of philosophy involves:",
+            "Formulating goals, norms and standards to guide culture and life", ["Clarifying concepts", "Speculating about existence", "Measuring natural phenomena"],
+            "Prescriptive = what ought to be.");
+        Q("branches", "medium", "The speculative function of philosophy refers to:",
+            "Our ability to think, reason and establish conjectures about existence and being", ["Analysis of language", "Formulating laws", "Detecting fallacies"],
+            "Speculation is reflective thinking about reality as a whole.");
+        Q("branches", "medium", "Philosophy raising conceptual questions about the foundations of other disciplines is described as:",
+            "Second-order activity", ["First-order activity", "Empirical research", "Applied ethics"],
+            "First-order: reflecting directly on knowledge, ethics and correct thinking.");
+        Q("branches", "hard", "Philosophy is said to be 'both a first-order and a second-order discipline'. Its first-order role is:",
+            "Reflecting on essential subjects such as knowledge, ethics and correct thinking", ["Investigating the projects of other disciplines", "Writing laws", "Doing experiments"],
+            "Second-order: investigating the projects of other disciplines.");
+        Q("branches", "easy", "Philosophy started in ancient Greece around the:",
+            "5th century B.C.", ["1st century A.D.", "10th century B.C.", "15th century A.D."],
+            "The Ionian philosophers reflected on puzzling natural phenomena.");
+        Q("branches", "hard", "Who defined epistemology as the branch studying the nature, origin, foundation, method, validity, extent and limits of human knowledge?",
+            "Joseph Omoregbe", ["Kwame Gyekye", "K.A. Owolabi", "Ozumba"],
+            "Omoregbe also defined ethics as studying the morality of human conduct.");
+
+        // ===================== EPISTEMOLOGY =====================
+        Q("epistemology", "easy", "Epistemology is the branch of philosophy concerned with:",
+            "The sources, scope and justification of knowledge", ["The nature of reality", "Right and wrong conduct", "Valid rules of inference"],
+            "It is the theory of knowledge.");
+        Q("epistemology", "easy", "Empiricism holds that the ultimate source of knowledge is:",
+            "Sense experience", ["Reason", "Revelation", "Intuition"],
+            "Rationalism accords priority to reason.");
+        Q("epistemology", "easy", "Rationalism holds that the ultimate source of genuine knowledge is:",
+            "Reason", ["Sense experience", "Tradition", "Authority"],
+            "Rationalism does not deny sense experience but gives priority to reason.");
+        Q("epistemology", "medium", "John Locke described the mind at birth as:",
+            "Tabula rasa – a blank slate", ["Full of innate ideas", "A world of forms", "A thinking substance"],
+            "Locke was an empiricist.");
+        Q("epistemology", "medium", "Which group lists only empiricists?",
+            "John Locke, George Berkeley and David Hume", ["Descartes, Spinoza and Leibniz", "Plato, Kant and Hegel", "Locke, Descartes and Plato"],
+            "These are the classical British empiricists.");
+        Q("epistemology", "medium", "Which group lists only rationalists?",
+            "Plato, René Descartes, Spinoza and Leibniz", ["Locke, Berkeley and Hume", "Moore, Locke and Plato", "Hume, Kant and Berkeley"],
+            "Rationalists say reason alone is the source of knowledge.");
+        Q("epistemology", "hard", "Who claimed that neither experience nor reason alone fully accounts for knowledge, but both play important roles?",
+            "Immanuel Kant", ["David Hume", "René Descartes", "John Locke"],
+            "Kant synthesised rationalism and empiricism.");
+        Q("epistemology", "medium", "Plato believed the human soul:",
+            "Pre-existed in the world of forms where it knew all things, but forgot on uniting with the body", ["Is a blank slate at birth", "Is identical with the brain", "Learns only through the senses"],
+            "Knowledge is recollection for Plato.");
+        Q("epistemology", "medium", "Methodological scepticism, strongly held by Descartes, says:",
+            "We can know things, but must doubt all claims to arrive at what cannot be doubted", ["Nothing at all can be known", "Knowledge is impossible in one area only", "Senses never mislead"],
+            "Philosophical scepticism says we can never be certain, so we cannot know.");
+        Q("epistemology", "medium", "The view that knowledge may be possible elsewhere but is unavailable in a selected area is:",
+            "Local scepticism", ["Global scepticism", "Methodological scepticism", "Extreme scepticism"],
+            "Global scepticism says we cannot know anything.");
+        Q("epistemology", "medium", "The traditional account of knowledge defines knowledge as:",
+            "Justified true belief", ["Strong opinion", "Any belief held by many", "Faith supported by authority"],
+            "S knows P if S believes P, P is true, and S has reasons to believe P.");
+        Q("epistemology", "hard", "Who argued that the three criteria of justified true belief are necessary but NOT sufficient for knowledge?",
+            "Edmund Gettier", ["Immanuel Kant", "John Locke", "Plato"],
+            "This led to controversies on what knowledge is.");
+        Q("epistemology", "hard", "Non-inferential beliefs that justify themselves and support inferential beliefs are called:",
+            "Foundations of knowledge", ["Synthetic judgements", "A posteriori truths", "Hypotheses"],
+            "Inferential beliefs rely on other beliefs for justification.");
+        Q("epistemology", "medium", "'All bachelors are unmarried males' is an example of:",
+            "Analytic/a priori knowledge", ["Synthetic/a posteriori knowledge", "Empirical generalisation", "Hypothesis"],
+            "It is known by pure reason; denying it is self-contradictory.");
+        Q("epistemology", "medium", "'All metals expand when heated' is an example of:",
+            "Synthetic/a posteriori knowledge", ["Analytic/a priori knowledge", "A tautology", "A contradiction"],
+            "It is established through the senses and is contingently true.");
+        Q("epistemology", "hard", "Which statement about analytic vs synthetic statements is correct?",
+            "The predicate of a synthetic statement adds new information to the subject", ["Denying a synthetic statement leads to self-contradiction", "Analytic truths require sense experience", "Synthetic truths are necessarily true"],
+            "Analytic predicates merely explain the subject; synthetic predicates add information.");
+        Q("epistemology", "medium", "The correspondence theory of truth holds that a statement is true if it:",
+            "Corresponds to reality or an actual state of affairs", ["Coheres with an established system of truths", "Is practicable or works", "Is believed by most people"],
+            "It emphasises agreement between beliefs and facts.");
+        Q("epistemology", "medium", "The coherence theory of truth holds that a statement is true if it:",
+            "Coheres with an already established system of truth", ["Matches a fact", "Is useful in practice", "Is stated by an authority"],
+            "It emphasises agreement among beliefs.");
+        Q("epistemology", "medium", "The pragmatist theory of truth says a proposition is true if:",
+            "What it affirms is practicable or realizable", ["It matches a fact", "It fits an established system", "It cannot be doubted"],
+            "Truth is a matter of practical experience.");
+        Q("epistemology", "medium", "K.A. Owolabi identifies how many dimensions to the meaning of knowledge?",
+            "Three", ["Two", "Four", "Five"],
+            "Cognitive consciousness, certitude on adequate grounds, and what is known.");
+        Q("epistemology", "medium", "'To be is to be perceived' was said by:",
+            "Bishop George Berkeley", ["John Locke", "David Hume", "Plato"],
+            "Berkeley established subjective idealism.");
+        Q("epistemology", "hard", "Bishop Berkeley's form of idealism is called:",
+            "Subjective idealism", ["Objective idealism", "Personal idealism", "Naive realism"],
+            "Objective idealists include Hegel, Spinoza and Plato.");
+        Q("epistemology", "hard", "Which philosopher depicted the universe as an unfolding process of thought and the physical manifestation of God?",
+            "Hegel", ["Berkeley", "Locke", "Armstrong"],
+            "Hegel is an objective idealist.");
+        Q("epistemology", "hard", "Naive realism, which holds that we perceive the physical world as it is, is associated with:",
+            "G.E. Moore", ["John Locke", "Plato", "Hegel"],
+            "Locke: representative realism; Plato: ultra realism.");
+        Q("epistemology", "hard", "'A materialist theory of mind' was written by:",
+            "David Armstrong", ["David Hume", "G.E. Moore", "Gilbert Ryle"],
+            "Armstrong: 'Man is nothing but a material object having none but physical properties.'");
+        Q("epistemology", "medium", "Subjectivism is the doctrine that:",
+            "All knowledge is limited to experiences by the self", ["Objects exist independent of mind", "Reason is the only source of knowledge", "Truth is what works"],
+            "Transcendent knowledge is impossible on this view.");
+        Q("epistemology", "medium", "Plato distinguished two worlds:",
+            "The world of appearance and the world of forms (reality)", ["Heaven and earth", "Mind and body", "Past and future"],
+            "The philosopher is interested in what things are, not what they seem.");
+
+        // ===================== METAPHYSICS =====================
+        Q("metaphysics", "easy", "Metaphysics comes from 'meta' and 'physika', meaning:",
+            "Beyond the physical", ["Study of nature", "Love of wisdom", "Theory of knowledge"],
+            "It deals with the ultimate constituent and origin of the universe.");
+        Q("metaphysics", "medium", "What is central to all metaphysical enquiries?",
+            "Reality", ["Morality", "Language", "Validity"],
+            "Metaphysics is a comprehensive account of the universe.");
+        Q("metaphysics", "medium", "Idealism holds that the ultimate constituent of the universe is:",
+            "Idea, spirit or non-matter", ["Matter", "Water", "Number"],
+            "The physical world depends on the mind.");
+        Q("metaphysics", "medium", "Materialism holds that:",
+            "Matter is the basic substance of everything", ["Ideas are primary", "Nothing exists", "God is everything"],
+            "Even mind and spirits must be explainable in material terms.");
+        Q("metaphysics", "medium", "Nihilism holds that:",
+            "Nothing exists (no God, no justice)", ["Only matter exists", "Only ideas exist", "Many gods exist"],
+            "A nihilist may also claim nothing ought to exist.");
+        Q("metaphysics", "medium", "Concepts such as humanity, beauty and justice, which many things share, are:",
+            "Universals", ["Particulars", "Qualities", "Substances"],
+            "Particulars are individual things like a blue car.");
+        Q("metaphysics", "medium", "Those who deny that universals exist objectively and say they are only names are:",
+            "Nominalists", ["Realists", "Idealists", "Dualists"],
+            "Realists believe in universals.");
+        Q("metaphysics", "hard", "Which is a feature of particulars?",
+            "They cannot be in more than one place at a time", ["They can be in many places at once", "They are instantiated by other things", "They never pass away"],
+            "Universals can be in many places at once.");
+        Q("metaphysics", "medium", "Substances, as opposed to qualities, are:",
+            "The substratum not open to sensory observation", ["Attributes like size, shape and colour", "Particular things only", "Names for groups"],
+            "Qualities are the attributes open to the senses.");
+        Q("metaphysics", "easy", "The view that man is composed of two entities, body and mind, is:",
+            "Dualism", ["Monism", "Materialism", "Nihilism"],
+            "Descartes was a dualist and interactionist.");
+        Q("metaphysics", "medium", "Interactionism holds that:",
+            "Mind and body causally influence each other", ["Mind does not exist", "God regulates mind-body correlation", "Mental events have no physical effects"],
+            "Descartes was an interactionist.");
+        Q("metaphysics", "hard", "Occasionalism explains mind-body correlation by:",
+            "Making God the mind-body regulator", ["Identifying mind with brain", "Denying the body exists", "Parallel lines drawn eternally"],
+            "It is a variant of dualism.");
+        Q("metaphysics", "hard", "Leibniz's view that mental and physical events are parallel lines eternally drawn by God is:",
+            "Psycho-physical parallelism", ["Epiphenomenalism", "Functionalism", "Occasionalism"],
+            "Mind and body do not interact but correspond.");
+        Q("metaphysics", "hard", "Epiphenomenalism holds that mental effects:",
+            "Are caused by physical brain events but have no effect on physical events", ["Cause all physical events", "Are identical to brain states", "Are regulated by God"],
+            "The mental is a by-product of the physical.");
+        Q("metaphysics", "hard", "The view that every mental state is identical to some state of the brain or central nervous system is:",
+            "Central state materialism", ["Functionalism", "Property dualism", "Idealism"],
+            "Functionalism defines mental states by causal relations.");
+        Q("metaphysics", "hard", "Howard Robinson's problems of the mind include consciousness, intentionality, self and:",
+            "Embodiment", ["Memory", "Language", "Free will"],
+            "These are four problems in the mind-body debate.");
+        Q("metaphysics", "medium", "Deism holds that:",
+            "One God exists but does not involve himself in his creation", ["God is identical with the universe", "Many gods exist", "God's existence cannot be known"],
+            "Theism: one God who is involved.");
+        Q("metaphysics", "medium", "The view that the truth about God cannot be known, so judgement should be suspended, is:",
+            "Agnosticism", ["Atheism", "Deism", "Pantheism"],
+            "Atheism denies God's existence.");
+        Q("metaphysics", "hard", "The view that God is not identical with the universe but includes the universe is:",
+            "Panentheism", ["Pantheism", "Deism", "Henotheism"],
+            "Pantheism, associated with Hinduism, identifies God with the universe.");
+        Q("metaphysics", "hard", "Henotheism holds that:",
+            "There is a plurality of gods but allegiance is restricted to one superior god", ["Only one god exists", "No god exists", "Two gods are equal and opposed"],
+            "A variation of polytheism.");
+        Q("metaphysics", "medium", "Determinism is the view that:",
+            "Everything that happens is necessitated by what has gone before", ["Humans are fully free", "Nothing exists", "Morality is relative"],
+            "Libertarians hold that we are free and determinism is false.");
+        Q("metaphysics", "hard", "A soft determinist believes that:",
+            "Both determinism and free will are true", ["Determinism is true and free will is false", "Free will is true and determinism is false", "Neither is true"],
+            "The hard determinist accepts determinism and rejects free will.");
+        Q("metaphysics", "hard", "Greek philosophers who proposed that we are purely material beings were:",
+            "Leucippus and Democritus", ["Plato and Socrates", "Thales and Heraclitus", "Aristotle and Plato"],
+            "They were early materialists (atomists).");
+
+        // ===================== ETHICS =====================
+        Q("ethics", "easy", "The term 'ethics' comes from the Greek word:",
+            "Ethos (custom)", ["Eros (love)", "Episteme (knowledge)", "Logos (reason)"],
+            "Ethics is also called moral philosophy.");
+        Q("ethics", "medium", "The branch of ethics concerned with setting standards of good moral conduct is:",
+            "Normative (prescriptive) ethics", ["Descriptive ethics", "Meta-ethics", "Applied ethics"],
+            "It uses teleological, deontological and virtue approaches.");
+        Q("ethics", "medium", "Meta-ethics (critical ethics) examines:",
+            "The meaning, nature and origin of moral standards", ["Concrete social issues", "How societies actually behave", "Laws of a country"],
+            "E.g. the is/ought distinction.");
+        Q("ethics", "medium", "Applied ethics:",
+            "Examines the moral status of concrete social issues using ethical theories", ["Describes morality across cultures", "Analyses moral terms", "Is the same as law"],
+            "Includes bioethics, business ethics and environmental ethics.");
+        Q("ethics", "medium", "Psychological egoism is an example of descriptive ethics because it:",
+            "Merely observes that people act to satisfy their interests, without prescribing", ["Says people ought to pursue self-interest", "Says actions must benefit others", "Rests on duty"],
+            "Ethical egoism, by contrast, prescribes.");
+        Q("ethics", "medium", "Ethical egoism holds that an action is morally right if:",
+            "Its consequences are more favourable than unfavourable to the agent", ["It benefits everyone except the agent", "It follows God's command", "It can be universalised"],
+            "Altruism favours others except the agent.");
+        Q("ethics", "medium", "Ethical altruism holds that an action is right if its consequences are more favourable to:",
+            "Everyone except the agent", ["The agent only", "The greatest number including the agent", "God"],
+            "Acting for the benefit of others is the best thing to do.");
+        Q("ethics", "easy", "Utilitarianism is based on the idea of:",
+            "The greatest happiness for the greatest number", ["Duty for duty's sake", "Self-interest only", "Obeying God"],
+            "It is consequentialist.");
+        Q("ethics", "medium", "Rule utilitarianism holds that people should:",
+            "Obey rules that provide the greatest happiness for the greatest number", ["Assess each act separately", "Pursue only their pleasure", "Follow intuition"],
+            "Act utilitarianism assesses each individual action's consequences.");
+        Q("ethics", "easy", "Teleological theories are also called:",
+            "Consequentialist theories", ["Deontological theories", "Virtue theories", "Divine command theories"],
+            "'Telos/teleo' means end or purpose.");
+        Q("ethics", "medium", "Deontological theories hold that the rightness of an action depends on:",
+            "Something intrinsic to the action, such as duty, not its consequences", ["Its consequences only", "The agent's pleasure", "Majority opinion"],
+            "Examples: Kant's categorical imperative, divine command theory.");
+        Q("ethics", "medium", "Which is a deontological (non-consequentialist) theory?",
+            "Kant's categorical imperative", ["Utilitarianism", "Ethical egoism", "Ethical altruism"],
+            "The others are teleological.");
+        Q("ethics", "medium", "Kant's categorical imperative states that one should act on a maxim that:",
+            "One can will to become a universal law", ["Produces the most happiness", "Benefits oneself", "God commands"],
+            "It also says a person is an end, not a means.");
+        Q("ethics", "medium", "The Divine Command Theory holds that moral rightness is based on:",
+            "Agreement with what God commands", ["Consequences", "Social contract", "Personal feelings"],
+            "It is a deontological theory.");
+        Q("ethics", "medium", "Virtue ethics focuses on:",
+            "The character of the actor rather than the act itself", ["The consequences of the act", "Rules from God", "The law of the land"],
+            "For Aristotle, virtue is a mean between two extremes.");
+        Q("ethics", "hard", "Situation ethics holds that:",
+            "Love is the only absolute principle and there are no absolute moral laws", ["Duty is absolute", "Pleasure is the only good", "Morality is set by contract"],
+            "It focuses on the circumstances of an action.");
+        Q("ethics", "hard", "Feminist (care) ethics emphasises:",
+            "Care, responsibility, nurturance and compassion", ["Duty, justice and selfishness", "Pleasure and pain", "Universal laws"],
+            "It de-emphasises values seen as androcentric (male-centred).");
+        Q("ethics", "medium", "Social contract ethics holds that morality consists of:",
+            "Rules agreed on by rational people for mutual benefit", ["God's commands", "Personal feelings", "Character traits"],
+            "Rules govern how people treat one another.");
+        Q("ethics", "medium", "Hedonism holds that:",
+            "Pleasure is the highest or only good", ["Duty is the highest good", "Knowledge is the highest good", "Nothing is good"],
+            "Ethical hedonism: people ought to seek pleasure.");
+        Q("ethics", "medium", "Emotivism claims that ethical statements:",
+            "Are neither true nor false but express feelings", ["Are always true", "Are facts about the world", "Are commands from God"],
+            "It is a species of non-cognitivism.");
+        Q("ethics", "medium", "Ethical relativism holds that moral principles are:",
+            "Valid relative to a particular place and time", ["Universally valid", "Commands of God", "Laws of nature"],
+            "Moral objectivism holds there is one moral code.");
+        Q("ethics", "medium", "The view that ethical truths are true whether or not anyone thinks so is:",
+            "Ethical realism", ["Ethical subjectivism", "Ethical conventionalism", "Emotivism"],
+            "Objective ethical facts exist independently of opinion.");
+        Q("ethics", "hard", "Ethical naturalism, a meta-ethical theory, holds that:",
+            "Ethical sentences can be translated without loss into non-ethical ones", ["Ethical words cannot be defined naturally", "Ethics is pure emotion", "Ethics is God's command"],
+            "Anti-naturalism rejects this.");
+        Q("ethics", "medium", "A moral dilemma is a situation in which:",
+            "No available alternative satisfies all the moral rules that apply", ["The law is unclear", "There is only one option", "Everyone agrees"],
+            "Examples: abortion, surrogacy, terrorism.");
+        Q("ethics", "medium", "In the abortion debate, conservatives are typically:",
+            "Pro-life", ["Pro-abortion", "Neutral", "Utilitarian only"],
+            "Liberals are typically pro-choice.");
+        Q("ethics", "medium", "Private morality refers to:",
+            "How one behaves in the privacy of one's home", ["How one behaves in public", "Laws of the state", "Etiquette"],
+            "Public morality is how one behaves in public.");
+        Q("ethics", "medium", "Morality is said to be conventional, meaning:",
+            "People grow up in communities to imbibe moral norms, which are not consciously legislated", ["It is written by parliament", "It is enforced by courts", "It is identical in all societies"],
+            "It is social in origin, function and sanction.");
+        Q("ethics", "hard", "A key difference between law and morality is that:",
+            "Law can be traced to a definite date, while a moral norm cannot", ["Morality is justiciable and law is not", "Law has no relation to justice", "Morality is consciously legislated"],
+            "Morality aims at virtue; law aims at peaceful coexistence.");
+        Q("ethics", "medium", "Morality differs from etiquette in that:",
+            "Morality has a wider scope, while etiquette is influenced by tastes and aesthetics", ["Etiquette has a wider scope", "Etiquette is enforced by law", "They are identical"],
+            "Both regulate behaviour in the community.");
+        Q("ethics", "medium", "Prudence differs from morality in that prudence concerns:",
+            "Regulation of the private behaviour of individuals", ["Humans in the community of others", "The law", "Art"],
+            "Morality concerns human beings in the community of others.");
+        Q("ethics", "medium", "In Aristotle's concept, 'eudaimonia' refers to:",
+            "Human happiness or flourishing", ["Duty", "Pleasure", "Knowledge"],
+            "Ethics aims at 'eu zen' – living well – and arete (virtue).");
+        Q("ethics", "hard", "Who defined ethics as philosophical thinking about morality, moral problems and moral judgement?",
+            "William Frankena", ["Peter Singer", "William Lillie", "Joseph Omoregbe"],
+            "Lillie: 'the normative science of human conduct'.");
+
+        // ===================== PHILOSOPHY & OTHER DISCIPLINES =====================
+        Q("disciplines", "medium", "The relationship between philosophy and other disciplines is likened to that between:",
+            "A mother and her children", ["A king and his subjects", "A teacher and a stranger", "Rival siblings"],
+            "Children become independent but return for counselling.");
+        Q("disciplines", "medium", "Philosophy is called the 'queen of the sciences' and the:",
+            "Matriarch of the humanities", ["Servant of theology", "Enemy of science", "Youngest discipline"],
+            "It is foundational to all disciplines.");
+        Q("disciplines", "hard", "Who said philosophy is 'the base and the apex... the queen and the king of all the disciplines'?",
+            "C.S. Momoh", ["Kwame Gyekye", "H.S. Staniland", "Kwasi Wiredu"],
+            "Every culture is anchored on a philosophy.");
+        Q("disciplines", "medium", "The normative nature of philosophy means it is interested in:",
+            "Values and norms that ought to guide knowledge production", ["Accumulating empirical facts", "Laboratory methods", "Statistics"],
+            "Other fields focus on empirical facts.");
+        Q("disciplines", "medium", "Philosophy is said to function as a guard or watchdog over:",
+            "The autonomy and mutual independence of the various disciplines", ["Government policies", "Religious doctrine", "Market prices"],
+            "It delimits disciplinary boundaries.");
+        Q("disciplines", "medium", "Rudolf Carnap described philosophy of science as:",
+            "The logical analysis of scientific knowledge", ["Any method is as good as another", "A branch of theology", "Natural history"],
+            "Philosophy of science is a sub-branch of epistemology.");
+        Q("disciplines", "hard", "'Any method is as good as the other' was said by:",
+            "Paul Feyerabend", ["Rudolf Carnap", "Karl Popper", "Thomas Kuhn"],
+            "A reaction to logical positivists' claim that empirical method is the only legitimate one.");
+        Q("disciplines", "medium", "Philosophy of law differs from jurisprudence in that philosophy of law is:",
+            "Universal and prescriptive", ["Particularistic and descriptive", "Only about one country's laws", "Purely empirical"],
+            "Lawyers discuss legal issues from a particularistic, descriptive perspective.");
+        Q("disciplines", "medium", "A significant part of which work by Plato discusses the dissemination of knowledge for society's goals?",
+            "The Republic", ["The Apology", "Phaedo", "Meno"],
+            "This is a foundation of philosophy of education.");
+        Q("disciplines", "medium", "According to philosophy of education, education is:",
+            "Not the end, but a means to an end", ["An end in itself", "Only vocational", "Unrelated to values"],
+            "It aims at transforming humans and society.");
+        Q("disciplines", "medium", "The relationship between science and ethics is that:",
+            "Science is descriptive while ethics is normative", ["Both are purely descriptive", "Ethics is descriptive while science is normative", "They have no common goal"],
+            "Their common goal is to promote the social good.");
+        Q("disciplines", "medium", "The steps of the scientific method are observation, hypothesis formulation, prediction and:",
+            "Experiments by several independent experimenters", ["Faith", "Voting", "Revelation"],
+            "If experiments support the hypothesis, it becomes a theory.");
+        Q("disciplines", "medium", "A scientific law is:",
+            "A statement of an observed regularity among facts, often expressible mathematically", ["A tentative statement to be tested", "A guess", "A moral rule"],
+            "A hypothesis is a tentative testable statement.");
+        Q("disciplines", "medium", "In Aristotle's worldview, the sublunar region contained four elements; the superlunar region had a fifth element called:",
+            "Ether", ["Fire", "Number", "Plasma"],
+            "Aristotle also held the earth was stationary at the centre.");
+        Q("disciplines", "medium", "Which belief belongs to the Newtonian worldview?",
+            "The earth and planets move in elliptical orbits round the sun", ["The earth is stationary at the centre", "Only four elements exist", "Heavenly bodies are made of ether"],
+            "Newton: the same laws apply on earth and in the heavens.");
+        Q("disciplines", "medium", "Max Weber defined the state as:",
+            "An institution that exercises monopoly of legitimate violence in a defined territory", ["A group of families", "A market", "A religious body"],
+            "Critics say morality is also essential to the state.");
+        Q("disciplines", "medium", "Isaiah Berlin distinguished between:",
+            "Positive and negative freedom", ["Direct and indirect democracy", "Formal and material equality", "Power and authority"],
+            "Negative freedom: being left alone without interference.");
+        Q("disciplines", "medium", "Aristotle's dictum 'equals should be treated equally and unequals unequally' expresses:",
+            "The formal aspect of equality", ["Negative freedom", "Distributive justice by need", "Direct democracy"],
+            "Equality has formal and material dimensions.");
+        Q("disciplines", "medium", "Democracy originated from the ancient city of:",
+            "Athens", ["Rome", "Sparta", "Alexandria"],
+            "The Greeks practised direct democracy; modern liberal democracy is indirect.");
+        Q("disciplines", "hard", "Sartori's 'conceptual stretching' produces concepts applied across contexts without distortion, called:",
+            "Travelling concepts", ["Contested concepts", "Relative concepts", "Collective concepts"],
+            "Political concepts help describe political phenomena.");
+        Q("disciplines", "medium", "Which distinguishes authority from mere power?",
+            "Authority has the consent of the ruled", ["Authority relies only on force", "Power requires consent", "They are identical"],
+            "Power is the ability to make things happen, even through force.");
+
+        // ===================== LOGIC: NATURE & ARGUMENTS =====================
+        Q("logic", "easy", "The primary concern of logic is to:",
+            "Distinguish between correct and incorrect reasoning", ["Study the processes of thinking", "Describe emotions", "Measure intelligence"],
+            "Psychology studies thinking processes; logic studies principles of correct reasoning.");
+        Q("logic", "medium", "Logic is informal when it uses ordinary language and formal when it uses:",
+            "Symbolic statements", ["Experiments", "Emotions", "Pictures"],
+            "Formal logic deals with structures of statements and arguments.");
+        Q("logic", "medium", "The law of identity states that:",
+            "If any statement is true, then it is true (P ⊃ P)", ["No statement is both true and false", "Every statement is either true or false", "All statements are probable"],
+            "It is a tautology.");
+        Q("logic", "medium", "'No statement can be both true and false' is the law of:",
+            "Non-contradiction", ["Identity", "Excluded middle", "Sufficient reason"],
+            "Every statement of the form P·~P is false.");
+        Q("logic", "medium", "'Every statement is either true or false' (P ∨ ~P) is the law of:",
+            "Excluded middle", ["Identity", "Non-contradiction", "Double negation"],
+            "There is no third truth value.");
+        Q("logic", "easy", "An argument is made up of:",
+            "Premises and a conclusion", ["Questions and answers", "Subject and predicate only", "Hypotheses and experiments"],
+            "Premises provide support for the conclusion.");
+        Q("logic", "medium", "Which is a conclusion indicator?",
+            "Therefore", ["Since", "Because", "For"],
+            "Conclusion indicators: therefore, hence, thus, it follows that...");
+        Q("logic", "medium", "Which is a premise indicator?",
+            "Since", ["Hence", "Thus", "Consequently"],
+            "Premise indicators: since, because, for, as, in view of...");
+        Q("logic", "medium", "In a deductive argument, the premises provide:",
+            "Conclusive (100%) support for the conclusion", ["Only probable support", "No support", "Emotional support"],
+            "It is impossible to accept the premises and reject the conclusion.");
+        Q("logic", "medium", "In an inductive argument:",
+            "It is possible to accept the premises and deny the conclusion without contradiction", ["The conclusion is contained in the premises", "The premises give 100% support", "Validity applies"],
+            "The conclusion goes beyond the premises.");
+        Q("logic", "medium", "'It rained heavily in April every year 2012–2020; therefore it will probably rain heavily in April 2021' is:",
+            "An inductive argument", ["A deductive argument", "A fallacy of division", "A tautology"],
+            "Premises strengthen but do not guarantee the conclusion.");
+        Q("logic", "medium", "Scientific propositions, by the nature of their methods, fall mostly within:",
+            "Induction", ["Deduction", "Fallacies", "Tautologies"],
+            "Science generalises from observations.");
+        Q("logic", "easy", "Truth and falsehood can be assigned to:",
+            "Propositions, not arguments", ["Arguments, not propositions", "Both equally", "Neither"],
+            "Validity and invalidity belong to deductive arguments.");
+        Q("logic", "medium", "What determines the validity of a deductive argument?",
+            "Its structure (form)", ["The truth of its premises", "Its popularity", "Its content"],
+            "An argument can be valid with false premises.");
+        Q("logic", "medium", "A deductive argument is sound when it is:",
+            "Valid and has true premises", ["Valid only", "Has true premises only", "Strong and probable"],
+            "Soundness combines validity and truth.");
+        Q("logic", "medium", "'All chairs are fish; Mango is a chair; therefore mango is a fish' is:",
+            "Valid but unsound", ["Sound", "Invalid but sound", "Inductive"],
+            "The structure is valid, but the premises are false.");
+        Q("logic", "medium", "'All humans are mortal; Socrates is mortal; therefore Socrates is human' is:",
+            "Invalid", ["Valid and sound", "Valid but unsound", "Inductively strong"],
+            "Not everything mortal is human – fowls are mortal.");
+        Q("logic", "medium", "The properties of an inductive argument are:",
+            "Probability and strength", ["Validity and soundness", "Truth and falsity", "Identity and contradiction"],
+            "Validity and soundness do not apply to induction.");
+        Q("logic", "medium", "An argument is valid if on its truth table:",
+            "There is no line where the premises are true and the conclusion false", ["All lines are true", "The conclusion is always false", "At least one premise is false"],
+            "One such line makes it invalid.");
+        Q("logic", "easy", "Reasoning is a type of thought characterised by:",
+            "Making inferences from premises to conclusions", ["Memorising facts", "Feeling emotions", "Observing nature"],
+            "Logic is the science of the laws of thought/reasoning.");
+        Q("logic", "medium", "In philosophy, 'argument' differs from its lexical sense of 'disagreement' because it means:",
+            "A set of propositions where premises support a conclusion", ["A quarrel", "A debate competition", "Any statement"],
+            "The course outline stresses this distinction.");
+
+        // ===================== FORMAL LOGIC =====================
+        Q("formal", "easy", "The logical connective for 'not' (negation) is represented by:",
+            "Tilde (~)", ["Dot (·)", "Wedge (∨)", "Horseshoe (⊃)"],
+            "Negation reverses the truth value.");
+        Q("formal", "easy", "Conjunction ('and') is represented by:",
+            "The dot (·) or ∧", ["The wedge (∨)", "The horseshoe (⊃)", "The triple bar (≡)"],
+            "Its parts are called conjuncts.");
+        Q("formal", "easy", "Disjunction ('or') is represented by:",
+            "The wedge or vee (∨)", ["The dot (·)", "The tilde (~)", "The triple bar (≡)"],
+            "Its parts are called disjuncts.");
+        Q("formal", "medium", "The biconditional ('if and only if') is represented by:",
+            "The triple bar (≡) or ↔", ["The horseshoe (⊃)", "The wedge (∨)", "The dot (·)"],
+            "Its parts are called components.");
+        Q("formal", "medium", "In a conditional statement 'If P then Q', P is called the:",
+            "Antecedent", ["Consequent", "Conjunct", "Disjunct"],
+            "Q, after 'then', is the consequent.");
+        Q("formal", "medium", "A conjunction is true only when:",
+            "Both conjuncts are true", ["At least one conjunct is true", "Both are false", "The first is true"],
+            "Otherwise it is false.");
+        Q("formal", "medium", "A disjunction is false only when:",
+            "Both disjuncts are false", ["Both are true", "One is true", "The first is false"],
+            "It is true if at least one disjunct is true.");
+        Q("formal", "medium", "A conditional statement is false only when:",
+            "The antecedent is true and the consequent is false", ["Both are false", "The antecedent is false", "Both are true"],
+            "Otherwise it is true.");
+        Q("formal", "medium", "A biconditional is true when:",
+            "Both components have the same truth value", ["Only the first is true", "They have different truth values", "Both are always true"],
+            "It is false if they differ.");
+        Q("formal", "medium", "How many lines are needed in a truth table for an expression with 3 propositional variables?",
+            "8", ["6", "3", "9"],
+            "The number of lines is 2ⁿ: 2³ = 8.");
+        Q("formal", "easy", "A truth table for P ∨ Q needs how many lines?",
+            "4", ["2", "8", "3"],
+            "2² = 4.");
+        Q("formal", "medium", "Two statements are logically equivalent if on a truth table:",
+            "They have the same truth values on every line", ["They are both true on one line", "One is always false", "They have different variables"],
+            "E.g. P ≡ Q is equivalent to (P ⊃ Q)·(Q ⊃ P).");
+        Q("formal", "medium", "From 'P ⊃ Q' and 'P', we may infer 'Q'. This rule is:",
+            "Modus ponens", ["Modus tollens", "Disjunctive syllogism", "Simplification"],
+            "Affirming the antecedent.");
+        Q("formal", "medium", "From 'P ⊃ Q' and '~Q', we may infer '~P'. This rule is:",
+            "Modus tollens", ["Modus ponens", "Hypothetical syllogism", "Addition"],
+            "Denying the consequent.");
+        Q("formal", "medium", "From 'P ∨ Q' and '~P', we may infer 'Q'. This is:",
+            "Disjunctive syllogism", ["Modus ponens", "Conjunction", "Constructive dilemma"],
+            "Denying one disjunct affirms the other.");
+        Q("formal", "medium", "From 'P · Q' we may infer 'P'. This rule is:",
+            "Simplification", ["Addition", "Conjunction", "Double negation"],
+            "The truth of a conjunction implies each conjunct.");
+        Q("formal", "medium", "From 'P' we may infer 'P ∨ Q'. This rule is:",
+            "Addition", ["Simplification", "Conjunction", "Modus ponens"],
+            "A true statement makes any disjunction containing it true.");
+        Q("formal", "medium", "From 'P ⊃ Q' and 'Q ⊃ R' we may infer 'P ⊃ R'. This is:",
+            "Hypothetical syllogism", ["Modus tollens", "Constructive dilemma", "Disjunctive syllogism"],
+            "Implication is chained.");
+        Q("formal", "hard", "'(P ⊃ Q)·(R ⊃ S), ~Q ∨ ~S, therefore ~P ∨ ~R' is:",
+            "Destructive dilemma", ["Constructive dilemma", "Modus ponens", "Hypothetical syllogism"],
+            "It denies the consequents to deny the antecedents.");
+        Q("formal", "hard", "The argument 'P ⊃ Q, Q, therefore P' commits the fallacy of:",
+            "Affirming the consequent", ["Denying the antecedent", "Undistributed middle", "Four terms"],
+            "It is not a valid form – Q could be true for other reasons.");
+        Q("formal", "hard", "The argument 'P ⊃ Q, ~P, therefore ~Q' commits the fallacy of:",
+            "Denying the antecedent", ["Affirming the consequent", "Illicit minor", "Existential fallacy"],
+            "Modus tollens denies the consequent, not the antecedent.");
+        Q("formal", "medium", "Double negation allows us to infer from '~~P' that:",
+            "P", ["~P", "P ∨ ~P", "Nothing"],
+            "Two negations cancel.");
+        Q("formal", "medium", "Propositional variables (p, q, r...) differ from propositional constants in that constants:",
+            "Are uppercase letters representing particular simple propositions", ["Are lowercase letters", "Represent any proposition", "Are logical connectives"],
+            "Variables let us talk about any proposition.");
+        Q("formal", "medium", "The universal quantifier '(x)' stands for:",
+            "All", ["Some", "None", "One"],
+            "The existential quantifier means 'there is at least one' (some).");
+        Q("formal", "medium", "The four standard categorical propositions are labelled:",
+            "A, E, I, O", ["A, B, C, D", "P, Q, R, S", "T, F, T, F"],
+            "A = universal affirmative, E = universal negative, I = particular affirmative, O = particular negative.");
+        Q("formal", "medium", "A universal negative proposition ('No S is P') is labelled:",
+            "E", ["A", "I", "O"],
+            "A is universal affirmative.");
+        Q("formal", "medium", "A valid standard categorical syllogism must contain exactly how many terms?",
+            "Three", ["Two", "Four", "Five"],
+            "Major, minor and middle terms; four terms commits quaternio terminorum.");
+        Q("formal", "hard", "If the middle term of a categorical syllogism is not distributed in at least one premise, the fallacy is:",
+            "Undistributed middle", ["Illicit minor", "Exclusive premises", "Existential fallacy"],
+            "A term is distributed if it refers to every member of its class.");
+        Q("formal", "hard", "A categorical syllogism with two negative premises commits the fallacy of:",
+            "Exclusive premises", ["Undistributed middle", "Four terms", "Illicit minor"],
+            "No conclusion can follow from two negatives.");
+        Q("formal", "hard", "A syllogism with two universal premises and a particular conclusion commits the:",
+            "Existential fallacy", ["Fallacy of four terms", "Illicit minor", "Undistributed middle"],
+            "Also called the fallacy of existential import.");
+        Q("formal", "hard", "If one premise is negative, the conclusion must be:",
+            "Negative", ["Affirmative", "Universal", "Particular"],
+            "Otherwise the fallacy of drawing an affirmative conclusion from a negative premise is committed.");
+        Q("formal", "medium", "Symbolic logic deals with deductive arguments expressed in:",
+            "Artificial language", ["Natural language", "Pictures", "Music"],
+            "Categorical, hypothetical and disjunctive syllogisms and dilemmas are in natural language.");
+
+        // ===================== FALLACIES =====================
+        Q("fallacies", "easy", "A fallacy is:",
+            "An error or mistake in reasoning", ["A true conclusion", "A type of premise", "A valid argument"],
+            "Fallacies may look persuasive but are incorrect on close examination.");
+        Q("fallacies", "medium", "Formal fallacies involve:",
+            "Violation of the rules of valid inference", ["Errors in natural conversation only", "Emotional appeals", "Ambiguous words"],
+            "Informal fallacies arise in natural language from carelessness or trickery.");
+        Q("fallacies", "medium", "Informal fallacies are classified into fallacies of relevance, ambiguity and:",
+            "Presumption", ["Validity", "Soundness", "Induction"],
+            "These are the three broad categories in the text.");
+        Q("fallacies", "easy", "Argumentum ad baculum is the appeal to:",
+            "Force", ["Pity", "The people", "Authority"],
+            "Threatening consequences to get a conclusion accepted.");
+        Q("fallacies", "medium", "'Nigeria should join the Non-Aligned Nations if she wants them to buy her oil' commits:",
+            "Argumentum ad baculum (appeal to force)", ["Argumentum ad misericordiam", "Petitio principii", "Hasty generalisation"],
+            "It threatens unfortunate consequences.");
+        Q("fallacies", "easy", "Argumentum ad misericordiam is the appeal to:",
+            "Pity", ["Force", "Ignorance", "Authority"],
+            "E.g. pleading hardship to avoid a traffic ticket.");
+        Q("fallacies", "medium", "Argumentum ad populum is committed when one:",
+            "Appeals to the emotions of the people to win assent", ["Attacks the person", "Threatens force", "Appeals to ignorance"],
+            "Emotively charged language replaces evidence.");
+        Q("fallacies", "medium", "Argumentum ad verecundiam is committed when:",
+            "An authority is appealed to outside his/her field of expertise", ["Pity is appealed to", "The person is attacked", "Force is threatened"],
+            "E.g. a philosophy professor's opinion on geometry.");
+        Q("fallacies", "medium", "'Mr Brown's arguments for pre-marital sex should be dropped because he is a womanizer' commits:",
+            "Argumentum ad hominem (abusive)", ["Argumentum ad hominem (circumstantial)", "Ad verecundiam", "False cause"],
+            "It attacks the person, not the argument.");
+        Q("fallacies", "hard", "'Rev. Father John should accept my position against abortion because it fits his Catholic faith' commits:",
+            "Argumentum ad hominem (circumstantial)", ["Argumentum ad hominem (abusive)", "Ad populum", "Ad baculum"],
+            "It argues from the opponent's circumstances.");
+        Q("fallacies", "medium", "'No one has proven there is no life on Jupiter's moons, so there is life there' commits:",
+            "Argumentum ad ignorantiam", ["Ad hominem", "Equivocation", "Composition"],
+            "Lack of disproof is taken as proof.");
+        Q("fallacies", "medium", "The fallacy that tries to prove one conclusion with an argument supporting a different conclusion is:",
+            "Ignoratio elenchi (irrelevant conclusion)", ["Petitio principii", "Complex question", "Amphiboly"],
+            "The argument misses the point.");
+        Q("fallacies", "medium", "'He who is not for Christianity is against it; Sodiq is not for it; so he is against it' commits the:",
+            "Black-or-white (false dilemma) fallacy", ["Fallacy of division", "Fallacy of accent", "Ad populum"],
+            "It ignores a third alternative.");
+        Q("fallacies", "medium", "'Only man is rational; no woman is a man; therefore no woman is rational' commits:",
+            "Equivocation", ["Division", "Composition", "Accident"],
+            "'Man' is used in two different senses.");
+        Q("fallacies", "medium", "'The end of a thing is its perfection; death is the end of life; so death is life's perfection' commits:",
+            "Equivocation", ["Amphiboly", "Composition", "False cause"],
+            "'End' means goal in one premise and termination in the other.");
+        Q("fallacies", "medium", "'Nigeria is great; therefore every Nigerian is great' commits the fallacy of:",
+            "Division", ["Composition", "Accident", "Hasty generalisation"],
+            "Attributing a feature of the whole to its parts.");
+        Q("fallacies", "medium", "'All the actors in the film are good; therefore the film is good' commits the fallacy of:",
+            "Composition", ["Division", "Equivocation", "Ad populum"],
+            "Attributing a feature of the parts to the whole.");
+        Q("fallacies", "hard", "A fallacy arising from ambiguous grammatical construction is:",
+            "Amphiboly", ["Accent", "Equivocation", "Division"],
+            "The sentence is true on one interpretation and false on another.");
+        Q("fallacies", "hard", "A fallacy whose meaning shifts based on which words are emphasised is the fallacy of:",
+            "Accent", ["Amphiboly", "Composition", "Accident"],
+            "E.g. stressing 'today' to imply Peter is usually late.");
+        Q("fallacies", "hard", "Applying a general rule to a specific case whose accidental circumstances make the rule inapplicable is the fallacy of:",
+            "Accident", ["Converse accident", "False cause", "Complex question"],
+            "Converse accident is hasty generalisation.");
+        Q("fallacies", "medium", "'Dennis Rodman wears earrings and rebounds well; so earring wearers are good rebounders' commits:",
+            "Converse accident (hasty generalisation)", ["Accident", "Division", "Ad verecundiam"],
+            "One instance is insufficient evidence.");
+        Q("fallacies", "medium", "Concluding that A caused B simply because A happened before B is:",
+            "Post hoc ergo propter hoc", ["Non causa pro causa", "Petitio principii", "Ignoratio elenchi"],
+            "A variety of the false cause fallacy.");
+        Q("fallacies", "medium", "'The moon was full on Thursday; I overslept Friday; so the full moon made me oversleep' commits:",
+            "False cause", ["Ad populum", "Complex question", "Composition"],
+            "It commits both strands of false cause.");
+        Q("fallacies", "medium", "Begging the question (petitio principii) is committed when:",
+            "The conclusion to be proved is assumed as a premise", ["Force is threatened", "A word changes meaning", "A loaded question is asked"],
+            "E.g. 'Democracy is best because government by the people is best.'");
+        Q("fallacies", "medium", "'Have you stopped watching too much television?' illustrates the fallacy of:",
+            "Complex question", ["Begging the question", "Ad ignorantiam", "Amphiboly"],
+            "Either answer admits the presupposition.");
+        Q("fallacies", "hard", "Who said 'Arguments, like men, are often pretenders'?",
+            "Plato", ["Socrates", "Aristotle", "Copi"],
+            "Arguments may look sound but be fallacious.");
+        Q("fallacies", "hard", "The method of faulting an invalid argument by showing a parallel argument with true premises and false conclusion is:",
+            "Refutation by logical analogy", ["Reductio ad absurdum", "Truth table", "Contact tracing"],
+            "Same form, obviously false conclusion.");
+
+        // ===================== LANGUAGE, MEANING & DEFINITION =====================
+        Q("meaning", "medium", "The three basic functions of language are:",
+            "Informative, expressive and directive", ["Phonetic, phonological and grammatical", "Lexical, stipulative and precising", "Monadic, dyadic and triadic"],
+            "Some limit them to cognitive and emotive.");
+        Q("meaning", "medium", "Commands and requests illustrate which function of language?",
+            "Directive", ["Informative", "Expressive", "Ceremonial"],
+            "The directive function initiates or prevents action.");
+        Q("meaning", "medium", "Which function of language conveys feelings that cannot be true or false?",
+            "Expressive", ["Informative", "Directive", "Descriptive"],
+            "Informative language formulates propositions that are true or false.");
+        Q("meaning", "medium", "The study of the total resources of sound available for speech is:",
+            "Phonetics", ["Phonology", "Grammar", "Semantics"],
+            "Phonology studies sound patterns in particular languages.");
+        Q("meaning", "medium", "In a definition, the word to be defined is called the:",
+            "Definiendum", ["Definiens", "Predicate", "Middle term"],
+            "The definiens is the group of words that does the defining.");
+        Q("meaning", "medium", "The intensional (connotative) meaning of a word consists of:",
+            "The qualities or attributes the word connotes", ["The members of the class it denotes", "Its pronunciation", "Its spelling"],
+            "Extensional (denotative) meaning is the class members.");
+        Q("meaning", "medium", "When a linguistic expression encodes more than one meaning it is:",
+            "Ambiguous", ["Vague", "Circular", "Persuasive"],
+            "Vagueness: no uniquely determinable interpretation.");
+        Q("meaning", "medium", "A definition given to a newly introduced word (a neologism) is:",
+            "Stipulative", ["Lexical", "Precising", "Ostensive"],
+            "It is an arbitrary creation and tells us nothing new about the definiendum.");
+        Q("meaning", "medium", "A definition reporting a word's established usage, as found in dictionaries, is:",
+            "Lexical", ["Stipulative", "Persuasive", "Theoretical"],
+            "Lexical definitions can be true or false.");
+        Q("meaning", "medium", "A definition used to reduce the vagueness of a word in a particular context is:",
+            "Precising", ["Ostensive", "Persuasive", "Lexical"],
+            "It goes beyond what the lexical definition can do.");
+        Q("meaning", "medium", "A definition meant to influence attitudes towards what the term denotes is:",
+            "Persuasive", ["Theoretical", "Stipulative", "Lexical"],
+            "It engenders favourable or unfavourable emotion.");
+        Q("meaning", "medium", "Defining a word by pointing at the object, e.g. for a child, is:",
+            "Ostensive definition", ["Theoretical definition", "Precising definition", "Lexical definition"],
+            "Used when a word is hard to define verbally.");
+        Q("meaning", "hard", "A definition giving a scientific or conceptual characterisation grounded in a background theory is:",
+            "Theoretical", ["Stipulative", "Ostensive", "Persuasive"],
+            "E.g. a scientific definition of a phenomenon.");
+        Q("meaning", "medium", "A lexical definition that imports the definiendum into the definiens breaks the rule against:",
+            "Circularity", ["Being too broad", "Negativity", "Emotive language"],
+            "The word to be defined must not appear in its own definition.");
+        Q("meaning", "medium", "Which is a rule of lexical definition?",
+            "It must not be negative where it can be affirmative", ["It must use figurative language", "It must be emotive", "It may be circular"],
+            "It must also avoid ambiguous, obscure or figurative language.");
+        Q("meaning", "medium", "The rule that a lexical definition must indicate context applies to words like 'deuce', which is meaningful only in:",
+            "A tennis game", ["Mathematics", "Chemistry", "Law"],
+            "Context-specific words need their context stated.");
+        Q("meaning", "medium", "John Locke's 'tabula rasa' implies that:",
+            "No innate ideas exist; all knowledge comes through experience", ["Humans are born with innate language", "The mind is a world of forms", "Language precedes thought"],
+            "Chomsky argued humans are born with the capacity to learn language.");
+        Q("meaning", "medium", "Noam Chomsky's potentiality argument holds that:",
+            "Humans are born with the capacity to learn language", ["The mind is a blank slate", "Language is learnt only by imitation", "Meaning is only verbal"],
+            "Without this potentiality, learning language would be impossible.");
+        Q("meaning", "hard", "Meaning communicated without language, e.g. dark clouds indicating rain, is:",
+            "Extra-linguistic (natural) meaning", ["Linguistic meaning", "Stipulative meaning", "Lexical meaning"],
+            "Extra-linguistic meaning can be natural or pragmatic.");
+        Q("meaning", "medium", "Which is a purpose of definition?",
+            "To remove ambiguity", ["To create fallacies", "To add vagueness", "To avoid communication"],
+            "Others: increase vocabulary, reduce vagueness, give theoretical explanation, influence attitudes.");
+
+        // ===================== RELATIONS & PUZZLES =====================
+        Q("relations", "medium", "A term expresses a relation if it:",
+            "Requires more than one entity to have complete meaning", ["Describes a single object", "Is a proper name", "Is a logical connective"],
+            "E.g. parent, spouse, older than.");
+        Q("relations", "medium", "'Hitler was a short man' expresses a:",
+            "Monadic (one-place) predicate", ["Dyadic predicate", "Triadic predicate", "Tetradic predicate"],
+            "Polyadic predicates involve more than one place.");
+        Q("relations", "medium", "'Turkey is between Europe and Asia' expresses a:",
+            "Triadic (ternary) relation", ["Dyadic relation", "Monadic predicate", "Tetradic relation"],
+            "Three relata: Turkey, Europe and Asia.");
+        Q("relations", "medium", "'Bianca and Bruno are lovers' expresses a:",
+            "Dyadic (binary) relation", ["Triadic relation", "Monadic predicate", "Tetradic relation"],
+            "The number of relata determines the type.");
+        Q("relations", "medium", "'X is a colleague of Y' implies Y is a colleague of X. This relation is:",
+            "Symmetrical", ["Asymmetrical", "Non-symmetrical", "Intransitive"],
+            "The same relation holds in reverse.");
+        Q("relations", "medium", "'A is the boss of B' means B cannot be the boss of A. This relation is:",
+            "Asymmetrical", ["Symmetrical", "Non-symmetrical", "Reflexive"],
+            "The reverse relation cannot hold.");
+        Q("relations", "hard", "'X loves Y' – Y may or may not love X. This relation is:",
+            "Non-symmetrical", ["Symmetrical", "Asymmetrical", "Irreflexive"],
+            "Neither symmetrical nor asymmetrical.");
+        Q("relations", "medium", "'X is taller than Y and Y is taller than Z, so X is taller than Z.' The relation 'taller than' is:",
+            "Transitive", ["Intransitive", "Non-transitive", "Symmetrical"],
+            "It carries over from the first to the third element.");
+        Q("relations", "medium", "'Father of' is intransitive because:",
+            "If X is father of Y and Y father of Z, X cannot be father of Z", ["X must be father of Z", "X may or may not be father of Z", "X is father of himself"],
+            "X is grandfather, not father, of Z.");
+        Q("relations", "hard", "'If A is married to B, A cannot be married to A.' This relation is:",
+            "Irreflexive", ["Reflexive", "Non-reflexive", "Transitive"],
+            "An element cannot bear the relation to itself.");
+        Q("relations", "hard", "A relation such as 'A may or may not hate A' is:",
+            "Non-reflexive", ["Reflexive", "Irreflexive", "Symmetrical"],
+            "Neither reflexive nor irreflexive.");
+        Q("relations", "medium", "'Henry is the father of Smith' (irreversible) is an example of a relation that is:",
+            "Uni-directional", ["Bi-directional", "Monadic", "Reflexive"],
+            "Bi-directional relations go both ways, e.g. colleagues.");
+        Q("relations", "medium", "Logical puzzles, as defined by Bello (2000), consist of:",
+            "Questions accompanied by information given as true, solved by arguments", ["Riddles meant only for entertainment", "Mathematical equations only", "Truth tables"],
+            "Puzzles sharpen our natural ability to reason.");
+        Q("relations", "hard", "Five people stand in a line: A is in front of B, B is in front of C, C is in front of D, and D is in front of E. Who is last?",
+            "E", ["A", "C", "D"],
+            "'In front of' is transitive, so E is behind everyone.");
+        Q("relations", "hard", "All lecturers in a department are philosophers. Ade is not a philosopher. What follows?",
+            "Ade is not a lecturer in the department", ["Ade is a lecturer", "Ade is a philosopher", "Nothing follows"],
+            "Modus tollens: if lecturer ⊃ philosopher, and not philosopher, then not lecturer.");
+
+        // ===================== BASIC CONCEPTS & ETHICAL THEORY TYPES (Course Overview / Textbook) =====================
+        Q("branches", "medium", "A concept whose existence entails the existence of another object (e.g. 'parent') is:",
+            "A relative concept", ["A non-relative concept", "A negative concept", "A collective concept"],
+            "Non-relative concepts do not entail the existence of other objects.");
+        Q("branches", "medium", "A concept that indicates the ABSENCE of a quality or relation in an object is:",
+            "A negative concept", ["A positive concept", "A relative concept", "A collective concept"],
+            "Positive concepts affirm the presence of a quality or relation.");
+        Q("branches", "hard", "A concept that regards a group of homogeneous objects as a single whole (e.g. 'army') is:",
+            "A collective concept", ["A non-collective concept", "A relative concept", "A negative concept"],
+            "Non-collective concepts apply to each separate member of a class.");
+        Q("branches", "medium", "The process of acquiring information about the world through the five sense organs is:",
+            "Perception (sense perception)", ["Rationality", "Scepticism", "Utility"],
+            "Rationality is the quality of being based on or agreeable to reason.");
+        Q("branches", "medium", "In basic philosophical concepts, 'substance' refers to:",
+            "That which exists on its own, yet holds other things", ["A quality open to the senses", "Any material object", "A relation between objects"],
+            "Qualities are attributes of substances.");
+        Q("branches", "medium", "The concept holding that something is useful because it brings about the right kind of outcome is:",
+            "Utility", ["Morality", "Rationality", "Substance"],
+            "Utility underlies utilitarian ethics.");
+        Q("ethics", "medium", "The three basic types of ethical theories identified in the textbook are:",
+            "Consequentialist (teleological), deontological and virtue ethics", ["Egoism, altruism and hedonism", "Normative, descriptive and meta-ethics", "Realism, idealism and materialism"],
+            "Each judges actions differently: by outcome, by rules/duty, or by character.");
+        Q("ethics", "hard", "In the textbook's classification, social contract theory and divine command theory are grouped as:",
+            "Deontological theories", ["Consequentialist theories", "Virtue theories", "Meta-ethical theories"],
+            "They appeal to rules and principles, not outcomes – like Kant's categorical imperative.");
+        Q("ethics", "medium", "Hedonism, egoism, altruism and utilitarianism are all examples of:",
+            "Consequentialist (teleological) theories", ["Deontological theories", "Virtue theories", "Divine command theories"],
+            "They judge actions by their results.");
+        Q("ethics", "medium", "An example of virtue ethics given in the textbook is:",
+            "Aristotle's doctrine of the mean", ["Kant's categorical imperative", "Bentham's hedonic calculus", "Hobbes' social contract"],
+            "Virtue ethics holds that good action can only come from a good person.");
+        Q("ethics", "hard", "The moral injunction of Situation Ethics is:",
+            "Always do the loving thing", ["Always obey the law", "Maximise pleasure", "Never lie"],
+            "It accepts laws only as illuminating guides, not prescriptive commands.");
+        Q("ethics", "hard", "Liberals in the abortion debate hold that the right not to be killed belongs to:",
+            "Actual persons – humans who have been born alive", ["Every fertilised egg", "Potential persons", "Only adults"],
+            "Pro-life conservatives argue foetuses have a right to life as potential persons.");
+        Q("ethics", "medium", "In traditional African societies, children commonly imbibed moral values through:",
+            "Moonlight tales and communal living", ["Formal ethics courses", "Television", "Written legal codes"],
+            "The family was the custodian of moral values; modern individualism has weakened this.");
+
+        // Application State
+        let state = {
+            questions: [],
+            currentQuestionIndex: 0,
+            answers: {},
+            timeLimit: 0, 
+            timeRemaining: 0,
+            timerId: null
+        };
+
+        const contentDiv = document.getElementById('content');
+
+        // Initialize App
+        function initApp() {
+            renderSetupScreen();
+        }
+
+        // --- SCREEN RENDERERS ---
+
+        function renderSetupScreen() {
+            contentDiv.className = "flex-grow min-h-0 overflow-y-auto flex flex-col p-5 sm:p-8 bg-white";
+            contentDiv.innerHTML = `
+                <div class="w-full max-w-xl mx-auto my-auto fade-in">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Test Preferences</h2>
+                    
+                    <div class="space-y-5 bg-gray-50 p-5 sm:p-6 rounded-2xl border border-gray-100 shadow-inner">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Number of Questions</label>
+                            <select id="numQuestions" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
+                                <option value="10">10 Questions</option>
+                                <option value="20">20 Questions</option>
+                                <option value="40" selected>40 Questions</option>
+                                <option value="60">60 Questions (Exam Length)</option>
+                                <option value="100">100 Questions</option>
+                                <option value="0">All Questions (${questionBank.length})</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Topic</label>
+                            <select id="topic" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
+                                <option value="all" selected>All Topics</option>
+                                ${Object.entries(TOPICS).map(([key, name]) => `<option value="${key}">${name} (${questionBank.filter(q => q.topic === key).length})</option>`).join('')}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Difficulty Level</label>
+                            <select id="difficulty" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
+                                <option value="mixed" selected>Mixed (All Levels)</option>
+                                <option value="easy">Easy</option>
+                                <option value="medium">Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Time Limit</label>
+                            <select id="timeLimit" class="w-full border border-gray-300 rounded-xl p-3.5 sm:p-3 text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition bg-white appearance-none">
+                                <option value="auto" selected>Exam Pace (45 seconds per question)</option>
+                                <option value="10">10 Minutes</option>
+                                <option value="20">20 Minutes</option>
+                                <option value="30">30 Minutes</option>
+                                <option value="45">45 Minutes</option>
+                                <option value="60">60 Minutes</option>
+                                <option value="120">2 Hours</option>
+                            </select>
+                        </div>
+
+                        <button onclick="startTest()" class="w-full mt-8 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold text-lg py-4 sm:py-3 px-4 rounded-xl transition duration-200 shadow-md">
+                            <i class="fa-solid fa-play mr-2"></i> Start Test
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTestScreen() {
+            // Adjust padding specifically for test view
+            contentDiv.className = "flex-grow min-h-0 flex flex-col bg-white relative";
+            
+            const question = state.questions[state.currentQuestionIndex];
+            const progress = ((state.currentQuestionIndex) / state.questions.length) * 100;
+            const isLastQuestion = state.currentQuestionIndex === state.questions.length - 1;
+
+            let optionsHtml = '';
+            question.options.forEach((opt, index) => {
+                const isSelected = state.answers[state.currentQuestionIndex] === index;
+                optionsHtml += `
+                    <div class="mb-3 sm:mb-4 relative">
+                        <input type="radio" name="option" id="opt_${index}" value="${index}" class="option-radio opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10" ${isSelected ? 'checked' : ''} onchange="selectOption(${index})">
+                        <label for="opt_${index}" class="option-label block w-full border border-gray-200 rounded-xl p-4 sm:p-5 cursor-pointer active:bg-gray-100 hover:bg-gray-50 flex items-center">
+                            <span class="w-6 h-6 sm:w-7 sm:h-7 flex-shrink-0 border-2 rounded-full mr-4 flex items-center justify-center ${isSelected ? 'border-indigo-600 bg-indigo-600' : 'border-gray-300'}">
+                                ${isSelected ? '<div class="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-white rounded-full"></div>' : ''}
+                            </span>
+                            <span class="text-base sm:text-lg text-gray-800 leading-snug">${opt}</span>
+                        </label>
+                    </div>
+                `;
+            });
+
+            contentDiv.innerHTML = `
+                <!-- Sticky Header for Mobile & Desktop -->
+                <div class="shrink-0 bg-white/95 backdrop-blur-sm z-20 px-5 sm:px-8 py-4 border-b border-gray-100 shadow-sm">
+                    <div class="flex justify-between items-center mb-3">
+                        <div class="text-xs sm:text-sm font-bold text-gray-500 uppercase tracking-wider">
+                            Q ${state.currentQuestionIndex + 1} <span class="text-gray-300 mx-1">/</span> ${state.questions.length}
+                        </div>
+                        <div class="flex items-center text-base sm:text-lg font-bold ${state.timeRemaining <= 60 ? 'text-red-500 animate-pulse' : 'text-indigo-600'} bg-indigo-50 px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg">
+                            <i class="fa-regular fa-clock mr-2"></i> <span id="timerDisplay">--:--</span>
+                        </div>
+                    </div>
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-gray-200 rounded-full h-1.5 sm:h-2">
+                        <div class="bg-indigo-500 h-1.5 sm:h-2 rounded-full transition-all duration-300 ease-out" style="width: ${progress}%"></div>
+                    </div>
+                </div>
+
+                <!-- Scrollable Question Area -->
+                <div class="flex-grow min-h-0 px-5 sm:px-8 py-6 overflow-y-auto fade-in">
+                    <p class="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-2">${TOPICS[question.topic]}</p>
+                    <h3 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-6 sm:mb-8 leading-relaxed">
+                        ${question.text}
+                    </h3>
+                    <div class="mb-4">
+                        ${optionsHtml}
+                    </div>
+                </div>
+
+                <!-- Sticky Footer -->
+                <div class="shrink-0 w-full bg-white border-t border-gray-200 p-4 sm:px-8 sm:py-5 z-20 flex justify-between items-center shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] sm:shadow-none">
+                    <button onclick="prevQuestion()" class="${state.currentQuestionIndex === 0 ? 'invisible' : ''} w-1/2 sm:w-auto px-4 py-3 sm:py-2.5 text-gray-600 font-bold bg-gray-100 active:bg-gray-200 hover:bg-gray-200 rounded-xl sm:rounded-lg transition text-center mr-2">
+                        <i class="fa-solid fa-arrow-left sm:mr-2"></i> <span class="hidden sm:inline">Previous</span>
+                    </button>
+                    
+                    ${isLastQuestion ? 
+                        `<button onclick="submitTest()" class="w-1/2 sm:w-auto px-4 py-3 sm:py-2.5 bg-green-600 active:bg-green-700 hover:bg-green-700 text-white font-bold rounded-xl sm:rounded-lg transition shadow-md text-center ml-2">
+                            Submit <i class="fa-solid fa-check ml-1 sm:ml-2"></i>
+                        </button>` 
+                        : 
+                        `<button onclick="nextQuestion()" class="w-1/2 sm:w-auto px-4 py-3 sm:py-2.5 bg-indigo-600 active:bg-indigo-700 hover:bg-indigo-700 text-white font-bold rounded-xl sm:rounded-lg transition shadow-md text-center ml-2">
+                            Next <i class="fa-solid fa-arrow-right ml-1 sm:ml-2"></i>
+                        </button>`
+                    }
+                </div>
+            `;
+            
+            updateTimerDisplay(); // Ensure immediate render
+        }
+
+        function renderReviewScreen() {
+            // Adjust padding to allow full natural scrolling on mobile
+            contentDiv.className = "flex-grow min-h-0 flex flex-col px-4 py-6 sm:p-8 bg-white overflow-y-auto";
+            
+            let score = 0;
+            state.questions.forEach((q, idx) => {
+                if (state.answers[idx] === q.correct) score++;
+            });
+
+            const percentage = Math.round((score / state.questions.length) * 100);
+            let feedback = '';
+            if (percentage >= 80) feedback = "Excellent work! You have a solid grasp of the GES 106 material.";
+            else if (percentage >= 50) feedback = "Good effort! Review the concepts below to solidify your understanding.";
+            else feedback = "Keep studying! Carefully review the detailed rationales below to master these concepts.";
+
+            let reviewHtml = `
+                <div class="fade-in w-full max-w-3xl mx-auto pb-8">
+                    
+                    <!-- Score Card -->
+                    <div class="text-center mb-8 bg-indigo-50 p-6 sm:p-8 rounded-2xl border border-indigo-100 shadow-sm">
+                        <div class="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full shadow mb-4">
+                            <h2 class="text-3xl font-black text-indigo-600">${score}<span class="text-lg text-gray-400">/${state.questions.length}</span></h2>
+                        </div>
+                        <p class="text-xl font-bold text-gray-800 mb-2">Score: ${percentage}%</p>
+                        <p class="text-sm sm:text-base text-gray-600 px-4">${feedback}</p>
+                        <button onclick="initApp()" class="mt-6 w-full sm:w-auto px-8 py-3.5 sm:py-2.5 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold rounded-xl transition shadow-md">
+                            <i class="fa-solid fa-rotate-right mr-2"></i> Retake Setup
+                        </button>
+                    </div>
+                    
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-4 border-b pb-3 pl-1">Score by Topic</h3>
+                    <div class="space-y-2 mb-8">
+                        ${Object.entries(TOPICS).map(([key, name]) => {
+                            const qs = state.questions.map((q, i) => ({ q, i })).filter(x => x.q.topic === key);
+                            if (qs.length === 0) return '';
+                            const right = qs.filter(x => state.answers[x.i] === x.q.correct).length;
+                            const pct = Math.round(right / qs.length * 100);
+                            const bar = pct >= 70 ? 'bg-green-500' : pct >= 50 ? 'bg-yellow-400' : 'bg-red-500';
+                            return `<div class="text-sm">
+                                <div class="flex justify-between mb-1"><span class="text-gray-700 pr-2">${name}</span><span class="font-semibold text-gray-800 shrink-0">${right}/${qs.length}</span></div>
+                                <div class="w-full bg-gray-200 rounded-full h-2"><div class="${bar} h-2 rounded-full" style="width:${pct}%"></div></div>
+                            </div>`;
+                        }).join('')}
+                    </div>
+
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-5 border-b pb-3 pl-1">Informed Review</h3>
+                    <div class="space-y-5 sm:space-y-6">
+            `;
+
+            state.questions.forEach((q, idx) => {
+                const userAnswer = state.answers[idx];
+                const isCorrect = userAnswer === q.correct;
+                const unanswered = userAnswer === undefined;
+
+                let userChoiceText = unanswered ? "<span class='italic text-gray-400'>Not answered</span>" : q.options[userAnswer];
+                let correctChoiceText = q.options[q.correct];
+
+                reviewHtml += `
+                    <div class="bg-white border rounded-2xl p-4 sm:p-6 ${isCorrect ? 'border-green-200 shadow-sm' : 'border-red-200 shadow-sm'}">
+                        <div class="flex items-start">
+                            <div class="mt-1 mr-3 sm:mr-4 flex-shrink-0 bg-white rounded-full">
+                                ${isCorrect ? '<i class="fa-solid fa-circle-check text-green-500 text-2xl"></i>' : '<i class="fa-solid fa-circle-xmark text-red-500 text-2xl"></i>'}
+                            </div>
+                            <div class="flex-grow min-w-0"> <!-- min-w-0 fixes flexbox text truncation issues -->
+                                <p class="font-semibold text-gray-800 mb-4 text-base sm:text-lg leading-relaxed"><span class="text-gray-400 mr-1">${idx + 1}.</span> ${q.text}</p>
+                                
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5 text-sm sm:text-base">
+                                    <div class="bg-gray-50 p-3.5 sm:p-4 rounded-xl border border-gray-200">
+                                        <p class="text-gray-500 mb-1.5 text-xs font-bold uppercase tracking-wider">Your Answer</p>
+                                        <p class="${isCorrect ? 'text-green-700 font-semibold' : 'text-red-700 font-medium'} break-words">${userChoiceText}</p>
+                                    </div>
+                                    ${!isCorrect ? `
+                                    <div class="bg-green-50 p-3.5 sm:p-4 rounded-xl border border-green-200">
+                                        <p class="text-green-600 mb-1.5 text-xs font-bold uppercase tracking-wider">Correct Answer</p>
+                                        <p class="text-green-800 font-semibold break-words">${correctChoiceText}</p>
+                                    </div>
+                                    ` : ''}
+                                </div>
+
+                                <div class="bg-blue-50/70 border-l-4 border-blue-400 p-4 sm:p-5 rounded-r-xl">
+                                    <h4 class="text-xs font-bold text-blue-800 uppercase tracking-wider mb-2 flex items-center"><i class="fa-solid fa-book-open mr-2"></i> Rationale</h4>
+                                    <p class="text-sm sm:text-base text-blue-900 leading-relaxed">${q.rationale}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            reviewHtml += `
+                    </div>
+                </div>
+            `;
+            
+            contentDiv.innerHTML = reviewHtml;
+            // Scroll to top of review screen
+            window.scrollTo(0,0);
+            if(contentDiv.scrollTo) contentDiv.scrollTo(0,0);
+        }
+
+        // --- APP LOGIC ---
+
+        function startTest() {
+            const numQ = parseInt(document.getElementById('numQuestions').value);
+            const diff = document.getElementById('difficulty').value;
+            const topic = document.getElementById('topic').value;
+            const timeChoice = document.getElementById('timeLimit').value;
+
+            // Filter questions
+            let filteredQuestions = questionBank.filter(q =>
+                (diff === 'mixed' || q.difficulty === diff) && (topic === 'all' || q.topic === topic));
+            if (filteredQuestions.length === 0) {
+                alert("No questions match that topic and difficulty. Try 'Mixed' difficulty.");
+                return;
+            }
+
+            // Shuffle questions, take the requested count, then shuffle each question's options
+            filteredQuestions = shuffleArray([...filteredQuestions]);
+            const count = numQ === 0 ? filteredQuestions.length : Math.min(numQ, filteredQuestions.length);
+            const selectedQuestions = filteredQuestions.slice(0, count).map(q => {
+                const order = shuffleArray(q.options.map((_, i) => i));
+                return { ...q, options: order.map(i => q.options[i]), correct: order.indexOf(q.correct) };
+            });
+
+            // Setup state
+            state.questions = selectedQuestions;
+            state.currentQuestionIndex = 0;
+            state.answers = {};
+            state.timeLimit = timeChoice === 'auto' ? Math.max(60, count * 45) : parseInt(timeChoice) * 60;
+            state.timeRemaining = state.timeLimit;
+            
+            // Start Timer
+            if (state.timerId) clearInterval(state.timerId);
+            state.timerId = setInterval(timerTick, 1000);
+
+            renderTestScreen();
+            window.scrollTo(0,0);
+        }
+
+        function timerTick() {
+            state.timeRemaining--;
+            updateTimerDisplay();
+
+            if (state.timeRemaining <= 0) {
+                clearInterval(state.timerId);
+                alert("Time's up! Submitting your test automatically.");
+                submitTest();
+            }
+        }
+
+        function updateTimerDisplay() {
+            const timerEl = document.getElementById('timerDisplay');
+            if (!timerEl) return;
+            
+            const m = Math.floor(state.timeRemaining / 60).toString().padStart(2, '0');
+            const s = (state.timeRemaining % 60).toString().padStart(2, '0');
+            timerEl.textContent = `${m}:${s}`;
+            
+            if (state.timeRemaining <= 60 && state.timeRemaining > 0) {
+                timerEl.parentElement.classList.remove('text-indigo-600', 'bg-indigo-50');
+                timerEl.parentElement.classList.add('text-red-600', 'bg-red-50', 'animate-pulse');
+            }
+        }
+
+        function selectOption(index) {
+            state.answers[state.currentQuestionIndex] = index;
+            // Force re-render to update radio visual states
+            renderTestScreen();
+        }
+
+        function nextQuestion() {
+            if (state.currentQuestionIndex < state.questions.length - 1) {
+                state.currentQuestionIndex++;
+                renderTestScreen();
+                window.scrollTo(0,0);
+            }
+        }
+
+        function prevQuestion() {
+            if (state.currentQuestionIndex > 0) {
+                state.currentQuestionIndex--;
+                renderTestScreen();
+                window.scrollTo(0,0);
+            }
+        }
+
+        function submitTest() {
+            clearInterval(state.timerId);
+            renderReviewScreen();
+        }
+
+        // Utility: Fisher-Yates Shuffle
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Boot
+        initApp();
+    </script>
+</body>
+</html>
